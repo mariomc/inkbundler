@@ -17,7 +17,7 @@ Steps to use:
 
 1. Visit [the GH page](http://mariomc.github.io/inkbundler/#/ "OSM Sauce")
 
-If you're 133 and want to modify this tool, take this
+If you're 1337 and want to modify this tool, take this:
 
 Steps to contribue:
 -------------------
