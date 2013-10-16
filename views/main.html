@@ -56,12 +56,12 @@
         <input class="large-70" name="bundleName" type="text" placeholder="Bundle Name" ng-model="bundle.name">
       </div>
       <textarea class="large-100" placeholder="Append your script here" ng-model="bundle.append"></textarea>
-        <div style="margin-top:10px"><label for="minify" title="Unless you have a 1337 machine"><input type="checkbox" ng-model="bundle.minify">Minify (takes some time!)</label>
+        <div style="margin-top:10px"><label title="Unless you have a 1337 machine"><input type="checkbox" ng-model="bundle.minify">Minify (takes some time!)</label>
         </div>
       </div>
       <div class="large-100">
           <button type="button" class="ink-button large-100" ng-click="progressDone = progressDone + 10"> <span class="icon-save"></span> Save Bundle Settings </button>
-          <button type="button" class="ink-button large-100" ng-click="downloadBundle()" ng-disabled="downloading || !bundle.name" title="{{bundle.name && 'Download your file' || 'Fill up the bundle name first'}}"> <span class="icon-save"></span> Download Bundle </button>
+          <button type="button" class="ink-button large-100" ng-click="downloadBundle()" ng-disabled="downloading || !bundle.name" title="{{bundle.name && 'Download your file' || 'Fill up the bundle name first'}}"> <span class="icon-download-alt"></span> Download Bundle </button>
       </div>
 </div>
     </div>
