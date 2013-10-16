@@ -320,7 +320,7 @@ angular.module('inkbundlerApp')
 			var zip = new JSZip();
 			var bundle_string = '';
 			var bundle_name = $scope.bundle.name;
-			var custom_script = $("#customScript").val();
+			var custom_script = $scope.bundle.append;
 			_.each($scope.selectedFiles, function(element, index, list){
 			  bundle_string += ('\n' + rawFiles.js[element]) || '';
 			});
