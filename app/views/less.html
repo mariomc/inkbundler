@@ -1,69 +1,14 @@
- <div class="ink-grid">
-    <div class="column-group gutters">
-    <div class="large-100">
-    <h1 title="Get into the choppa">JS Packager!</h1>
-    <p>Choose all the packages you want.</p>
-    </div>
-  </div>
-  <div class="column-group gutters">
-    <div class="large-70">
-    <div class="ink-form column-group" style="margin-top: 1em;">
-      <div class="large-70">
-        <input type="text" value="" name="search" class="large-100" placeholder="Search" ng-model="search">
-      </div>
-      <div class="control large-30">
-      <button type="button" ng-click="selectedFiles = []" class="ink-button red large-100"><i class="icon-remove"></i> Reset </button>
-    </div>
+<div class="ink-grid">
+  <h1>Alerts</h1>
+  <h1>Colors</h1>
+  <h1>Footer</h1>
+  <h1>Forms</h1>
+  <h1>Grid</h1>
+  <h1>Labels</h1>
+  <h1>Navigation</h1>
+  <h1>Tables</h1>
+  <h1>Tooltips</h1>
+  <h1>Typography</h1>
+  <h1>Widgets</h1>
+
 </div>
-<table class="ink-table">
-        <thead>
-          <tr> 
-            <th>Name <a class="sort pull-right" href="#"></a></th>
-            <th>URL <a class="sort pull-right" href="#"></a></th>
-            <th>Operations</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="file in files | filter:search">
-              <td>{{file.name}}</td>
-              <td>{{file.url}}</td>
-          <td>
-	          <button type="button" class="ink-button push-right" ng-class="{'green': (!isSelected() && !
-                        isDependent()), 'red':(isSelected() && !isDependent()), 'orange' : isDependent()}" ng-click="operation()" ng-disabled="isDependent()"><span ng-class="{'icon-plus': (!isSelected() && !isDependent()), 'icon-remove':(isSelected() && !isDependent()), 'icon-lock' : isDependent()}" ng-disabled="isDependent()"></span> {{ buttonText() }} </button>
-	          </td>
-            </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="large-30 push-right">
-    	<div class="ink-alert block success">
-  <h4>
-    <i class="icon-plus"></i>  Files to add <span class="ink-badge black pull-right" style="height: auto;">{{ (files|filter:selectedFilter).length }}</span>
-  </h4>
-  	<div style="margin-top: 0;" class="column-group" ng-repeat="file in files | orderBy:sortFiles | filter:selectedFilter" >
-          <p class="push-left" style="padding-bottom: 0; line-height: 41px;">{{file.name}}</p>
-               <button ng-click="operation()" type="button" class="push-right ink-button small" ng-class="{'red':isSelected() && !isDependent(), 'orange' : isDependent()}" ng-disabled="isDependent()"><span ng-class="{'icon-plus':!isSelected() && !isDependent(), 'icon-remove':isSelected() && !isDependent(), 'icon-lock' : isDependent()}"></span>
-              </button> 
-  </div>
-</div>
-<div class="ink-alert block info">
-  <h4>
-    <i class="icon-cog"></i>  Bundle Settings
-  </h4>
-      <div class="panel-body ink-form" style="padding: 0 1em 1em 1em;">
-      <div class="control-group column-group">
-        <label class="large-30" for ="bundleName">Name</label>
-        <input class="large-70" name="bundleName" type="text" placeholder="Bundle Name" ng-model="bundle.name">
-      </div>
-      <textarea class="large-100" placeholder="Append your script here" ng-model="bundle.append"></textarea>
-        <div style="margin-top:10px;"><label title="Unless you have a 1337 machine"><input type="checkbox" ng-model="bundle.minify" >Minify (takes some time!)</label>
-        </div>
-      </div>
-      <div class="large-100">
-          <button type="button" class="ink-button large-100" ng-click="progressDone = progressDone + 10"> <span class="icon-save"></span> Save Bundle Settings </button>
-          <button type="button" class="ink-button large-100" ng-click="downloadBundle()" ng-disabled="downloading || !bundle.name" title="{{bundle.name && 'Download your file' || 'Fill up the bundle name first'}}"> <span class="icon-download-alt"></span> Download Bundle </button>
-      </div>
-</div>
-    </div>
-  </div>
- </div>
