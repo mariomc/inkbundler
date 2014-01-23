@@ -1,4 +1,6279 @@
-!function(n,e){"use strict";function t(n){for(var e=Object.create(null),t=0;t<n.length;++t)e[n[t]]=!0;return e}function i(n,e){return Array.prototype.slice.call(n,e||0)}function r(n){return n.split("")}function o(n,e){for(var t=e.length;--t>=0;)if(e[t]==n)return!0;return!1}function a(n,e){for(var t=0,i=e.length;i>t;++t)if(n(e[t]))return e[t]}function u(n,e){if(0>=e)return"";if(1==e)return n;var t=u(n,e>>1);return t+=t,1&e&&(t+=n),t}function s(n,e){this.msg=n,this.defs=e}function c(n,e,t){n===!0&&(n={});var i=n||{};if(t)for(var r in i)if(i.hasOwnProperty(r)&&!e.hasOwnProperty(r))throw new s("`"+r+"` is not a supported option",e);for(var r in e)e.hasOwnProperty(r)&&(i[r]=n&&n.hasOwnProperty(r)?n[r]:e[r]);return i}function f(n,e){for(var t in e)e.hasOwnProperty(t)&&(n[t]=e[t]);return n}function l(){}function p(n,e){n.indexOf(e)<0&&n.push(e)}function d(n,e){return n.replace(/\{(.+?)\}/g,function(n,t){return e[t]})}function h(n,e){for(var t=n.length;--t>=0;)n[t]===e&&n.splice(t,1)}function _(n,e){function t(n,t){for(var i=[],r=0,o=0,a=0;r<n.length&&o<t.length;)i[a++]=e(n[r],t[o])<=0?n[r++]:t[o++];return r<n.length&&i.push.apply(i,n.slice(r)),o<t.length&&i.push.apply(i,t.slice(o)),i}function i(n){if(n.length<=1)return n;var e=Math.floor(n.length/2),r=n.slice(0,e),o=n.slice(e);return r=i(r),o=i(o),t(r,o)}return n.length<2?n.slice():i(n)}function m(n,e){return n.filter(function(n){return e.indexOf(n)<0})}function v(n,e){return n.filter(function(n){return e.indexOf(n)>=0})}function b(n){function e(n){if(1==n.length)return t+="return str === "+JSON.stringify(n[0])+";";t+="switch(str){";for(var e=0;e<n.length;++e)t+="case "+JSON.stringify(n[e])+":";t+="return true}return false;"}n instanceof Array||(n=n.split(" "));var t="",i=[];n:for(var r=0;r<n.length;++r){for(var o=0;o<i.length;++o)if(i[o][0].length==n[r].length){i[o].push(n[r]);continue n}i.push([n[r]])}if(i.length>3){i.sort(function(n,e){return e.length-n.length}),t+="switch(str.length){";for(var r=0;r<i.length;++r){var a=i[r];t+="case "+a[0].length+":",e(a)}t+="}"}else e(n);return new Function("str",t)}function y(n,e){for(var t=n.length;--t>=0;)if(!e(n[t]))return!1;return!0}function g(){this._values=Object.create(null),this._size=0}function A(n,e,t,i){arguments.length<4&&(i=W),e=e?e.split(/\s+/):[];var r=e;i&&i.PROPS&&(e=e.concat(i.PROPS));for(var o="return function AST_"+n+"(props){ if (props) { ",a=e.length;--a>=0;)o+="this."+e[a]+" = props."+e[a]+";";var u=i&&new i;(u&&u.initialize||t&&t.initialize)&&(o+="this.initialize();"),o+="}}";var s=new Function(o)();if(u&&(s.prototype=u,s.BASE=i),i&&i.SUBCLASSES.push(s),s.prototype.CTOR=s,s.PROPS=e||null,s.SELF_PROPS=r,s.SUBCLASSES=[],n&&(s.prototype.TYPE=s.TYPE=n),t)for(a in t)t.hasOwnProperty(a)&&(/^\$/.test(a)?s[a.substr(1)]=t[a]:s.prototype[a]=t[a]);return s.DEFMETHOD=function(n,e){this.prototype[n]=e},s}function w(n,e){n.body instanceof Y?n.body._walk(e):n.body.forEach(function(n){n._walk(e)})}function E(n){this.visit=n,this.stack=[]}function D(n){return n>=97&&122>=n||n>=65&&90>=n||n>=170&&Rt.letter.test(String.fromCharCode(n))}function F(n){return n>=48&&57>=n}function S(n){return F(n)||D(n)}function C(n){return Rt.non_spacing_mark.test(n)||Rt.space_combining_mark.test(n)}function k(n){return Rt.connector_punctuation.test(n)}function B(n){return!Ft(n)&&/^[a-z_$][a-z0-9_$]*$/i.test(n)}function T(n){return 36==n||95==n||D(n)}function x(n){var e=n.charCodeAt(0);return T(e)||F(e)||8204==e||8205==e||C(n)||k(n)}function $(n){var e=n.length;if(0==e)return!1;if(F(n.charCodeAt(0)))return!1;for(;--e>=0;)if(!x(n.charAt(e)))return!1;return!0}function O(n){return kt.test(n)?parseInt(n.substr(2),16):Bt.test(n)?parseInt(n.substr(1),8):Tt.test(n)?parseFloat(n):void 0}function M(n,e,t,i){this.message=n,this.line=e,this.col=t,this.pos=i,this.stack=(new Error).stack}function N(n,e,t,i,r){throw new M(n,t,i,r)}function R(n,e,t){return n.type==e&&(null==t||n.value==t)}function H(n,e){function t(){return A.text.charAt(A.pos)}function i(n,e){var t=A.text.charAt(A.pos++);if(n&&!t)throw Ht;return"\n"==t?(A.newline_before=A.newline_before||!e,++A.line,A.col=0):++A.col,t}function r(n,e){var t=A.text.indexOf(n,A.pos);if(e&&-1==t)throw Ht;return t}function o(){A.tokline=A.line,A.tokcol=A.col,A.tokpos=A.pos}function a(n,t,i){A.regex_allowed="operator"==n&&!zt(t)||"keyword"==n&&St(t)||"punc"==n&&Ot(t);var r={type:n,value:t,line:A.tokline,col:A.tokcol,pos:A.tokpos,endpos:A.pos,nlb:A.newline_before,file:e};if(!i){r.comments_before=A.comments_before,A.comments_before=[];for(var o=0,a=r.comments_before.length;a>o;o++)r.nlb=r.nlb||r.comments_before[o].nlb}return A.newline_before=!1,new V(r)}function u(){for(;$t(t());)i()}function s(n){for(var e,r="",o=0;(e=t())&&n(e,o++);)r+=i();return r}function c(n){N(n,e,A.tokline,A.tokcol,A.tokpos)}function f(n){var e=!1,t=!1,i=!1,r="."==n,o=s(function(o,a){var u=o.charCodeAt(0);switch(u){case 120:case 88:return i?!1:i=!0;case 101:case 69:return i?!0:e?!1:e=t=!0;case 45:return t||0==a&&!n;case 43:return t;case t=!1,46:return r||i||e?!1:r=!0}return S(u)});n&&(o=n+o);var u=O(o);return isNaN(u)?(c("Invalid syntax: "+o),void 0):a("num",u)}function l(n){var e=i(!0,n);switch(e.charCodeAt(0)){case 110:return"\n";case 114:return"\r";case 116:return"	";case 98:return"\b";case 118:return"";case 102:return"\f";case 48:return"\x00";case 120:return String.fromCharCode(p(2));case 117:return String.fromCharCode(p(4));case 10:return"";default:return e}}function p(n){for(var e=0;n>0;--n){var t=parseInt(i(!0),16);isNaN(t)&&c("Invalid hex-character pattern in string"),e=e<<4|t}return e}function d(){i();var n,e=r("\n");return-1==e?(n=A.text.substr(A.pos),A.pos=A.text.length):(n=A.text.substring(A.pos,e),A.pos=e),a("comment1",n,!0)}function h(){for(var n,e,r=!1,o="",a=!1;null!=(n=t());)if(r)"u"!=n&&c("Expecting UnicodeEscapeSequence -- uXXXX"),n=l(),x(n)||c("Unicode char: "+n.charCodeAt(0)+" is not valid in identifier"),o+=n,r=!1;else if("\\"==n)a=r=!0,i();else{if(!x(n))break;o+=i()}return Et(o)&&a&&(e=o.charCodeAt(0).toString(16).toUpperCase(),o="\\u"+"0000".substr(e.length)+e+o.slice(1)),o}function _(n){function e(n){if(!t())return n;var r=n+t();return xt(r)?(i(),e(r)):n}return a("operator",e(n||i()))}function m(){i();var n=A.regex_allowed;switch(t()){case"/":return A.comments_before.push(d()),A.regex_allowed=n,g();case"*":return A.comments_before.push(E()),A.regex_allowed=n,g()}return A.regex_allowed?D(""):_("/")}function v(){return i(),F(t().charCodeAt(0))?f("."):a("punc",".")}function b(){var n=h();return Dt(n)?a("atom",n):Et(n)?xt(n)?a("operator",n):a("keyword",n):a("name",n)}function y(n,e){return function(t){try{return e(t)}catch(i){if(i!==Ht)throw i;c(n)}}}function g(n){if(null!=n)return D(n);u(),o();var e=t();if(!e)return a("eof");var r=e.charCodeAt(0);switch(r){case 34:case 39:return w();case 46:return v();case 47:return m()}return F(r)?f():Mt(e)?a("punc",i()):Ct(e)?_():92==r||T(r)?b():(c("Unexpected character '"+e+"'"),void 0)}var A={text:n.replace(/\r\n?|[\n\u2028\u2029]/g,"\n").replace(/\uFEFF/g,""),filename:e,pos:0,tokpos:0,line:1,tokline:0,col:0,tokcol:0,newline_before:!1,regex_allowed:!1,comments_before:[]},w=y("Unterminated string constant",function(){for(var n=i(),e="";;){var t=i(!0);if("\\"==t){var r=0,o=null;t=s(function(n){if(n>="0"&&"7">=n){if(!o)return o=n,++r;if("3">=o&&2>=r)return++r;if(o>="4"&&1>=r)return++r}return!1}),t=r>0?String.fromCharCode(parseInt(t,8)):l(!0)}else if(t==n)break;e+=t}return a("string",e)}),E=y("Unterminated multiline comment",function(){i();var n=r("*/",!0),e=A.text.substring(A.pos,n),t=e.split("\n"),o=t.length;return A.pos=n+2,A.line+=o-1,o>1?A.col=t[o-1].length:A.col+=t[o-1].length,A.col+=2,A.newline_before=A.newline_before||e.indexOf("\n")>=0,a("comment2",e,!0)}),D=y("Unterminated regular expression",function(n){for(var e,t=!1,r=!1;e=i(!0);)if(t)n+="\\"+e,t=!1;else if("["==e)r=!0,n+=e;else if("]"==e&&r)r=!1,n+=e;else{if("/"==e&&!r)break;"\\"==e?t=!0:n+=e}var o=h();return a("regexp",new RegExp(n,o))});return g.context=function(n){return n&&(A=n),A},g}function q(n,e){function t(n,e){return R(P.token,n,e)}function i(){return P.peeked||(P.peeked=P.input())}function r(){return P.prev=P.token,P.peeked?(P.token=P.peeked,P.peeked=null):P.token=P.input(),P.in_directives=P.in_directives&&("string"==P.token.type||t("punc",";")),P.token}function o(){return P.prev}function u(n,e,t,i){var r=P.input.context();N(n,r.filename,null!=e?e:r.tokline,null!=t?t:r.tokcol,null!=i?i:r.tokpos)}function s(n,e){u(e,n.line,n.col)}function f(n){null==n&&(n=P.token),s(n,"Unexpected token: "+n.type+" ("+n.value+")")}function l(n,e){return t(n,e)?r():(s(P.token,"Unexpected token "+P.token.type+" «"+P.token.value+"»"+", expected "+n+" «"+e+"»"),void 0)}function p(n){return l("punc",n)}function d(){return!e.strict&&(P.token.nlb||t("eof")||t("punc","}"))}function h(){t("punc",";")?r():d()||f()}function _(){p("(");var n=_e(!0);return p(")"),n}function m(n){return function(){var e=P.token,t=n(),i=o();return t.start=e,t.end=i,t}}function v(){var n=$(at);a(function(e){return e.name==n.name},P.labels)&&u("Label "+n.name+" defined twice"),p(":"),P.labels.push(n);var e=j();return P.labels.pop(),new ee({body:e,label:n})}function b(n){return new J({body:(n=_e(!0),h(),n)})}function y(n){var e=null;return d()||(e=$(st,!0)),null!=e?a(function(n){return n.name==e.name},P.labels)||u("Undefined label "+e.name):0==P.in_loop&&u(n.TYPE+" not inside a loop or switch"),h(),new n({label:e})}function g(){p("(");var n=null;return!t("punc",";")&&(n=t("keyword","var")?(r(),U(!0)):_e(!0,!0),t("operator","in"))?(n instanceof Te&&n.definitions.length>1&&u("Only one variable declaration allowed in for..in loop"),r(),w(n)):A(n)}function A(n){p(";");var e=t("punc",";")?null:_e(!0);p(";");var i=t("punc",")")?null:_e(!0);return p(")"),new oe({init:n,condition:e,step:i,body:z(j)})}function w(n){var e=n instanceof Te?n.definitions[0].name:null,t=_e(!0);return p(")"),new ae({init:n,name:e,object:t,body:z(j)})}function E(){var n=_(),e=j(),i=null;return t("keyword","else")&&(r(),i=j()),new Ae({condition:n,body:e,alternative:i})}function D(){p("{");for(var n=[];!t("punc","}");)t("eof")&&f(),n.push(j());return r(),n}function F(){p("{");for(var n,e=[],i=null,a=null;!t("punc","}");)t("eof")&&f(),t("keyword","case")?(a&&(a.end=o()),i=[],a=new Fe({start:(n=P.token,r(),n),expression:_e(!0),body:i}),e.push(a),p(":")):t("keyword","default")?(a&&(a.end=o()),i=[],a=new De({start:(n=P.token,r(),p(":"),n),body:i}),e.push(a)):(i||f(),i.push(j()));return a&&(a.end=o()),r(),e}function S(){var n=D(),e=null,i=null;if(t("keyword","catch")){var a=P.token;r(),p("(");var s=$(ot);p(")"),e=new Ce({start:a,argname:s,body:D(),end:o()})}if(t("keyword","finally")){var a=P.token;r(),i=new ke({start:a,body:D(),end:o()})}return e||i||u("Missing catch/finally blocks"),new Se({body:n,bcatch:e,bfinally:i})}function C(n,e){for(var i=[];i.push(new $e({start:P.token,name:$(e?et:nt),value:t("operator","=")?(r(),_e(!1,n)):null,end:o()})),t("punc",",");)r();return i}function k(){var n,e=P.token;switch(e.type){case"name":return $(ut);case"num":n=new pt({start:e,end:e,value:e.value});break;case"string":n=new lt({start:e,end:e,value:e.value});break;case"regexp":n=new dt({start:e,end:e,value:e.value});break;case"atom":switch(e.value){case"false":n=new At({start:e,end:e});break;case"true":n=new wt({start:e,end:e});break;case"null":n=new _t({start:e,end:e})}}return r(),n}function B(n,e,i){for(var o=!0,a=[];!t("punc",n)&&(o?o=!1:p(","),!e||!t("punc",n));)t("punc",",")&&i?a.push(new bt({start:P.token,end:P.token})):a.push(_e(!1));return r(),a}function T(){var n=P.token;switch(r(),n.type){case"num":case"string":case"name":case"operator":case"keyword":case"atom":return n.value;default:f()}}function x(){var n=P.token;switch(r(),n.type){case"name":case"operator":case"keyword":case"atom":return n.value;default:f()}}function $(n,e){if(!t("name"))return e||u("Name expected"),null;var i=P.token.value,o=new("this"==i?ct:n)({name:String(P.token.value),start:P.token,end:P.token});return r(),o}function O(n,e,t){return"++"!=e&&"--"!=e||q(t)||u("Invalid use of "+e+" operator"),new n({operator:e,expression:t})}function M(n){return se(te(!0),0,n)}function q(n){return e.strict?n instanceof ct?!1:n instanceof Re||n instanceof Ke:!0}function z(n){++P.in_loop;var e=n();return--P.in_loop,e}e=c(e,{strict:!1,filename:null,toplevel:null,expression:!1});var P={input:"string"==typeof n?H(n,e.filename):n,token:null,prev:null,peeked:null,in_function:0,in_directives:!0,in_loop:0,labels:[]};P.token=r();var j=m(function(){var n;switch((t("operator","/")||t("operator","/="))&&(P.peeked=null,P.token=P.input(P.token.value.substr(1))),P.token.type){case"string":var e=P.in_directives,a=b();return e&&a.body instanceof lt&&!t("punc",",")?new G({value:a.body.value}):a;case"num":case"regexp":case"operator":case"atom":return b();case"name":return R(i(),"punc",":")?v():b();case"punc":switch(P.token.value){case"{":return new Z({start:P.token,body:D(),end:o()});case"[":case"(":return b();case";":return r(),new Q;default:f()}case"keyword":switch(n=P.token.value,r(),n){case"break":return y(ye);case"continue":return y(ge);case"debugger":return h(),new X;case"do":return new ie({body:z(j),condition:(l("keyword","while"),n=_(),h(),n)});case"while":return new re({condition:_(),body:z(j)});case"for":return g();case"function":return I(!0);case"if":return E();case"return":return 0==P.in_function&&u("'return' outside of function"),new me({value:t("punc",";")?(r(),null):d()?null:(n=_e(!0),h(),n)});case"switch":return new we({expression:_(),body:z(F)});case"throw":return P.token.nlb&&u("Illegal newline after 'throw'"),new ve({value:(n=_e(!0),h(),n)});case"try":return S();case"var":return n=U(),h(),n;case"const":return n=L(),h(),n;case"with":return new ue({expression:_(),body:j()});default:f()}}}),I=function(n,e){var i=e===le,o=t("name")?$(n?it:i?Ze:rt):i&&(t("string")||t("num"))?k():null;return n&&!o&&f(),p("("),e||(e=n?de:pe),new e({name:o,argnames:function(n,e){for(;!t("punc",")");)n?n=!1:p(","),e.push($(tt));return r(),e}(!0,[]),body:function(n,e){++P.in_function,P.in_directives=!0,P.in_loop=0,P.labels=[];var t=D();return--P.in_function,P.in_loop=n,P.labels=e,t}(P.in_loop,P.labels)})},U=function(n){return new Te({start:o(),definitions:C(n,!1),end:o()})},L=function(){return new xe({start:o(),definitions:C(!1,!0),end:o()})},V=function(){var n=P.token;l("operator","new");var e,i=W(!1);return t("punc","(")?(r(),e=B(")")):e=[],ne(new Me({start:n,expression:i,args:e,end:o()}),!0)},W=function(n){if(t("operator","new"))return V();var e=P.token;if(t("punc")){switch(e.value){case"(":r();var i=_e(!0);return i.start=e,i.end=P.token,p(")"),ne(i,n);case"[":return ne(Y(),n);case"{":return ne(K(),n)}f()}if(t("keyword","function")){r();var a=I(!1);return a.start=e,a.end=o(),ne(a,n)}return Ut[P.token.type]?ne(k(),n):(f(),void 0)},Y=m(function(){return p("["),new Ve({elements:B("]",!e.strict,!0)})}),K=m(function(){p("{");for(var n=!0,i=[];!t("punc","}")&&(n?n=!1:p(","),e.strict||!t("punc","}"));){var a=P.token,u=a.type,s=T();if("name"==u&&!t("punc",":")){if("get"==s){i.push(new Je({start:a,key:s,value:I(!1,le),end:o()}));continue}if("set"==s){i.push(new Ge({start:a,key:s,value:I(!1,le),end:o()}));continue}}p(":"),i.push(new Xe({start:a,key:s,value:_e(!1),end:o()}))}return r(),new We({properties:i})}),ne=function(n,e){var i=n.start;if(t("punc","."))return r(),ne(new He({start:i,expression:n,property:x(),end:o()}),e);if(t("punc","[")){r();var a=_e(!0);return p("]"),ne(new qe({start:i,expression:n,property:a,end:o()}),e)}return e&&t("punc","(")?(r(),ne(new Oe({start:i,expression:n,args:B(")"),end:o()}),!0)):n},te=function(n){var e=P.token;if(t("operator")&&qt(e.value)){r();var i=O(Pe,e.value,te(n));return i.start=e,i.end=o(),i}for(var a=W(n);t("operator")&&zt(P.token.value)&&!P.token.nlb;)a=O(je,P.token.value,a),a.start=e,a.end=P.token,r();return a},se=function(n,e,i){var o=t("operator")?P.token.value:null;"in"==o&&i&&(o=null);var a=null!=o?jt[o]:null;if(null!=a&&a>e){r();var u=se(te(!0),a,i);return se(new Ie({start:n.start,left:n,operator:o,right:u,end:u.end}),e,i)}return n},fe=function(n){var e=P.token,o=M(n);if(t("operator","?")){r();var a=_e(!1);return p(":"),new Ue({start:e,condition:o,consequent:a,alternative:_e(!1,n),end:i()})}return o},he=function(n){var e=P.token,i=fe(n),a=P.token.value;if(t("operator")&&Pt(a)){if(q(i))return r(),new Le({start:e,left:i,operator:a,right:he(n),end:o()});u("Invalid assignment")}return i},_e=function(n,e){var o=P.token,a=he(e);return n&&t("punc",",")?(r(),new Ne({start:o,car:a,cdr:_e(!0,e),end:i()})):a};return e.expression?_e(!0):function(){for(var n=P.token,i=[];!t("eof");)i.push(j());var r=o(),a=e.toplevel;return a?(a.body=a.body.concat(i),a.end=r):a=new ce({start:n,body:i,end:r}),a}()}function z(n,e){E.call(this),this.before=n,this.after=e}function P(n,e,t){this.name=t.name,this.orig=[t],this.scope=n,this.references=[],this.global=!1,this.mangled_name=null,this.undeclared=!1,this.constant=!1,this.index=e}function j(n){function e(n,e){return n.replace(/[\u0080-\uffff]/g,function(n){var t=n.charCodeAt(0).toString(16);if(t.length<=2&&!e){for(;t.length<2;)t="0"+t;return"\\x"+t}for(;t.length<4;)t="0"+t;return"\\u"+t})}function t(t){var i=0,r=0;return t=t.replace(/[\\\b\f\n\r\t\x22\x27\u2028\u2029\0]/g,function(n){switch(n){case"\\":return"\\\\";case"\b":return"\\b";case"\f":return"\\f";case"\n":return"\\n";case"\r":return"\\r";case"\u2028":return"\\u2028";case"\u2029":return"\\u2029";case'"':return++i,'"';case"'":return++r,"'";case"\x00":return"\\x00"}return n}),n.ascii_only&&(t=e(t)),i>r?"'"+t.replace(/\x27/g,"\\'")+"'":'"'+t.replace(/\x22/g,'\\"')+'"'}function i(e){var i=t(e);return n.inline_script&&(i=i.replace(/<\x2fscript([>\/\t\n\f\r ])/gi,"<\\/script$1")),i}function r(t){return t=t.toString(),n.ascii_only&&(t=e(t,!0)),t}function o(e){return u(" ",n.indent_start+A-e*n.indent_level)}function a(){return k.charAt(k.length-1)}function s(){n.max_line_len&&w>n.max_line_len&&f("\n")}function f(e){e=String(e);var t=e.charAt(0);if(C&&(t&&!(";}".indexOf(t)<0)||/[;]$/.test(k)||(n.semicolons||B(t)?(F+=";",w++,D++):(F+="\n",D++,E++,w=0),n.beautify||(S=!1)),C=!1,s()),!n.beautify&&n.preserve_line&&H[H.length-1])for(var i=H[H.length-1].start.line;i>E;)F+="\n",D++,E++,w=0,S=!1;if(S){var r=a();(x(r)&&(x(t)||"\\"==t)||/^[\+\-\/]$/.test(t)&&t==r)&&(F+=" ",w++,D++),S=!1}var o=e.split(/\r?\n/),u=o.length-1;E+=u,0==u?w+=o[u].length:w=o[u].length,D+=e.length,k=e,F+=e}function p(){C=!1,f(";")}function d(){return A+n.indent_level}function h(n){var e;return f("{"),M(),O(d(),function(){e=n()}),$(),f("}"),e}function _(n){f("(");var e=n();return f(")"),e}function m(n){f("[");var e=n();return f("]"),e}function v(){f(","),T()}function y(){f(":"),n.space_colon&&T()}function g(){return F}n=c(n,{indent_start:0,indent_level:4,quote_keys:!1,space_colon:!0,ascii_only:!1,inline_script:!1,width:80,max_line_len:32e3,beautify:!1,source_map:null,bracketize:!1,semicolons:!0,comments:!1,preserve_line:!1,screw_ie8:!1},!0);var A=0,w=0,E=1,D=0,F="",S=!1,C=!1,k=null,B=b("( [ + * / - , ."),T=n.beautify?function(){f(" ")}:function(){S=!0},$=n.beautify?function(e){n.beautify&&f(o(e?.5:0))}:l,O=n.beautify?function(n,e){n===!0&&(n=d());var t=A;A=n;var i=e();return A=t,i}:function(n,e){return e()},M=n.beautify?function(){f("\n")}:l,N=n.beautify?function(){f(";")}:function(){C=!0},R=n.source_map?function(e,t){try{e&&n.source_map.add(e.file||"?",E,w,e.line,e.col,t||"name"!=e.type?t:e.value)}catch(i){W.warn("Couldn't figure out mapping for {file}:{line},{col} → {cline},{ccol} [{name}]",{file:e.file,line:e.line,col:e.col,cline:E,ccol:w,name:t||""})}}:l,H=[];return{get:g,toString:g,indent:$,indentation:function(){return A},current_width:function(){return w-A},should_break:function(){return n.width&&this.current_width()>=n.width},newline:M,print:f,space:T,comma:v,colon:y,last:function(){return k},semicolon:N,force_semicolon:p,to_ascii:e,print_name:function(n){f(r(n))},print_string:function(n){f(i(n))},next_indent:d,with_indent:O,with_block:h,with_parens:_,with_square:m,add_mapping:R,option:function(e){return n[e]},line:function(){return E},col:function(){return w},pos:function(){return D},push_node:function(n){H.push(n)},pop_node:function(){return H.pop()},stack:function(){return H},parent:function(n){return H[H.length-2-(n||0)]}}}function I(n,e){return this instanceof I?(z.call(this,this.before,this.after),this.options=c(n,{sequences:!e,properties:!e,dead_code:!e,drop_debugger:!e,unsafe:!1,unsafe_comps:!1,conditionals:!e,comparisons:!e,evaluate:!e,booleans:!e,loops:!e,unused:!e,hoist_funs:!e,hoist_vars:!1,if_return:!e,join_vars:!e,cascade:!e,side_effects:!e,negate_iife:!e,screw_ie8:!1,warnings:!0,global_defs:{}},!0),void 0):new I(n,e)}function U(n){function e(n,e,r,o,a,u){if(i){var s=i.originalPositionFor({line:o,column:a});n=s.source,o=s.line,a=s.column,u=s.name}t.addMapping({generated:{line:e,column:r},original:{line:o,column:a},source:n,name:u})}n=c(n,{file:null,root:null,orig:null});var t=new MOZ_SourceMap.SourceMapGenerator({file:n.file,sourceRoot:n.root}),i=n.orig&&new MOZ_SourceMap.SourceMapConsumer(n.orig);return{add:e,get:function(){return t},toString:function(){return t.toString()}}}e.UglifyJS=n;var L=function(){function n(n,o,a){function u(){var u=o(n[s],s),l=u instanceof i;return l&&(u=u.v),u instanceof e?(u=u.v,u instanceof t?f.push.apply(f,a?u.v.slice().reverse():u.v):f.push(u)):u!==r&&(u instanceof t?c.push.apply(c,a?u.v.slice().reverse():u.v):c.push(u)),l}var s,c=[],f=[];if(n instanceof Array)if(a){for(s=n.length;--s>=0&&!u(););c.reverse(),f.reverse()}else for(s=0;s<n.length&&!u();++s);else for(s in n)if(n.hasOwnProperty(s)&&u())break;return f.concat(c)}function e(n){this.v=n}function t(n){this.v=n}function i(n){this.v=n}n.at_top=function(n){return new e(n)},n.splice=function(n){return new t(n)},n.last=function(n){return new i(n)};var r=n.skip={};return n}();g.prototype={set:function(n,e){return this.has(n)||++this._size,this._values["$"+n]=e,this},add:function(n,e){return this.has(n)?this.get(n).push(e):this.set(n,[e]),this},get:function(n){return this._values["$"+n]},del:function(n){return this.has(n)&&(--this._size,delete this._values["$"+n]),this},has:function(n){return"$"+n in this._values},each:function(n){for(var e in this._values)n(this._values[e],e.substr(1))},size:function(){return this._size},map:function(n){var e=[];for(var t in this._values)e.push(n(this._values[t],t.substr(1)));return e}};var V=A("Token","type value line col pos endpos nlb comments_before file",{},null),W=A("Node","start end",{clone:function(){return new this.CTOR(this)},$documentation:"Base class of all AST nodes",$propdoc:{start:"[AST_Token] The first token of this node",end:"[AST_Token] The last token of this node"},_walk:function(n){return n._visit(this)},walk:function(n){return this._walk(n)}},null);W.warn_function=null,W.warn=function(n,e){W.warn_function&&W.warn_function(d(n,e))};var Y=A("Statement",null,{$documentation:"Base class of all statements"}),X=A("Debugger",null,{$documentation:"Represents a debugger statement"},Y),G=A("Directive","value scope",{$documentation:'Represents a directive, like "use strict";',$propdoc:{value:"[string] The value of this directive as a plain string (it's not an AST_String!)",scope:"[AST_Scope/S] The scope that this directive affects"}},Y),J=A("SimpleStatement","body",{$documentation:"A statement consisting of an expression, i.e. a = 1 + 2",$propdoc:{body:"[AST_Node] an expression node (should not be instanceof AST_Statement)"},_walk:function(n){return n._visit(this,function(){this.body._walk(n)})}},Y),K=A("Block","body",{$documentation:"A body of statements (usually bracketed)",$propdoc:{body:"[AST_Statement*] an array of statements"},_walk:function(n){return n._visit(this,function(){w(this,n)})}},Y),Z=A("BlockStatement",null,{$documentation:"A block statement"},K),Q=A("EmptyStatement",null,{$documentation:"The empty statement (empty block or simply a semicolon)",_walk:function(n){return n._visit(this)}},Y),ne=A("StatementWithBody","body",{$documentation:"Base class for all statements that contain one nested body: `For`, `ForIn`, `Do`, `While`, `With`",$propdoc:{body:"[AST_Statement] the body; this should always be present, even if it's an AST_EmptyStatement"},_walk:function(n){return n._visit(this,function(){this.body._walk(n)})}},Y),ee=A("LabeledStatement","label",{$documentation:"Statement with a label",$propdoc:{label:"[AST_Label] a label definition"},_walk:function(n){return n._visit(this,function(){this.label._walk(n),this.body._walk(n)})}},ne),te=A("DWLoop","condition",{$documentation:"Base class for do/while statements",$propdoc:{condition:"[AST_Node] the loop condition.  Should not be instanceof AST_Statement"},_walk:function(n){return n._visit(this,function(){this.condition._walk(n),this.body._walk(n)})}},ne),ie=A("Do",null,{$documentation:"A `do` statement"},te),re=A("While",null,{$documentation:"A `while` statement"},te),oe=A("For","init condition step",{$documentation:"A `for` statement",$propdoc:{init:"[AST_Node?] the `for` initialization code, or null if empty",condition:"[AST_Node?] the `for` termination clause, or null if empty",step:"[AST_Node?] the `for` update clause, or null if empty"},_walk:function(n){return n._visit(this,function(){this.init&&this.init._walk(n),this.condition&&this.condition._walk(n),this.step&&this.step._walk(n),this.body._walk(n)})}},ne),ae=A("ForIn","init name object",{$documentation:"A `for ... in` statement",$propdoc:{init:"[AST_Node] the `for/in` initialization code",name:"[AST_SymbolRef?] the loop variable, only if `init` is AST_Var",object:"[AST_Node] the object that we're looping through"},_walk:function(n){return n._visit(this,function(){this.init._walk(n),this.object._walk(n),this.body._walk(n)})}},ne),ue=A("With","expression",{$documentation:"A `with` statement",$propdoc:{expression:"[AST_Node] the `with` expression"},_walk:function(n){return n._visit(this,function(){this.expression._walk(n),this.body._walk(n)})}},ne),se=A("Scope","directives variables functions uses_with uses_eval parent_scope enclosed cname",{$documentation:"Base class for all statements introducing a lexical scope",$propdoc:{directives:"[string*/S] an array of directives declared in this scope",variables:"[Object/S] a map of name -> SymbolDef for all variables/functions defined in this scope",functions:"[Object/S] like `variables`, but only lists function declarations",uses_with:"[boolean/S] tells whether this scope uses the `with` statement",uses_eval:"[boolean/S] tells whether this scope contains a direct call to the global `eval`",parent_scope:"[AST_Scope?/S] link to the parent scope",enclosed:"[SymbolDef*/S] a list of all symbol definitions that are accessed from this scope or any subscopes",cname:"[integer/S] current index for mangling variables (used internally by the mangler)"}},K),ce=A("Toplevel","globals",{$documentation:"The toplevel scope",$propdoc:{globals:"[Object/S] a map of name -> SymbolDef for all undeclared names"},wrap_enclose:function(n){var e=this,t=[],i=[];n.forEach(function(n){var e=n.split(":");t.push(e[0]),i.push(e[1])});var r="(function("+i.join(",")+"){ '$ORIG'; })("+t.join(",")+")";return r=q(r),r=r.transform(new z(function(n){return n instanceof G&&"$ORIG"==n.value?L.splice(e.body):void 0}))},wrap_commonjs:function(n,e){var t=this,i=[];e&&(t.figure_out_scope(),t.walk(new E(function(n){n instanceof Qe&&n.definition().global&&(a(function(e){return e.name==n.name},i)||i.push(n))})));var r="(function(exports, global){ global['"+n+"'] = exports; '$ORIG'; '$EXPORTS'; }({}, (function(){return this}())))";return r=q(r),r=r.transform(new z(function(n){if(n instanceof J&&(n=n.body,n instanceof lt))switch(n.getValue()){case"$ORIG":return L.splice(t.body);case"$EXPORTS":var e=[];return i.forEach(function(n){e.push(new J({body:new Le({left:new qe({expression:new ut({name:"exports"}),property:new lt({value:n.name})}),operator:"=",right:new ut(n)})}))}),L.splice(e)}}))}},se),fe=A("Lambda","name argnames uses_arguments",{$documentation:"Base class for functions",$propdoc:{name:"[AST_SymbolDeclaration?] the name of this function",argnames:"[AST_SymbolFunarg*] array of function arguments",uses_arguments:"[boolean/S] tells whether this function accesses the arguments array"},_walk:function(n){return n._visit(this,function(){this.name&&this.name._walk(n),this.argnames.forEach(function(e){e._walk(n)}),w(this,n)})}},se),le=A("Accessor",null,{$documentation:"A setter/getter function"},fe),pe=A("Function",null,{$documentation:"A function expression"},fe),de=A("Defun",null,{$documentation:"A function definition"},fe),he=A("Jump",null,{$documentation:"Base class for “jumps” (for now that's `return`, `throw`, `break` and `continue`)"},Y),_e=A("Exit","value",{$documentation:"Base class for “exits” (`return` and `throw`)",$propdoc:{value:"[AST_Node?] the value returned or thrown by this statement; could be null for AST_Return"},_walk:function(n){return n._visit(this,this.value&&function(){this.value._walk(n)})}},he),me=A("Return",null,{$documentation:"A `return` statement"},_e),ve=A("Throw",null,{$documentation:"A `throw` statement"},_e),be=A("LoopControl","label",{$documentation:"Base class for loop control statements (`break` and `continue`)",$propdoc:{label:"[AST_LabelRef?] the label, or null if none"},_walk:function(n){return n._visit(this,this.label&&function(){this.label._walk(n)})}},he),ye=A("Break",null,{$documentation:"A `break` statement"},be),ge=A("Continue",null,{$documentation:"A `continue` statement"},be),Ae=A("If","condition alternative",{$documentation:"A `if` statement",$propdoc:{condition:"[AST_Node] the `if` condition",alternative:"[AST_Statement?] the `else` part, or null if not present"},_walk:function(n){return n._visit(this,function(){this.condition._walk(n),this.body._walk(n),this.alternative&&this.alternative._walk(n)})}},ne),we=A("Switch","expression",{$documentation:"A `switch` statement",$propdoc:{expression:"[AST_Node] the `switch` “discriminant”"},_walk:function(n){return n._visit(this,function(){this.expression._walk(n),w(this,n)})}},K),Ee=A("SwitchBranch",null,{$documentation:"Base class for `switch` branches"},K),De=A("Default",null,{$documentation:"A `default` switch branch"},Ee),Fe=A("Case","expression",{$documentation:"A `case` switch branch",$propdoc:{expression:"[AST_Node] the `case` expression"},_walk:function(n){return n._visit(this,function(){this.expression._walk(n),w(this,n)})}},Ee),Se=A("Try","bcatch bfinally",{$documentation:"A `try` statement",$propdoc:{bcatch:"[AST_Catch?] the catch block, or null if not present",bfinally:"[AST_Finally?] the finally block, or null if not present"},_walk:function(n){return n._visit(this,function(){w(this,n),this.bcatch&&this.bcatch._walk(n),this.bfinally&&this.bfinally._walk(n)})}},K),Ce=A("Catch","argname",{$documentation:"A `catch` node; only makes sense as part of a `try` statement",$propdoc:{argname:"[AST_SymbolCatch] symbol for the exception"},_walk:function(n){return n._visit(this,function(){this.argname._walk(n),w(this,n)})}},K),ke=A("Finally",null,{$documentation:"A `finally` node; only makes sense as part of a `try` statement"},K),Be=A("Definitions","definitions",{$documentation:"Base class for `var` or `const` nodes (variable declarations/initializations)",$propdoc:{definitions:"[AST_VarDef*] array of variable definitions"},_walk:function(n){return n._visit(this,function(){this.definitions.forEach(function(e){e._walk(n)})})}},Y),Te=A("Var",null,{$documentation:"A `var` statement"},Be),xe=A("Const",null,{$documentation:"A `const` statement"},Be),$e=A("VarDef","name value",{$documentation:"A variable declaration; only appears in a AST_Definitions node",$propdoc:{name:"[AST_SymbolVar|AST_SymbolConst] name of the variable",value:"[AST_Node?] initializer, or null of there's no initializer"},_walk:function(n){return n._visit(this,function(){this.name._walk(n),this.value&&this.value._walk(n)})}}),Oe=A("Call","expression args",{$documentation:"A function call expression",$propdoc:{expression:"[AST_Node] expression to invoke as function",args:"[AST_Node*] array of arguments"},_walk:function(n){return n._visit(this,function(){this.expression._walk(n),this.args.forEach(function(e){e._walk(n)
-})})}}),Me=A("New",null,{$documentation:"An object instantiation.  Derives from a function call since it has exactly the same properties"},Oe),Ne=A("Seq","car cdr",{$documentation:"A sequence expression (two comma-separated expressions)",$propdoc:{car:"[AST_Node] first element in sequence",cdr:"[AST_Node] second element in sequence"},$cons:function(n,e){var t=new Ne(n);return t.car=n,t.cdr=e,t},$from_array:function(n){if(0==n.length)return null;if(1==n.length)return n[0].clone();for(var e=null,t=n.length;--t>=0;)e=Ne.cons(n[t],e);for(var i=e;i;){if(i.cdr&&!i.cdr.cdr){i.cdr=i.cdr.car;break}i=i.cdr}return e},to_array:function(){for(var n=this,e=[];n;){if(e.push(n.car),n.cdr&&!(n.cdr instanceof Ne)){e.push(n.cdr);break}n=n.cdr}return e},add:function(n){for(var e=this;e;){if(!(e.cdr instanceof Ne)){var t=Ne.cons(e.cdr,n);return e.cdr=t}e=e.cdr}},_walk:function(n){return n._visit(this,function(){this.car._walk(n),this.cdr&&this.cdr._walk(n)})}}),Re=A("PropAccess","expression property",{$documentation:'Base class for property access expressions, i.e. `a.foo` or `a["foo"]`',$propdoc:{expression:"[AST_Node] the “container” expression",property:"[AST_Node|string] the property to access.  For AST_Dot this is always a plain string, while for AST_Sub it's an arbitrary AST_Node"}}),He=A("Dot",null,{$documentation:"A dotted property access expression",_walk:function(n){return n._visit(this,function(){this.expression._walk(n)})}},Re),qe=A("Sub",null,{$documentation:'Index-style property access, i.e. `a["foo"]`',_walk:function(n){return n._visit(this,function(){this.expression._walk(n),this.property._walk(n)})}},Re),ze=A("Unary","operator expression",{$documentation:"Base class for unary expressions",$propdoc:{operator:"[string] the operator",expression:"[AST_Node] expression that this unary operator applies to"},_walk:function(n){return n._visit(this,function(){this.expression._walk(n)})}}),Pe=A("UnaryPrefix",null,{$documentation:"Unary prefix expression, i.e. `typeof i` or `++i`"},ze),je=A("UnaryPostfix",null,{$documentation:"Unary postfix expression, i.e. `i++`"},ze),Ie=A("Binary","left operator right",{$documentation:"Binary expression, i.e. `a + b`",$propdoc:{left:"[AST_Node] left-hand side expression",operator:"[string] the operator",right:"[AST_Node] right-hand side expression"},_walk:function(n){return n._visit(this,function(){this.left._walk(n),this.right._walk(n)})}}),Ue=A("Conditional","condition consequent alternative",{$documentation:"Conditional expression using the ternary operator, i.e. `a ? b : c`",$propdoc:{condition:"[AST_Node]",consequent:"[AST_Node]",alternative:"[AST_Node]"},_walk:function(n){return n._visit(this,function(){this.condition._walk(n),this.consequent._walk(n),this.alternative._walk(n)})}}),Le=A("Assign",null,{$documentation:"An assignment expression — `a = b + 5`"},Ie),Ve=A("Array","elements",{$documentation:"An array literal",$propdoc:{elements:"[AST_Node*] array of elements"},_walk:function(n){return n._visit(this,function(){this.elements.forEach(function(e){e._walk(n)})})}}),We=A("Object","properties",{$documentation:"An object literal",$propdoc:{properties:"[AST_ObjectProperty*] array of properties"},_walk:function(n){return n._visit(this,function(){this.properties.forEach(function(e){e._walk(n)})})}}),Ye=A("ObjectProperty","key value",{$documentation:"Base class for literal object properties",$propdoc:{key:"[string] the property name; it's always a plain string in our AST, no matter if it was a string, number or identifier in original code",value:"[AST_Node] property value.  For setters and getters this is an AST_Function."},_walk:function(n){return n._visit(this,function(){this.value._walk(n)})}}),Xe=A("ObjectKeyVal",null,{$documentation:"A key: value object property"},Ye),Ge=A("ObjectSetter",null,{$documentation:"An object setter property"},Ye),Je=A("ObjectGetter",null,{$documentation:"An object getter property"},Ye),Ke=A("Symbol","scope name thedef",{$propdoc:{name:"[string] name of this symbol",scope:"[AST_Scope/S] the current scope (not necessarily the definition scope)",thedef:"[SymbolDef/S] the definition of this symbol"},$documentation:"Base class for all symbols"}),Ze=A("SymbolAccessor",null,{$documentation:"The name of a property accessor (setter/getter function)"},Ke),Qe=A("SymbolDeclaration","init",{$documentation:"A declaration symbol (symbol in var/const, function name or argument, symbol in catch)",$propdoc:{init:"[AST_Node*/S] array of initializers for this declaration."}},Ke),nt=A("SymbolVar",null,{$documentation:"Symbol defining a variable"},Qe),et=A("SymbolConst",null,{$documentation:"A constant declaration"},Qe),tt=A("SymbolFunarg",null,{$documentation:"Symbol naming a function argument"},nt),it=A("SymbolDefun",null,{$documentation:"Symbol defining a function"},Qe),rt=A("SymbolLambda",null,{$documentation:"Symbol naming a function expression"},Qe),ot=A("SymbolCatch",null,{$documentation:"Symbol naming the exception in catch"},Qe),at=A("Label","references",{$documentation:"Symbol naming a label (declaration)",$propdoc:{references:"[AST_LabelRef*] a list of nodes referring to this label"}},Ke),ut=A("SymbolRef",null,{$documentation:"Reference to some symbol (not definition/declaration)"},Ke),st=A("LabelRef",null,{$documentation:"Reference to a label symbol"},Ke),ct=A("This",null,{$documentation:"The `this` symbol"},Ke),ft=A("Constant",null,{$documentation:"Base class for all constants",getValue:function(){return this.value}}),lt=A("String","value",{$documentation:"A string literal",$propdoc:{value:"[string] the contents of this string"}},ft),pt=A("Number","value",{$documentation:"A number literal",$propdoc:{value:"[number] the numeric value"}},ft),dt=A("RegExp","value",{$documentation:"A regexp literal",$propdoc:{value:"[RegExp] the actual regexp"}},ft),ht=A("Atom",null,{$documentation:"Base class for atoms"},ft),_t=A("Null",null,{$documentation:"The `null` atom",value:null},ht),mt=A("NaN",null,{$documentation:"The impossible value",value:0/0},ht),vt=A("Undefined",null,{$documentation:"The `undefined` value",value:void 0},ht),bt=A("Hole",null,{$documentation:"A hole in an array",value:void 0},ht),yt=A("Infinity",null,{$documentation:"The `Infinity` value",value:1/0},ht),gt=A("Boolean",null,{$documentation:"Base class for booleans"},ht),At=A("False",null,{$documentation:"The `false` atom",value:!1},gt),wt=A("True",null,{$documentation:"The `true` atom",value:!0},gt);E.prototype={_visit:function(n,e){this.stack.push(n);var t=this.visit(n,e?function(){e.call(n)}:l);return!t&&e&&e.call(n),this.stack.pop(),t},parent:function(n){return this.stack[this.stack.length-2-(n||0)]},push:function(n){this.stack.push(n)},pop:function(){return this.stack.pop()},self:function(){return this.stack[this.stack.length-1]},find_parent:function(n){for(var e=this.stack,t=e.length;--t>=0;){var i=e[t];if(i instanceof n)return i}},has_directive:function(n){return this.find_parent(se).has_directive(n)},in_boolean_context:function(){for(var n=this.stack,e=n.length,t=n[--e];e>0;){var i=n[--e];if(i instanceof Ae&&i.condition===t||i instanceof Ue&&i.condition===t||i instanceof te&&i.condition===t||i instanceof oe&&i.condition===t||i instanceof Pe&&"!"==i.operator&&i.expression===t)return!0;if(!(i instanceof Ie)||"&&"!=i.operator&&"||"!=i.operator)return!1;t=i}},loopcontrol_target:function(n){var e=this.stack;if(n)for(var t=e.length;--t>=0;){var i=e[t];if(i instanceof ee&&i.label.name==n.name)return i.body}else for(var t=e.length;--t>=0;){var i=e[t];if(i instanceof we||i instanceof oe||i instanceof ae||i instanceof te)return i}}};var Et="break case catch const continue debugger default delete do else finally for function if in instanceof new return switch throw try typeof var void while with",Dt="false null true",Ft="abstract boolean byte char class double enum export extends final float goto implements import int interface long native package private protected public short static super synchronized this throws transient volatile "+Dt+" "+Et,St="return new delete throw else case";Et=b(Et),Ft=b(Ft),St=b(St),Dt=b(Dt);var Ct=b(r("+-*&%=<>!?|~^")),kt=/^0x[0-9a-f]+$/i,Bt=/^0[0-7]+$/,Tt=/^\d*\.?\d*(?:e[+-]?\d*(?:\d\.?|\.?\d)\d*)?$/i,xt=b(["in","instanceof","typeof","new","void","delete","++","--","+","-","!","~","&","|","^","*","/","%",">>","<<",">>>","<",">","<=",">=","==","===","!=","!==","?","=","+=","-=","/=","*=","%=",">>=","<<=",">>>=","|=","^=","&=","&&","||"]),$t=b(r("  \n\r	\f​᠎             　")),Ot=b(r("[{(,.;:")),Mt=b(r("[]{}(),;:")),Nt=b(r("gmsiy")),Rt={letter:new RegExp("[\\u0041-\\u005A\\u0061-\\u007A\\u00AA\\u00B5\\u00BA\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02C1\\u02C6-\\u02D1\\u02E0-\\u02E4\\u02EC\\u02EE\\u0370-\\u0374\\u0376\\u0377\\u037A-\\u037D\\u0386\\u0388-\\u038A\\u038C\\u038E-\\u03A1\\u03A3-\\u03F5\\u03F7-\\u0481\\u048A-\\u0523\\u0531-\\u0556\\u0559\\u0561-\\u0587\\u05D0-\\u05EA\\u05F0-\\u05F2\\u0621-\\u064A\\u066E\\u066F\\u0671-\\u06D3\\u06D5\\u06E5\\u06E6\\u06EE\\u06EF\\u06FA-\\u06FC\\u06FF\\u0710\\u0712-\\u072F\\u074D-\\u07A5\\u07B1\\u07CA-\\u07EA\\u07F4\\u07F5\\u07FA\\u0904-\\u0939\\u093D\\u0950\\u0958-\\u0961\\u0971\\u0972\\u097B-\\u097F\\u0985-\\u098C\\u098F\\u0990\\u0993-\\u09A8\\u09AA-\\u09B0\\u09B2\\u09B6-\\u09B9\\u09BD\\u09CE\\u09DC\\u09DD\\u09DF-\\u09E1\\u09F0\\u09F1\\u0A05-\\u0A0A\\u0A0F\\u0A10\\u0A13-\\u0A28\\u0A2A-\\u0A30\\u0A32\\u0A33\\u0A35\\u0A36\\u0A38\\u0A39\\u0A59-\\u0A5C\\u0A5E\\u0A72-\\u0A74\\u0A85-\\u0A8D\\u0A8F-\\u0A91\\u0A93-\\u0AA8\\u0AAA-\\u0AB0\\u0AB2\\u0AB3\\u0AB5-\\u0AB9\\u0ABD\\u0AD0\\u0AE0\\u0AE1\\u0B05-\\u0B0C\\u0B0F\\u0B10\\u0B13-\\u0B28\\u0B2A-\\u0B30\\u0B32\\u0B33\\u0B35-\\u0B39\\u0B3D\\u0B5C\\u0B5D\\u0B5F-\\u0B61\\u0B71\\u0B83\\u0B85-\\u0B8A\\u0B8E-\\u0B90\\u0B92-\\u0B95\\u0B99\\u0B9A\\u0B9C\\u0B9E\\u0B9F\\u0BA3\\u0BA4\\u0BA8-\\u0BAA\\u0BAE-\\u0BB9\\u0BD0\\u0C05-\\u0C0C\\u0C0E-\\u0C10\\u0C12-\\u0C28\\u0C2A-\\u0C33\\u0C35-\\u0C39\\u0C3D\\u0C58\\u0C59\\u0C60\\u0C61\\u0C85-\\u0C8C\\u0C8E-\\u0C90\\u0C92-\\u0CA8\\u0CAA-\\u0CB3\\u0CB5-\\u0CB9\\u0CBD\\u0CDE\\u0CE0\\u0CE1\\u0D05-\\u0D0C\\u0D0E-\\u0D10\\u0D12-\\u0D28\\u0D2A-\\u0D39\\u0D3D\\u0D60\\u0D61\\u0D7A-\\u0D7F\\u0D85-\\u0D96\\u0D9A-\\u0DB1\\u0DB3-\\u0DBB\\u0DBD\\u0DC0-\\u0DC6\\u0E01-\\u0E30\\u0E32\\u0E33\\u0E40-\\u0E46\\u0E81\\u0E82\\u0E84\\u0E87\\u0E88\\u0E8A\\u0E8D\\u0E94-\\u0E97\\u0E99-\\u0E9F\\u0EA1-\\u0EA3\\u0EA5\\u0EA7\\u0EAA\\u0EAB\\u0EAD-\\u0EB0\\u0EB2\\u0EB3\\u0EBD\\u0EC0-\\u0EC4\\u0EC6\\u0EDC\\u0EDD\\u0F00\\u0F40-\\u0F47\\u0F49-\\u0F6C\\u0F88-\\u0F8B\\u1000-\\u102A\\u103F\\u1050-\\u1055\\u105A-\\u105D\\u1061\\u1065\\u1066\\u106E-\\u1070\\u1075-\\u1081\\u108E\\u10A0-\\u10C5\\u10D0-\\u10FA\\u10FC\\u1100-\\u1159\\u115F-\\u11A2\\u11A8-\\u11F9\\u1200-\\u1248\\u124A-\\u124D\\u1250-\\u1256\\u1258\\u125A-\\u125D\\u1260-\\u1288\\u128A-\\u128D\\u1290-\\u12B0\\u12B2-\\u12B5\\u12B8-\\u12BE\\u12C0\\u12C2-\\u12C5\\u12C8-\\u12D6\\u12D8-\\u1310\\u1312-\\u1315\\u1318-\\u135A\\u1380-\\u138F\\u13A0-\\u13F4\\u1401-\\u166C\\u166F-\\u1676\\u1681-\\u169A\\u16A0-\\u16EA\\u1700-\\u170C\\u170E-\\u1711\\u1720-\\u1731\\u1740-\\u1751\\u1760-\\u176C\\u176E-\\u1770\\u1780-\\u17B3\\u17D7\\u17DC\\u1820-\\u1877\\u1880-\\u18A8\\u18AA\\u1900-\\u191C\\u1950-\\u196D\\u1970-\\u1974\\u1980-\\u19A9\\u19C1-\\u19C7\\u1A00-\\u1A16\\u1B05-\\u1B33\\u1B45-\\u1B4B\\u1B83-\\u1BA0\\u1BAE\\u1BAF\\u1C00-\\u1C23\\u1C4D-\\u1C4F\\u1C5A-\\u1C7D\\u1D00-\\u1DBF\\u1E00-\\u1F15\\u1F18-\\u1F1D\\u1F20-\\u1F45\\u1F48-\\u1F4D\\u1F50-\\u1F57\\u1F59\\u1F5B\\u1F5D\\u1F5F-\\u1F7D\\u1F80-\\u1FB4\\u1FB6-\\u1FBC\\u1FBE\\u1FC2-\\u1FC4\\u1FC6-\\u1FCC\\u1FD0-\\u1FD3\\u1FD6-\\u1FDB\\u1FE0-\\u1FEC\\u1FF2-\\u1FF4\\u1FF6-\\u1FFC\\u2071\\u207F\\u2090-\\u2094\\u2102\\u2107\\u210A-\\u2113\\u2115\\u2119-\\u211D\\u2124\\u2126\\u2128\\u212A-\\u212D\\u212F-\\u2139\\u213C-\\u213F\\u2145-\\u2149\\u214E\\u2183\\u2184\\u2C00-\\u2C2E\\u2C30-\\u2C5E\\u2C60-\\u2C6F\\u2C71-\\u2C7D\\u2C80-\\u2CE4\\u2D00-\\u2D25\\u2D30-\\u2D65\\u2D6F\\u2D80-\\u2D96\\u2DA0-\\u2DA6\\u2DA8-\\u2DAE\\u2DB0-\\u2DB6\\u2DB8-\\u2DBE\\u2DC0-\\u2DC6\\u2DC8-\\u2DCE\\u2DD0-\\u2DD6\\u2DD8-\\u2DDE\\u2E2F\\u3005\\u3006\\u3031-\\u3035\\u303B\\u303C\\u3041-\\u3096\\u309D-\\u309F\\u30A1-\\u30FA\\u30FC-\\u30FF\\u3105-\\u312D\\u3131-\\u318E\\u31A0-\\u31B7\\u31F0-\\u31FF\\u3400\\u4DB5\\u4E00\\u9FC3\\uA000-\\uA48C\\uA500-\\uA60C\\uA610-\\uA61F\\uA62A\\uA62B\\uA640-\\uA65F\\uA662-\\uA66E\\uA67F-\\uA697\\uA717-\\uA71F\\uA722-\\uA788\\uA78B\\uA78C\\uA7FB-\\uA801\\uA803-\\uA805\\uA807-\\uA80A\\uA80C-\\uA822\\uA840-\\uA873\\uA882-\\uA8B3\\uA90A-\\uA925\\uA930-\\uA946\\uAA00-\\uAA28\\uAA40-\\uAA42\\uAA44-\\uAA4B\\uAC00\\uD7A3\\uF900-\\uFA2D\\uFA30-\\uFA6A\\uFA70-\\uFAD9\\uFB00-\\uFB06\\uFB13-\\uFB17\\uFB1D\\uFB1F-\\uFB28\\uFB2A-\\uFB36\\uFB38-\\uFB3C\\uFB3E\\uFB40\\uFB41\\uFB43\\uFB44\\uFB46-\\uFBB1\\uFBD3-\\uFD3D\\uFD50-\\uFD8F\\uFD92-\\uFDC7\\uFDF0-\\uFDFB\\uFE70-\\uFE74\\uFE76-\\uFEFC\\uFF21-\\uFF3A\\uFF41-\\uFF5A\\uFF66-\\uFFBE\\uFFC2-\\uFFC7\\uFFCA-\\uFFCF\\uFFD2-\\uFFD7\\uFFDA-\\uFFDC]"),non_spacing_mark:new RegExp("[\\u0300-\\u036F\\u0483-\\u0487\\u0591-\\u05BD\\u05BF\\u05C1\\u05C2\\u05C4\\u05C5\\u05C7\\u0610-\\u061A\\u064B-\\u065E\\u0670\\u06D6-\\u06DC\\u06DF-\\u06E4\\u06E7\\u06E8\\u06EA-\\u06ED\\u0711\\u0730-\\u074A\\u07A6-\\u07B0\\u07EB-\\u07F3\\u0816-\\u0819\\u081B-\\u0823\\u0825-\\u0827\\u0829-\\u082D\\u0900-\\u0902\\u093C\\u0941-\\u0948\\u094D\\u0951-\\u0955\\u0962\\u0963\\u0981\\u09BC\\u09C1-\\u09C4\\u09CD\\u09E2\\u09E3\\u0A01\\u0A02\\u0A3C\\u0A41\\u0A42\\u0A47\\u0A48\\u0A4B-\\u0A4D\\u0A51\\u0A70\\u0A71\\u0A75\\u0A81\\u0A82\\u0ABC\\u0AC1-\\u0AC5\\u0AC7\\u0AC8\\u0ACD\\u0AE2\\u0AE3\\u0B01\\u0B3C\\u0B3F\\u0B41-\\u0B44\\u0B4D\\u0B56\\u0B62\\u0B63\\u0B82\\u0BC0\\u0BCD\\u0C3E-\\u0C40\\u0C46-\\u0C48\\u0C4A-\\u0C4D\\u0C55\\u0C56\\u0C62\\u0C63\\u0CBC\\u0CBF\\u0CC6\\u0CCC\\u0CCD\\u0CE2\\u0CE3\\u0D41-\\u0D44\\u0D4D\\u0D62\\u0D63\\u0DCA\\u0DD2-\\u0DD4\\u0DD6\\u0E31\\u0E34-\\u0E3A\\u0E47-\\u0E4E\\u0EB1\\u0EB4-\\u0EB9\\u0EBB\\u0EBC\\u0EC8-\\u0ECD\\u0F18\\u0F19\\u0F35\\u0F37\\u0F39\\u0F71-\\u0F7E\\u0F80-\\u0F84\\u0F86\\u0F87\\u0F90-\\u0F97\\u0F99-\\u0FBC\\u0FC6\\u102D-\\u1030\\u1032-\\u1037\\u1039\\u103A\\u103D\\u103E\\u1058\\u1059\\u105E-\\u1060\\u1071-\\u1074\\u1082\\u1085\\u1086\\u108D\\u109D\\u135F\\u1712-\\u1714\\u1732-\\u1734\\u1752\\u1753\\u1772\\u1773\\u17B7-\\u17BD\\u17C6\\u17C9-\\u17D3\\u17DD\\u180B-\\u180D\\u18A9\\u1920-\\u1922\\u1927\\u1928\\u1932\\u1939-\\u193B\\u1A17\\u1A18\\u1A56\\u1A58-\\u1A5E\\u1A60\\u1A62\\u1A65-\\u1A6C\\u1A73-\\u1A7C\\u1A7F\\u1B00-\\u1B03\\u1B34\\u1B36-\\u1B3A\\u1B3C\\u1B42\\u1B6B-\\u1B73\\u1B80\\u1B81\\u1BA2-\\u1BA5\\u1BA8\\u1BA9\\u1C2C-\\u1C33\\u1C36\\u1C37\\u1CD0-\\u1CD2\\u1CD4-\\u1CE0\\u1CE2-\\u1CE8\\u1CED\\u1DC0-\\u1DE6\\u1DFD-\\u1DFF\\u20D0-\\u20DC\\u20E1\\u20E5-\\u20F0\\u2CEF-\\u2CF1\\u2DE0-\\u2DFF\\u302A-\\u302F\\u3099\\u309A\\uA66F\\uA67C\\uA67D\\uA6F0\\uA6F1\\uA802\\uA806\\uA80B\\uA825\\uA826\\uA8C4\\uA8E0-\\uA8F1\\uA926-\\uA92D\\uA947-\\uA951\\uA980-\\uA982\\uA9B3\\uA9B6-\\uA9B9\\uA9BC\\uAA29-\\uAA2E\\uAA31\\uAA32\\uAA35\\uAA36\\uAA43\\uAA4C\\uAAB0\\uAAB2-\\uAAB4\\uAAB7\\uAAB8\\uAABE\\uAABF\\uAAC1\\uABE5\\uABE8\\uABED\\uFB1E\\uFE00-\\uFE0F\\uFE20-\\uFE26]"),space_combining_mark:new RegExp("[\\u0903\\u093E-\\u0940\\u0949-\\u094C\\u094E\\u0982\\u0983\\u09BE-\\u09C0\\u09C7\\u09C8\\u09CB\\u09CC\\u09D7\\u0A03\\u0A3E-\\u0A40\\u0A83\\u0ABE-\\u0AC0\\u0AC9\\u0ACB\\u0ACC\\u0B02\\u0B03\\u0B3E\\u0B40\\u0B47\\u0B48\\u0B4B\\u0B4C\\u0B57\\u0BBE\\u0BBF\\u0BC1\\u0BC2\\u0BC6-\\u0BC8\\u0BCA-\\u0BCC\\u0BD7\\u0C01-\\u0C03\\u0C41-\\u0C44\\u0C82\\u0C83\\u0CBE\\u0CC0-\\u0CC4\\u0CC7\\u0CC8\\u0CCA\\u0CCB\\u0CD5\\u0CD6\\u0D02\\u0D03\\u0D3E-\\u0D40\\u0D46-\\u0D48\\u0D4A-\\u0D4C\\u0D57\\u0D82\\u0D83\\u0DCF-\\u0DD1\\u0DD8-\\u0DDF\\u0DF2\\u0DF3\\u0F3E\\u0F3F\\u0F7F\\u102B\\u102C\\u1031\\u1038\\u103B\\u103C\\u1056\\u1057\\u1062-\\u1064\\u1067-\\u106D\\u1083\\u1084\\u1087-\\u108C\\u108F\\u109A-\\u109C\\u17B6\\u17BE-\\u17C5\\u17C7\\u17C8\\u1923-\\u1926\\u1929-\\u192B\\u1930\\u1931\\u1933-\\u1938\\u19B0-\\u19C0\\u19C8\\u19C9\\u1A19-\\u1A1B\\u1A55\\u1A57\\u1A61\\u1A63\\u1A64\\u1A6D-\\u1A72\\u1B04\\u1B35\\u1B3B\\u1B3D-\\u1B41\\u1B43\\u1B44\\u1B82\\u1BA1\\u1BA6\\u1BA7\\u1BAA\\u1C24-\\u1C2B\\u1C34\\u1C35\\u1CE1\\u1CF2\\uA823\\uA824\\uA827\\uA880\\uA881\\uA8B4-\\uA8C3\\uA952\\uA953\\uA983\\uA9B4\\uA9B5\\uA9BA\\uA9BB\\uA9BD-\\uA9C0\\uAA2F\\uAA30\\uAA33\\uAA34\\uAA4D\\uAA7B\\uABE3\\uABE4\\uABE6\\uABE7\\uABE9\\uABEA\\uABEC]"),connector_punctuation:new RegExp("[\\u005F\\u203F\\u2040\\u2054\\uFE33\\uFE34\\uFE4D-\\uFE4F\\uFF3F]")};M.prototype.toString=function(){return this.message+" (line: "+this.line+", col: "+this.col+", pos: "+this.pos+")"+"\n\n"+this.stack};var Ht={},qt=b(["typeof","void","delete","--","++","!","~","-","+"]),zt=b(["--","++"]),Pt=b(["=","+=","-=","/=","*=","%=",">>=","<<=",">>>=","|=","^=","&="]),jt=function(n,e){for(var t=0,i=1;t<n.length;++t,++i)for(var r=n[t],o=0;o<r.length;++o)e[r[o]]=i;return e}([["||"],["&&"],["|"],["^"],["&"],["==","===","!=","!=="],["<",">","<=",">=","in","instanceof"],[">>","<<",">>>"],["+","-"],["*","/","%"]],{}),It=t(["for","do","while","switch"]),Ut=t(["atom","num","string","regexp","name"]);z.prototype=new E,function(n){function e(e,t){e.DEFMETHOD("transform",function(e,i){var r,o;return e.push(this),e.before&&(r=e.before(this,t,i)),r===n&&(e.after?(e.stack[e.stack.length-1]=r=this.clone(),t(r,e),o=e.after(r,i),o!==n&&(r=o)):(r=this,t(r,e))),e.pop(),r})}function t(n,e){return L(n,function(n){return n.transform(e,!0)})}e(W,l),e(ee,function(n,e){n.label=n.label.transform(e),n.body=n.body.transform(e)}),e(J,function(n,e){n.body=n.body.transform(e)}),e(K,function(n,e){n.body=t(n.body,e)}),e(te,function(n,e){n.condition=n.condition.transform(e),n.body=n.body.transform(e)}),e(oe,function(n,e){n.init&&(n.init=n.init.transform(e)),n.condition&&(n.condition=n.condition.transform(e)),n.step&&(n.step=n.step.transform(e)),n.body=n.body.transform(e)}),e(ae,function(n,e){n.init=n.init.transform(e),n.object=n.object.transform(e),n.body=n.body.transform(e)}),e(ue,function(n,e){n.expression=n.expression.transform(e),n.body=n.body.transform(e)}),e(_e,function(n,e){n.value&&(n.value=n.value.transform(e))}),e(be,function(n,e){n.label&&(n.label=n.label.transform(e))}),e(Ae,function(n,e){n.condition=n.condition.transform(e),n.body=n.body.transform(e),n.alternative&&(n.alternative=n.alternative.transform(e))}),e(we,function(n,e){n.expression=n.expression.transform(e),n.body=t(n.body,e)}),e(Fe,function(n,e){n.expression=n.expression.transform(e),n.body=t(n.body,e)}),e(Se,function(n,e){n.body=t(n.body,e),n.bcatch&&(n.bcatch=n.bcatch.transform(e)),n.bfinally&&(n.bfinally=n.bfinally.transform(e))}),e(Ce,function(n,e){n.argname=n.argname.transform(e),n.body=t(n.body,e)}),e(Be,function(n,e){n.definitions=t(n.definitions,e)}),e($e,function(n,e){n.name=n.name.transform(e),n.value&&(n.value=n.value.transform(e))}),e(fe,function(n,e){n.name&&(n.name=n.name.transform(e)),n.argnames=t(n.argnames,e),n.body=t(n.body,e)}),e(Oe,function(n,e){n.expression=n.expression.transform(e),n.args=t(n.args,e)}),e(Ne,function(n,e){n.car=n.car.transform(e),n.cdr=n.cdr.transform(e)}),e(He,function(n,e){n.expression=n.expression.transform(e)}),e(qe,function(n,e){n.expression=n.expression.transform(e),n.property=n.property.transform(e)}),e(ze,function(n,e){n.expression=n.expression.transform(e)}),e(Ie,function(n,e){n.left=n.left.transform(e),n.right=n.right.transform(e)}),e(Ue,function(n,e){n.condition=n.condition.transform(e),n.consequent=n.consequent.transform(e),n.alternative=n.alternative.transform(e)}),e(Ve,function(n,e){n.elements=t(n.elements,e)}),e(We,function(n,e){n.properties=t(n.properties,e)}),e(Ye,function(n,e){n.value=n.value.transform(e)})}(),P.prototype={unmangleable:function(n){return this.global&&!(n&&n.toplevel)||this.undeclared||!(n&&n.eval)&&(this.scope.uses_eval||this.scope.uses_with)},mangle:function(n){if(!this.mangled_name&&!this.unmangleable(n)){var e=this.scope;this.orig[0]instanceof rt&&!n.screw_ie8&&(e=e.parent_scope),this.mangled_name=e.next_mangled(n)}}},ce.DEFMETHOD("figure_out_scope",function(){var n=this,e=n.parent_scope=null,t=new g,i=0,r=new E(function(n,o){if(n instanceof se){n.init_scope_vars(i);var a=n.parent_scope=e,u=t;return++i,e=n,t=new g,o(),t=u,e=a,--i,!0}if(n instanceof G)return n.scope=e,p(e.directives,n.value),!0;if(n instanceof ue)for(var s=e;s;s=s.parent_scope)s.uses_with=!0;else{if(n instanceof ee){var c=n.label;if(t.has(c.name))throw new Error(d("Label {name} defined twice",c));return t.set(c.name,c),o(),t.del(c.name),!0}if(n instanceof Ke&&(n.scope=e),n instanceof at&&(n.thedef=n,n.init_scope_vars()),n instanceof rt)e.def_function(n);else if(n instanceof it)(n.scope=e.parent_scope).def_function(n);else if(n instanceof nt||n instanceof et){var f=e.def_variable(n);f.constant=n instanceof et,f.init=r.parent().value}else n instanceof ot&&e.def_variable(n);if(n instanceof st){var l=t.get(n.name);if(!l)throw new Error(d("Undefined label {name} [{line},{col}]",{name:n.name,line:n.start.line,col:n.start.col}));n.thedef=l}}});n.walk(r);var o=null,a=n.globals=new g,r=new E(function(e,t){if(e instanceof fe){var i=o;return o=e,t(),o=i,!0}if(e instanceof st)return e.reference(),!0;if(e instanceof ut){var u=e.name,s=e.scope.find_variable(u);if(s)e.thedef=s;else{var c;if(a.has(u)?c=a.get(u):(c=new P(n,a.size(),e),c.undeclared=!0,c.global=!0,a.set(u,c)),e.thedef=c,"eval"==u&&r.parent()instanceof Oe)for(var f=e.scope;f&&!f.uses_eval;f=f.parent_scope)f.uses_eval=!0;"arguments"==u&&(o.uses_arguments=!0)}return e.reference(),!0}});n.walk(r)}),se.DEFMETHOD("init_scope_vars",function(n){this.directives=[],this.variables=new g,this.functions=new g,this.uses_with=!1,this.uses_eval=!1,this.parent_scope=null,this.enclosed=[],this.cname=-1,this.nesting=n}),se.DEFMETHOD("strict",function(){return this.has_directive("use strict")}),fe.DEFMETHOD("init_scope_vars",function(){se.prototype.init_scope_vars.apply(this,arguments),this.uses_arguments=!1}),ut.DEFMETHOD("reference",function(){var n=this.definition();n.references.push(this);for(var e=this.scope;e&&(p(e.enclosed,n),e!==n.scope);)e=e.parent_scope;this.frame=this.scope.nesting-n.scope.nesting}),at.DEFMETHOD("init_scope_vars",function(){this.references=[]}),st.DEFMETHOD("reference",function(){this.thedef.references.push(this)}),se.DEFMETHOD("find_variable",function(n){return n instanceof Ke&&(n=n.name),this.variables.get(n)||this.parent_scope&&this.parent_scope.find_variable(n)}),se.DEFMETHOD("has_directive",function(n){return this.parent_scope&&this.parent_scope.has_directive(n)||(this.directives.indexOf(n)>=0?this:null)}),se.DEFMETHOD("def_function",function(n){this.functions.set(n.name,this.def_variable(n))}),se.DEFMETHOD("def_variable",function(n){var e;return this.variables.has(n.name)?(e=this.variables.get(n.name),e.orig.push(n)):(e=new P(this,this.variables.size(),n),this.variables.set(n.name,e),e.global=!this.parent_scope),n.thedef=e}),se.DEFMETHOD("next_mangled",function(n){var e=this.enclosed;n:for(;;){var t=Lt(++this.cname);if(B(t)){for(var i=e.length;--i>=0;){var r=e[i],o=r.mangled_name||r.unmangleable(n)&&r.name;if(t==o)continue n}return t}}}),se.DEFMETHOD("references",function(n){return n instanceof Ke&&(n=n.definition()),this.enclosed.indexOf(n)<0?null:n}),Ke.DEFMETHOD("unmangleable",function(n){return this.definition().unmangleable(n)}),Ze.DEFMETHOD("unmangleable",function(){return!0}),at.DEFMETHOD("unmangleable",function(){return!1}),Ke.DEFMETHOD("unreferenced",function(){return 0==this.definition().references.length&&!(this.scope.uses_eval||this.scope.uses_with)}),Ke.DEFMETHOD("undeclared",function(){return this.definition().undeclared}),st.DEFMETHOD("undeclared",function(){return!1}),at.DEFMETHOD("undeclared",function(){return!1}),Ke.DEFMETHOD("definition",function(){return this.thedef}),Ke.DEFMETHOD("global",function(){return this.definition().global}),ce.DEFMETHOD("_default_mangler_options",function(n){return c(n,{except:[],eval:!1,sort:!1,toplevel:!1,screw_ie8:!1})}),ce.DEFMETHOD("mangle_names",function(n){n=this._default_mangler_options(n);var e=-1,t=[],i=new E(function(r,o){if(r instanceof ee){var a=e;return o(),e=a,!0}if(r instanceof se){var u=(i.parent(),[]);return r.variables.each(function(e){n.except.indexOf(e.name)<0&&u.push(e)}),n.sort&&u.sort(function(n,e){return e.references.length-n.references.length}),t.push.apply(t,u),void 0}if(r instanceof at){var s;do s=Lt(++e);while(!B(s));return r.mangled_name=s,!0}});this.walk(i),t.forEach(function(e){e.mangle(n)})}),ce.DEFMETHOD("compute_char_frequency",function(n){n=this._default_mangler_options(n);var e=new E(function(e){e instanceof ft?Lt.consider(e.print_to_string()):e instanceof me?Lt.consider("return"):e instanceof ve?Lt.consider("throw"):e instanceof ge?Lt.consider("continue"):e instanceof ye?Lt.consider("break"):e instanceof X?Lt.consider("debugger"):e instanceof G?Lt.consider(e.value):e instanceof re?Lt.consider("while"):e instanceof ie?Lt.consider("do while"):e instanceof Ae?(Lt.consider("if"),e.alternative&&Lt.consider("else")):e instanceof Te?Lt.consider("var"):e instanceof xe?Lt.consider("const"):e instanceof fe?Lt.consider("function"):e instanceof oe?Lt.consider("for"):e instanceof ae?Lt.consider("for in"):e instanceof we?Lt.consider("switch"):e instanceof Fe?Lt.consider("case"):e instanceof De?Lt.consider("default"):e instanceof ue?Lt.consider("with"):e instanceof Ge?Lt.consider("set"+e.key):e instanceof Je?Lt.consider("get"+e.key):e instanceof Xe?Lt.consider(e.key):e instanceof Me?Lt.consider("new"):e instanceof ct?Lt.consider("this"):e instanceof Se?Lt.consider("try"):e instanceof Ce?Lt.consider("catch"):e instanceof ke?Lt.consider("finally"):e instanceof Ke&&e.unmangleable(n)?Lt.consider(e.name):e instanceof ze||e instanceof Ie?Lt.consider(e.operator):e instanceof He&&Lt.consider(e.property)});this.walk(e),Lt.sort()});var Lt=function(){function n(){i=Object.create(null),t=r.split("").map(function(n){return n.charCodeAt(0)}),t.forEach(function(n){i[n]=0})}function e(n){var e="",i=54;do e+=String.fromCharCode(t[n%i]),n=Math.floor(n/i),i=64;while(n>0);return e}var t,i,r="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";return e.consider=function(n){for(var e=n.length;--e>=0;){var t=n.charCodeAt(e);t in i&&++i[t]}},e.sort=function(){t=_(t,function(n,e){return F(n)&&!F(e)?1:F(e)&&!F(n)?-1:i[e]-i[n]})},e.reset=n,n(),e.get=function(){return t},e.freq=function(){return i},e}();ce.DEFMETHOD("scope_warnings",function(n){n=c(n,{undeclared:!1,unreferenced:!0,assign_to_global:!0,func_arguments:!0,nested_defuns:!0,eval:!0});var e=new E(function(t){if(n.undeclared&&t instanceof ut&&t.undeclared()&&W.warn("Undeclared symbol: {name} [{file}:{line},{col}]",{name:t.name,file:t.start.file,line:t.start.line,col:t.start.col}),n.assign_to_global){var i=null;t instanceof Le&&t.left instanceof ut?i=t.left:t instanceof ae&&t.init instanceof ut&&(i=t.init),i&&(i.undeclared()||i.global()&&i.scope!==i.definition().scope)&&W.warn("{msg}: {name} [{file}:{line},{col}]",{msg:i.undeclared()?"Accidental global?":"Assignment to global",name:i.name,file:i.start.file,line:i.start.line,col:i.start.col})}n.eval&&t instanceof ut&&t.undeclared()&&"eval"==t.name&&W.warn("Eval is used [{file}:{line},{col}]",t.start),n.unreferenced&&(t instanceof Qe||t instanceof at)&&t.unreferenced()&&W.warn("{type} {name} is declared but not referenced [{file}:{line},{col}]",{type:t instanceof at?"Label":"Symbol",name:t.name,file:t.start.file,line:t.start.line,col:t.start.col}),n.func_arguments&&t instanceof fe&&t.uses_arguments&&W.warn("arguments used in function {name} [{file}:{line},{col}]",{name:t.name?t.name.name:"anonymous",file:t.start.file,line:t.start.line,col:t.start.col}),n.nested_defuns&&t instanceof de&&!(e.parent()instanceof se)&&W.warn('Function {name} declared in nested statement "{type}" [{file}:{line},{col}]',{name:t.name.name,type:e.parent().TYPE,file:t.start.file,line:t.start.line,col:t.start.col})});this.walk(e)}),function(){function n(n,e){n.DEFMETHOD("_codegen",e)}function e(n,e){n.DEFMETHOD("needs_parens",e)}function t(n){var e=n.parent();return e instanceof ze?!0:e instanceof Ie&&!(e instanceof Le)?!0:e instanceof Oe&&e.expression===this?!0:e instanceof Ue&&e.condition===this?!0:e instanceof Re&&e.expression===this?!0:void 0}function i(n,e,t){var i=n.length-1;n.forEach(function(n,r){n instanceof Q||(t.indent(),n.print(t),r==i&&e||(t.newline(),e&&t.newline()))})}function r(n,e){n.length>0?e.with_block(function(){i(n,!1,e)}):e.print("{}")}function o(n,e){if(e.option("bracketize"))return d(n.body,e),void 0;if(!n.body)return e.force_semicolon();if(n.body instanceof ie&&!e.option("screw_ie8"))return d(n.body,e),void 0;for(var t=n.body;;)if(t instanceof Ae){if(!t.alternative)return d(n.body,e),void 0;t=t.alternative}else{if(!(t instanceof ne))break;t=t.body}u(n.body,e)}function a(n,e,t){if(t)try{n.walk(new E(function(n){if(n instanceof Ie&&"in"==n.operator)throw e})),n.print(e)}catch(i){if(i!==e)throw i;n.print(e,!0)}else n.print(e)}function u(n,e){e.option("bracketize")?!n||n instanceof Q?e.print("{}"):n instanceof Z?n.print(e):e.with_block(function(){e.indent(),n.print(e),e.newline()}):!n||n instanceof Q?e.force_semicolon():n.print(e)}function s(n){for(var e=n.stack(),t=e.length,i=e[--t],r=e[--t];t>0;){if(r instanceof Y&&r.body===i)return!0;if(!(r instanceof Ne&&r.car===i||r instanceof Oe&&r.expression===i&&!(r instanceof Me)||r instanceof He&&r.expression===i||r instanceof qe&&r.expression===i||r instanceof Ue&&r.condition===i||r instanceof Ie&&r.left===i||r instanceof je&&r.expression===i))return!1;i=r,r=e[--t]}}function c(n,e){return 0==n.args.length&&!e.option("beautify")}function f(n){for(var e=n[0],t=e.length,i=1;i<n.length;++i)n[i].length<t&&(e=n[i],t=e.length);return e}function p(n){var e,t=n.toString(10),i=[t.replace(/^0\./,".").replace("e+","e")];return Math.floor(n)===n?(n>=0?i.push("0x"+n.toString(16).toLowerCase(),"0"+n.toString(8)):i.push("-0x"+(-n).toString(16).toLowerCase(),"-0"+(-n).toString(8)),(e=/^(.*?)(0+)$/.exec(n))&&i.push(e[1]+"e"+e[2].length)):(e=/^0?\.(0+)(.*)$/.exec(n))&&i.push(e[2]+"e-"+(e[1].length+e[2].length),t.substr(t.indexOf("."))),f(i)}function d(n,e){return n instanceof Z?(n.print(e),void 0):(e.with_block(function(){e.indent(),n.print(e),e.newline()}),void 0)}function h(n,e){n.DEFMETHOD("add_source_map",function(n){e(this,n)})}function _(n,e){e.add_mapping(n.start)}W.DEFMETHOD("print",function(n,e){function t(){i.add_comments(n),i.add_source_map(n),r(i,n)}var i=this,r=i._codegen;n.push_node(i),e||i.needs_parens(n)?n.with_parens(t):t(),n.pop_node()}),W.DEFMETHOD("print_to_string",function(n){var e=j(n);return this.print(e),e.get()}),W.DEFMETHOD("add_comments",function(n){var e=n.option("comments"),t=this;if(e){var i=t.start;if(i&&!i._comments_dumped){i._comments_dumped=!0;var r=i.comments_before;t instanceof _e&&t.value&&t.value.start.comments_before.length>0&&(r=(r||[]).concat(t.value.start.comments_before),t.value.start.comments_before=[]),e.test?r=r.filter(function(n){return e.test(n.value)}):"function"==typeof e&&(r=r.filter(function(n){return e(t,n)})),r.forEach(function(e){"comment1"==e.type?(n.print("//"+e.value+"\n"),n.indent()):"comment2"==e.type&&(n.print("/*"+e.value+"*/"),i.nlb?(n.print("\n"),n.indent()):n.space())})}}}),e(W,function(){return!1}),e(pe,function(n){return s(n)}),e(We,function(n){return s(n)}),e(ze,function(n){var e=n.parent();return e instanceof Re&&e.expression===this}),e(Ne,function(n){var e=n.parent();return e instanceof Oe||e instanceof ze||e instanceof Ie||e instanceof $e||e instanceof He||e instanceof Ve||e instanceof Ye||e instanceof Ue}),e(Ie,function(n){var e=n.parent();if(e instanceof Oe&&e.expression===this)return!0;if(e instanceof ze)return!0;if(e instanceof Re&&e.expression===this)return!0;if(e instanceof Ie){var t=e.operator,i=jt[t],r=this.operator,o=jt[r];if(i>o||i==o&&this===e.right&&(r!=t||"*"!=r&&"&&"!=r&&"||"!=r))return!0}}),e(Re,function(n){var e=n.parent();if(e instanceof Me&&e.expression===this)try{this.walk(new E(function(n){if(n instanceof Oe)throw e}))}catch(t){if(t!==e)throw t;
-return!0}}),e(Oe,function(n){var e=n.parent();return e instanceof Me&&e.expression===this}),e(Me,function(n){var e=n.parent();return c(this,n)&&(e instanceof Re||e instanceof Oe&&e.expression===this)?!0:void 0}),e(pt,function(n){var e=n.parent();return this.getValue()<0&&e instanceof Re&&e.expression===this?!0:void 0}),e(mt,function(n){var e=n.parent();return e instanceof Re&&e.expression===this?!0:void 0}),e(Le,t),e(Ue,t),n(G,function(n,e){e.print_string(n.value),e.semicolon()}),n(X,function(n,e){e.print("debugger"),e.semicolon()}),ne.DEFMETHOD("_do_print_body",function(n){u(this.body,n)}),n(Y,function(n,e){n.body.print(e),e.semicolon()}),n(ce,function(n,e){i(n.body,!0,e),e.print("")}),n(ee,function(n,e){n.label.print(e),e.colon(),n.body.print(e)}),n(J,function(n,e){n.body.print(e),e.semicolon()}),n(Z,function(n,e){r(n.body,e)}),n(Q,function(n,e){e.semicolon()}),n(ie,function(n,e){e.print("do"),e.space(),n._do_print_body(e),e.space(),e.print("while"),e.space(),e.with_parens(function(){n.condition.print(e)}),e.semicolon()}),n(re,function(n,e){e.print("while"),e.space(),e.with_parens(function(){n.condition.print(e)}),e.space(),n._do_print_body(e)}),n(oe,function(n,e){e.print("for"),e.space(),e.with_parens(function(){n.init?(n.init instanceof Be?n.init.print(e):a(n.init,e,!0),e.print(";"),e.space()):e.print(";"),n.condition?(n.condition.print(e),e.print(";"),e.space()):e.print(";"),n.step&&n.step.print(e)}),e.space(),n._do_print_body(e)}),n(ae,function(n,e){e.print("for"),e.space(),e.with_parens(function(){n.init.print(e),e.space(),e.print("in"),e.space(),n.object.print(e)}),e.space(),n._do_print_body(e)}),n(ue,function(n,e){e.print("with"),e.space(),e.with_parens(function(){n.expression.print(e)}),e.space(),n._do_print_body(e)}),fe.DEFMETHOD("_do_print",function(n,e){var t=this;e||n.print("function"),t.name&&(n.space(),t.name.print(n)),n.with_parens(function(){t.argnames.forEach(function(e,t){t&&n.comma(),e.print(n)})}),n.space(),r(t.body,n)}),n(fe,function(n,e){n._do_print(e)}),_e.DEFMETHOD("_do_print",function(n,e){n.print(e),this.value&&(n.space(),this.value.print(n)),n.semicolon()}),n(me,function(n,e){n._do_print(e,"return")}),n(ve,function(n,e){n._do_print(e,"throw")}),be.DEFMETHOD("_do_print",function(n,e){n.print(e),this.label&&(n.space(),this.label.print(n)),n.semicolon()}),n(ye,function(n,e){n._do_print(e,"break")}),n(ge,function(n,e){n._do_print(e,"continue")}),n(Ae,function(n,e){e.print("if"),e.space(),e.with_parens(function(){n.condition.print(e)}),e.space(),n.alternative?(o(n,e),e.space(),e.print("else"),e.space(),u(n.alternative,e)):n._do_print_body(e)}),n(we,function(n,e){e.print("switch"),e.space(),e.with_parens(function(){n.expression.print(e)}),e.space(),n.body.length>0?e.with_block(function(){n.body.forEach(function(n,t){t&&e.newline(),e.indent(!0),n.print(e)})}):e.print("{}")}),Ee.DEFMETHOD("_do_print_body",function(n){this.body.length>0&&(n.newline(),this.body.forEach(function(e){n.indent(),e.print(n),n.newline()}))}),n(De,function(n,e){e.print("default:"),n._do_print_body(e)}),n(Fe,function(n,e){e.print("case"),e.space(),n.expression.print(e),e.print(":"),n._do_print_body(e)}),n(Se,function(n,e){e.print("try"),e.space(),r(n.body,e),n.bcatch&&(e.space(),n.bcatch.print(e)),n.bfinally&&(e.space(),n.bfinally.print(e))}),n(Ce,function(n,e){e.print("catch"),e.space(),e.with_parens(function(){n.argname.print(e)}),e.space(),r(n.body,e)}),n(ke,function(n,e){e.print("finally"),e.space(),r(n.body,e)}),Be.DEFMETHOD("_do_print",function(n,e){n.print(e),n.space(),this.definitions.forEach(function(e,t){t&&n.comma(),e.print(n)});var t=n.parent(),i=t instanceof oe||t instanceof ae,r=i&&t.init===this;r||n.semicolon()}),n(Te,function(n,e){n._do_print(e,"var")}),n(xe,function(n,e){n._do_print(e,"const")}),n($e,function(n,e){if(n.name.print(e),n.value){e.space(),e.print("="),e.space();var t=e.parent(1),i=t instanceof oe||t instanceof ae;a(n.value,e,i)}}),n(Oe,function(n,e){n.expression.print(e),n instanceof Me&&c(n,e)||e.with_parens(function(){n.args.forEach(function(n,t){t&&e.comma(),n.print(e)})})}),n(Me,function(n,e){e.print("new"),e.space(),Oe.prototype._codegen(n,e)}),Ne.DEFMETHOD("_do_print",function(n){this.car.print(n),this.cdr&&(n.comma(),n.should_break()&&(n.newline(),n.indent()),this.cdr.print(n))}),n(Ne,function(n,e){n._do_print(e)}),n(He,function(n,e){var t=n.expression;t.print(e),t instanceof pt&&t.getValue()>=0&&(/[xa-f.]/i.test(e.last())||e.print(".")),e.print("."),e.add_mapping(n.end),e.print_name(n.property)}),n(qe,function(n,e){n.expression.print(e),e.print("["),n.property.print(e),e.print("]")}),n(Pe,function(n,e){var t=n.operator;e.print(t),/^[a-z]/i.test(t)&&e.space(),n.expression.print(e)}),n(je,function(n,e){n.expression.print(e),e.print(n.operator)}),n(Ie,function(n,e){n.left.print(e),e.space(),e.print(n.operator),e.space(),n.right.print(e)}),n(Ue,function(n,e){n.condition.print(e),e.space(),e.print("?"),e.space(),n.consequent.print(e),e.space(),e.colon(),n.alternative.print(e)}),n(Ve,function(n,e){e.with_square(function(){var t=n.elements,i=t.length;i>0&&e.space(),t.forEach(function(n,t){t&&e.comma(),n.print(e),t===i-1&&n instanceof bt&&e.comma()}),i>0&&e.space()})}),n(We,function(n,e){n.properties.length>0?e.with_block(function(){n.properties.forEach(function(n,t){t&&(e.print(","),e.newline()),e.indent(),n.print(e)}),e.newline()}):e.print("{}")}),n(Xe,function(n,e){var t=n.key;e.option("quote_keys")?e.print_string(t+""):("number"==typeof t||!e.option("beautify")&&+t+""==t)&&parseFloat(t)>=0?e.print(p(t)):(Ft(t)?e.option("screw_ie8"):$(t))?e.print_name(t):e.print_string(t),e.colon(),n.value.print(e)}),n(Ge,function(n,e){e.print("set"),n.value._do_print(e,!0)}),n(Je,function(n,e){e.print("get"),n.value._do_print(e,!0)}),n(Ke,function(n,e){var t=n.definition();e.print_name(t?t.mangled_name||t.name:n.name)}),n(vt,function(n,e){e.print("void 0")}),n(bt,l),n(yt,function(n,e){e.print("1/0")}),n(mt,function(n,e){e.print("0/0")}),n(ct,function(n,e){e.print("this")}),n(ft,function(n,e){e.print(n.getValue())}),n(lt,function(n,e){e.print_string(n.getValue())}),n(pt,function(n,e){e.print(p(n.getValue()))}),n(dt,function(n,e){var t=n.getValue().toString();e.option("ascii_only")&&(t=e.to_ascii(t)),e.print(t);var i=e.parent();i instanceof Ie&&/^in/.test(i.operator)&&i.left===n&&e.print(" ")}),h(W,l),h(G,_),h(X,_),h(Ke,_),h(he,_),h(ne,_),h(ee,l),h(fe,_),h(we,_),h(Ee,_),h(Z,_),h(ce,l),h(Me,_),h(Se,_),h(Ce,_),h(ke,_),h(Be,_),h(ft,_),h(Ye,function(n,e){e.add_mapping(n.start,n.key)})}(),I.prototype=new z,f(I.prototype,{option:function(n){return this.options[n]},warn:function(){this.options.warnings&&W.warn.apply(W,arguments)},before:function(n,e){if(n._squeezed)return n;if(n instanceof se&&(n.drop_unused(this),n=n.hoist_declarations(this)),e(n,this),n=n.optimize(this),n instanceof se){var t=this.options.warnings;this.options.warnings=!1,n.drop_unused(this),this.options.warnings=t}return n._squeezed=!0,n}}),function(){function n(n,e){n.DEFMETHOD("optimize",function(n){var t=this;if(t._optimized)return t;var i=e(t,n);return i._optimized=!0,i===t?i:i.transform(n)})}function e(n,e,t){return t||(t={}),e&&(t.start||(t.start=e.start),t.end||(t.end=e.end)),new n(t)}function t(n,t,i){if(t instanceof W)return t.transform(n);switch(typeof t){case"string":return e(lt,i,{value:t}).optimize(n);case"number":return e(isNaN(t)?mt:pt,i,{value:t}).optimize(n);case"boolean":return e(t?wt:At,i).optimize(n);case"undefined":return e(vt,i).optimize(n);default:if(null===t)return e(_t,i).optimize(n);if(t instanceof RegExp)return e(dt,i).optimize(n);throw new Error(d("Can't handle constant of type: {type}",{type:typeof t}))}}function i(n){if(null===n)return[];if(n instanceof Z)return n.body;if(n instanceof Q)return[];if(n instanceof Y)return[n];throw new Error("Can't convert thing to statement array")}function r(n){return null===n?!0:n instanceof Q?!0:n instanceof Z?0==n.body.length:!1}function u(n){return n instanceof we?n:n instanceof oe||n instanceof ae||n instanceof te?n.body instanceof Z?n.body:n:n}function s(n,t){function r(n){var e=[];return n.reduce(function(n,t){return t instanceof Z?(d=!0,n.push.apply(n,r(t.body))):t instanceof Q?d=!0:t instanceof G?e.indexOf(t.value)<0?(n.push(t),e.push(t.value)):d=!0:n.push(t),n},[])}function o(n,t){var r=t.self(),o=r instanceof fe,a=[];n:for(var s=n.length;--s>=0;){var c=n[s];switch(!0){case o&&c instanceof me&&!c.value&&0==a.length:d=!0;continue n;case c instanceof Ae:if(c.body instanceof me){if((o&&0==a.length||a[0]instanceof me&&!a[0].value)&&!c.body.value&&!c.alternative){d=!0;var f=e(J,c.condition,{body:c.condition});a.unshift(f);continue n}if(a[0]instanceof me&&c.body.value&&a[0].value&&!c.alternative){d=!0,c=c.clone(),c.alternative=a[0],a[0]=c.transform(t);continue n}if((0==a.length||a[0]instanceof me)&&c.body.value&&!c.alternative&&o){d=!0,c=c.clone(),c.alternative=a[0]||e(me,c,{value:e(vt,c)}),a[0]=c.transform(t);continue n}if(!c.body.value&&o){d=!0,c=c.clone(),c.condition=c.condition.negate(t),c.body=e(Z,c,{body:i(c.alternative).concat(a)}),c.alternative=null,a=[c.transform(t)];continue n}if(1==a.length&&o&&a[0]instanceof J&&(!c.alternative||c.alternative instanceof J)){d=!0,a.push(e(me,a[0],{value:e(vt,a[0])}).transform(t)),a=i(c.alternative).concat(a),a.unshift(c);continue n}}var l=m(c.body),p=l instanceof be?t.loopcontrol_target(l.label):null;if(l&&(l instanceof me&&!l.value&&o||l instanceof ge&&r===u(p)||l instanceof ye&&p instanceof Z&&r===p)){l.label&&h(l.label.thedef.references,l.label),d=!0;var _=i(c.body).slice(0,-1);c=c.clone(),c.condition=c.condition.negate(t),c.body=e(Z,c,{body:a}),c.alternative=e(Z,c,{body:_}),a=[c.transform(t)];continue n}var l=m(c.alternative),p=l instanceof be?t.loopcontrol_target(l.label):null;if(l&&(l instanceof me&&!l.value&&o||l instanceof ge&&r===u(p)||l instanceof ye&&p instanceof Z&&r===p)){l.label&&h(l.label.thedef.references,l.label),d=!0,c=c.clone(),c.body=e(Z,c.body,{body:i(c.body).concat(a)}),c.alternative=e(Z,c.alternative,{body:i(c.alternative).slice(0,-1)}),a=[c.transform(t)];continue n}a.unshift(c);break;default:a.unshift(c)}}return a}function a(n,e){var t=!1,i=n.length,r=e.self();return n=n.reduce(function(n,i){if(t)c(e,i,n);else{if(i instanceof be){var o=e.loopcontrol_target(i.label);i instanceof ye&&o instanceof Z&&u(o)===r||i instanceof ge&&u(o)===r?i.label&&h(i.label.thedef.references,i.label):n.push(i)}else n.push(i);m(i)&&(t=!0)}return n},[]),d=n.length!=i,n}function s(n,t){function i(){r=Ne.from_array(r),r&&o.push(e(J,r,{body:r})),r=[]}if(n.length<2)return n;var r=[],o=[];return n.forEach(function(n){n instanceof J?r.push(n.body):(i(),o.push(n))}),i(),o=f(o,t),d=o.length!=n.length,o}function f(n,t){function i(n){r.pop();var e=o.body;return e instanceof Ne?e.add(n):e=Ne.cons(e,n),e.transform(t)}var r=[],o=null;return n.forEach(function(n){if(o)if(n instanceof oe){var t={};try{o.body.walk(new E(function(n){if(n instanceof Ie&&"in"==n.operator)throw t})),!n.init||n.init instanceof Be?n.init||(n.init=o.body,r.pop()):n.init=i(n.init)}catch(a){if(a!==t)throw a}}else n instanceof Ae?n.condition=i(n.condition):n instanceof ue?n.expression=i(n.expression):n instanceof _e&&n.value?n.value=i(n.value):n instanceof _e?n.value=i(e(vt,n)):n instanceof we&&(n.expression=i(n.expression));r.push(n),o=n instanceof J?n:null}),r}function l(n){var e=null;return n.reduce(function(n,t){return t instanceof Be&&e&&e.TYPE==t.TYPE?(e.definitions=e.definitions.concat(t.definitions),d=!0):t instanceof oe&&e instanceof Be&&(!t.init||t.init.TYPE==e.TYPE)?(d=!0,n.pop(),t.init?t.init.definitions=e.definitions.concat(t.init.definitions):t.init=e,n.push(t),e=t):(e=t,n.push(t)),n},[])}function p(n){n.forEach(function(n){n instanceof J&&(n.body=function t(n){return n.transform(new z(function(n){if(n instanceof Oe&&n.expression instanceof pe)return e(Pe,n,{operator:"!",expression:n});if(n instanceof Oe)n.expression=t(n.expression);else if(n instanceof Ne)n.car=t(n.car);else if(n instanceof Ue){var i=t(n.condition);if(i!==n.condition){n.condition=i;var r=n.consequent;n.consequent=n.alternative,n.alternative=r}}return n}))}(n.body))})}var d;do d=!1,n=r(n),t.option("dead_code")&&(n=a(n,t)),t.option("if_return")&&(n=o(n,t)),t.option("sequences")&&(n=s(n,t)),t.option("join_vars")&&(n=l(n,t));while(d);return t.option("negate_iife")&&p(n,t),n}function c(n,e,t){n.warn("Dropping unreachable code [{file}:{line},{col}]",e.start),e.walk(new E(function(e){return e instanceof Be?(n.warn("Declarations in unreachable code! [{file}:{line},{col}]",e.start),e.remove_initializers(),t.push(e),!0):e instanceof de?(t.push(e),!0):e instanceof se?!0:void 0}))}function f(n,e){return n.print_to_string().length>e.print_to_string().length?e:n}function m(n){return n&&n.aborts()}function v(n,t){function r(r){r=i(r),n.body instanceof Z?(n.body=n.body.clone(),n.body.body=r.concat(n.body.body.slice(1)),n.body=n.body.transform(t)):n.body=e(Z,n.body,{body:r}).transform(t),v(n,t)}var o=n.body instanceof Z?n.body.body[0]:n.body;o instanceof Ae&&(o.body instanceof ye&&t.loopcontrol_target(o.body.label)===n?(n.condition=n.condition?e(Ie,n.condition,{left:n.condition,operator:"&&",right:o.condition.negate(t)}):o.condition.negate(t),r(o.alternative)):o.alternative instanceof ye&&t.loopcontrol_target(o.alternative.label)===n&&(n.condition=n.condition?e(Ie,n.condition,{left:n.condition,operator:"&&",right:o.condition}):o.condition,r(o.body)))}function A(n,t){return t.option("booleans")&&t.in_boolean_context()?e(wt,n):n}n(W,function(n){return n}),W.DEFMETHOD("equivalent_to",function(n){return this.print_to_string()==n.print_to_string()}),function(n){var e=["!","delete"],t=["in","instanceof","==","!=","===","!==","<","<=",">=",">"];n(W,function(){return!1}),n(Pe,function(){return o(this.operator,e)}),n(Ie,function(){return o(this.operator,t)||("&&"==this.operator||"||"==this.operator)&&this.left.is_boolean()&&this.right.is_boolean()}),n(Ue,function(){return this.consequent.is_boolean()&&this.alternative.is_boolean()}),n(Le,function(){return"="==this.operator&&this.right.is_boolean()}),n(Ne,function(){return this.cdr.is_boolean()}),n(wt,function(){return!0}),n(At,function(){return!0})}(function(n,e){n.DEFMETHOD("is_boolean",e)}),function(n){n(W,function(){return!1}),n(lt,function(){return!0}),n(Pe,function(){return"typeof"==this.operator}),n(Ie,function(n){return"+"==this.operator&&(this.left.is_string(n)||this.right.is_string(n))}),n(Le,function(n){return("="==this.operator||"+="==this.operator)&&this.right.is_string(n)}),n(Ne,function(n){return this.cdr.is_string(n)}),n(Ue,function(n){return this.consequent.is_string(n)&&this.alternative.is_string(n)}),n(Oe,function(n){return n.option("unsafe")&&this.expression instanceof ut&&"String"==this.expression.name&&this.expression.undeclared()})}(function(n,e){n.DEFMETHOD("is_string",e)}),function(n){function e(n){return n._eval()}W.DEFMETHOD("evaluate",function(e){if(!e.option("evaluate"))return[this];try{var i=this._eval(),r=t(e,i,this);return[f(r,this),i]}catch(o){if(o!==n)throw o;return[this]}}),n(Y,function(){throw new Error(d("Cannot evaluate a statement [{file}:{line},{col}]",this.start))}),n(pe,function(){throw n}),n(W,function(){throw n}),n(ft,function(){return this.getValue()}),n(Pe,function(){var t=this.expression;switch(this.operator){case"!":return!e(t);case"typeof":if(t instanceof pe)return"function";if(t=e(t),t instanceof RegExp)throw n;return typeof t;case"void":return void e(t);case"~":return~e(t);case"-":if(t=e(t),0===t)throw n;return-t;case"+":return+e(t)}throw n}),n(Ie,function(){var t=this.left,i=this.right;switch(this.operator){case"&&":return e(t)&&e(i);case"||":return e(t)||e(i);case"|":return e(t)|e(i);case"&":return e(t)&e(i);case"^":return e(t)^e(i);case"+":return e(t)+e(i);case"*":return e(t)*e(i);case"/":return e(t)/e(i);case"%":return e(t)%e(i);case"-":return e(t)-e(i);case"<<":return e(t)<<e(i);case">>":return e(t)>>e(i);case">>>":return e(t)>>>e(i);case"==":return e(t)==e(i);case"===":return e(t)===e(i);case"!=":return e(t)!=e(i);case"!==":return e(t)!==e(i);case"<":return e(t)<e(i);case"<=":return e(t)<=e(i);case">":return e(t)>e(i);case">=":return e(t)>=e(i);case"in":return e(t)in e(i);case"instanceof":return e(t)instanceof e(i)}throw n}),n(Ue,function(){return e(this.condition)?e(this.consequent):e(this.alternative)}),n(ut,function(){var t=this.definition();if(t&&t.constant&&t.init)return e(t.init);throw n})}(function(n,e){n.DEFMETHOD("_eval",e)}),function(n){function t(n){return e(Pe,n,{operator:"!",expression:n})}n(W,function(){return t(this)}),n(Y,function(){throw new Error("Cannot negate a statement")}),n(pe,function(){return t(this)}),n(Pe,function(){return"!"==this.operator?this.expression:t(this)}),n(Ne,function(n){var e=this.clone();return e.cdr=e.cdr.negate(n),e}),n(Ue,function(n){var e=this.clone();return e.consequent=e.consequent.negate(n),e.alternative=e.alternative.negate(n),f(t(this),e)}),n(Ie,function(n){var e=this.clone(),i=this.operator;if(n.option("unsafe_comps"))switch(i){case"<=":return e.operator=">",e;case"<":return e.operator=">=",e;case">=":return e.operator="<",e;case">":return e.operator="<=",e}switch(i){case"==":return e.operator="!=",e;case"!=":return e.operator="==",e;case"===":return e.operator="!==",e;case"!==":return e.operator="===",e;case"&&":return e.operator="||",e.left=e.left.negate(n),e.right=e.right.negate(n),f(t(this),e);case"||":return e.operator="&&",e.left=e.left.negate(n),e.right=e.right.negate(n),f(t(this),e)}return t(this)})}(function(n,e){n.DEFMETHOD("negate",function(n){return e.call(this,n)})}),function(n){n(W,function(){return!0}),n(Q,function(){return!1}),n(ft,function(){return!1}),n(ct,function(){return!1}),n(K,function(){for(var n=this.body.length;--n>=0;)if(this.body[n].has_side_effects())return!0;return!1}),n(J,function(){return this.body.has_side_effects()}),n(de,function(){return!0}),n(pe,function(){return!1}),n(Ie,function(){return this.left.has_side_effects()||this.right.has_side_effects()}),n(Le,function(){return!0}),n(Ue,function(){return this.condition.has_side_effects()||this.consequent.has_side_effects()||this.alternative.has_side_effects()}),n(ze,function(){return"delete"==this.operator||"++"==this.operator||"--"==this.operator||this.expression.has_side_effects()}),n(ut,function(){return!1}),n(We,function(){for(var n=this.properties.length;--n>=0;)if(this.properties[n].has_side_effects())return!0;return!1}),n(Ye,function(){return this.value.has_side_effects()}),n(Ve,function(){for(var n=this.elements.length;--n>=0;)if(this.elements[n].has_side_effects())return!0;return!1}),n(Re,function(){return!0}),n(Ne,function(){return this.car.has_side_effects()||this.cdr.has_side_effects()})}(function(n,e){n.DEFMETHOD("has_side_effects",e)}),function(n){function e(){var n=this.body.length;return n>0&&m(this.body[n-1])}n(Y,function(){return null}),n(he,function(){return this}),n(Z,e),n(Ee,e),n(Ae,function(){return this.alternative&&m(this.body)&&m(this.alternative)})}(function(n,e){n.DEFMETHOD("aborts",e)}),n(G,function(n){return n.scope.has_directive(n.value)!==n.scope?e(Q,n):n}),n(X,function(n,t){return t.option("drop_debugger")?e(Q,n):n}),n(ee,function(n,t){return n.body instanceof ye&&t.loopcontrol_target(n.body.label)===n.body?e(Q,n):0==n.label.references.length?n.body:n}),n(K,function(n,e){return n.body=s(n.body,e),n}),n(Z,function(n,t){switch(n.body=s(n.body,t),n.body.length){case 1:return n.body[0];case 0:return e(Q,n)}return n}),se.DEFMETHOD("drop_unused",function(n){var t=this;if(n.option("unused")&&!(t instanceof ce)&&!t.uses_eval){var i=[],r=new g,a=this,u=new E(function(n,e){if(n!==t){if(n instanceof de)return r.add(n.name.name,n),!0;if(n instanceof Be&&a===t)return n.definitions.forEach(function(n){n.value&&(r.add(n.name.name,n.value),n.value.has_side_effects()&&n.value.walk(u))}),!0;if(n instanceof ut)return p(i,n.definition()),!0;if(n instanceof se){var o=a;return a=n,e(),a=o,!0}}});t.walk(u);for(var s=0;s<i.length;++s)i[s].orig.forEach(function(n){var e=r.get(n.name);e&&e.forEach(function(n){var e=new E(function(n){n instanceof ut&&p(i,n.definition())});n.walk(e)})});var c=new z(function(r,a,u){if(r instanceof fe&&!(r instanceof le))for(var s=r.argnames,f=s.length;--f>=0;){var l=s[f];if(!l.unreferenced())break;s.pop(),n.warn("Dropping unused function argument {name} [{file}:{line},{col}]",{name:l.name,file:l.start.file,line:l.start.line,col:l.start.col})}if(r instanceof de&&r!==t)return o(r.name.definition(),i)?r:(n.warn("Dropping unused function {name} [{file}:{line},{col}]",{name:r.name.name,file:r.name.start.file,line:r.name.start.line,col:r.name.start.col}),e(Q,r));if(r instanceof Be&&!(c.parent()instanceof ae)){var p=r.definitions.filter(function(e){if(o(e.name.definition(),i))return!0;var t={name:e.name.name,file:e.name.start.file,line:e.name.start.line,col:e.name.start.col};return e.value&&e.value.has_side_effects()?(e._unused_side_effects=!0,n.warn("Side effects in initialization of unused variable {name} [{file}:{line},{col}]",t),!0):(n.warn("Dropping unused variable {name} [{file}:{line},{col}]",t),!1)});p=_(p,function(n,e){return!n.value&&e.value?-1:!e.value&&n.value?1:0});for(var d=[],f=0;f<p.length;){var h=p[f];h._unused_side_effects?(d.push(h.value),p.splice(f,1)):(d.length>0&&(d.push(h.value),h.value=Ne.from_array(d),d=[]),++f)}return d=d.length>0?e(Z,r,{body:[e(J,r,{body:Ne.from_array(d)})]}):null,0!=p.length||d?0==p.length?d:(r.definitions=p,d&&(d.body.unshift(r),r=d),r):e(Q,r)}if(r instanceof oe&&r.init instanceof Z){a(r,this);var m=r.init.body.slice(0,-1);return r.init=r.init.body.slice(-1)[0].body,m.push(r),u?L.splice(m):e(Z,r,{body:m})}return r instanceof se&&r!==t?r:void 0});t.transform(c)}}),se.DEFMETHOD("hoist_declarations",function(n){var t=n.option("hoist_funs"),i=n.option("hoist_vars"),r=this;if(t||i){var o=[],u=[],s=new g,c=0,f=0;r.walk(new E(function(n){return n instanceof se&&n!==r?!0:n instanceof Te?(++f,!0):void 0})),i=i&&f>1;var l=new z(function(n){if(n!==r){if(n instanceof G)return o.push(n),e(Q,n);if(n instanceof de&&t)return u.push(n),e(Q,n);if(n instanceof Te&&i){n.definitions.forEach(function(n){s.set(n.name.name,n),++c});var a=n.to_assignments(),f=l.parent();return f instanceof ae&&f.init===n?null==a?n.definitions[0].name:a:f instanceof oe&&f.init===n?a:a?e(J,n,{body:a}):e(Q,n)}if(n instanceof se)return n}});if(r=r.transform(l),c>0){var p=[];if(s.each(function(n,e){r instanceof fe&&a(function(e){return e.name==n.name.name},r.argnames)?s.del(e):(n=n.clone(),n.value=null,p.push(n),s.set(e,n))}),p.length>0){for(var d=0;d<r.body.length;){if(r.body[d]instanceof J){var _,m,v=r.body[d].body;if(v instanceof Le&&"="==v.operator&&(_=v.left)instanceof Ke&&s.has(_.name)){var b=s.get(_.name);if(b.value)break;b.value=v.right,h(p,b),p.push(b),r.body.splice(d,1);continue}if(v instanceof Ne&&(m=v.car)instanceof Le&&"="==m.operator&&(_=m.left)instanceof Ke&&s.has(_.name)){var b=s.get(_.name);if(b.value)break;b.value=m.right,h(p,b),p.push(b),r.body[d].body=v.cdr;continue}}if(r.body[d]instanceof Q)r.body.splice(d,1);else{if(!(r.body[d]instanceof Z))break;var y=[d,1].concat(r.body[d].body);r.body.splice.apply(r.body,y)}}p=e(Te,r,{definitions:p}),u.push(p)}}r.body=o.concat(u,r.body)}return r}),n(J,function(n,t){return t.option("side_effects")&&!n.body.has_side_effects()?(t.warn("Dropping side-effect-free statement [{file}:{line},{col}]",n.start),e(Q,n)):n}),n(te,function(n,t){var i=n.condition.evaluate(t);if(n.condition=i[0],!t.option("loops"))return n;if(i.length>1){if(i[1])return e(oe,n,{body:n.body});if(n instanceof re&&t.option("dead_code")){var r=[];return c(t,n.body,r),e(Z,n,{body:r})}}return n}),n(re,function(n,t){return t.option("loops")?(n=te.prototype.optimize.call(n,t),n instanceof re&&(v(n,t),n=e(oe,n,n).transform(t)),n):n}),n(oe,function(n,t){var i=n.condition;if(i&&(i=i.evaluate(t),n.condition=i[0]),!t.option("loops"))return n;if(i&&i.length>1&&!i[1]&&t.option("dead_code")){var r=[];return n.init instanceof Y?r.push(n.init):n.init&&r.push(e(J,n.init,{body:n.init})),c(t,n.body,r),e(Z,n,{body:r})}return v(n,t),n}),n(Ae,function(n,t){if(!t.option("conditionals"))return n;var i=n.condition.evaluate(t);if(n.condition=i[0],i.length>1)if(i[1]){if(t.warn("Condition always true [{file}:{line},{col}]",n.condition.start),t.option("dead_code")){var o=[];return n.alternative&&c(t,n.alternative,o),o.push(n.body),e(Z,n,{body:o}).transform(t)}}else if(t.warn("Condition always false [{file}:{line},{col}]",n.condition.start),t.option("dead_code")){var o=[];return c(t,n.body,o),n.alternative&&o.push(n.alternative),e(Z,n,{body:o}).transform(t)}r(n.alternative)&&(n.alternative=null);var a=n.condition.negate(t),u=f(n.condition,a)===a;if(n.alternative&&u){u=!1,n.condition=a;var s=n.body;n.body=n.alternative||e(Q),n.alternative=s}if(r(n.body)&&r(n.alternative))return e(J,n.condition,{body:n.condition}).transform(t);if(n.body instanceof J&&n.alternative instanceof J)return e(J,n,{body:e(Ue,n,{condition:n.condition,consequent:n.body.body,alternative:n.alternative.body})}).transform(t);if(r(n.alternative)&&n.body instanceof J)return u?e(J,n,{body:e(Ie,n,{operator:"||",left:a,right:n.body.body})}).transform(t):e(J,n,{body:e(Ie,n,{operator:"&&",left:n.condition,right:n.body.body})}).transform(t);if(n.body instanceof Q&&n.alternative&&n.alternative instanceof J)return e(J,n,{body:e(Ie,n,{operator:"||",left:n.condition,right:n.alternative.body})}).transform(t);if(n.body instanceof _e&&n.alternative instanceof _e&&n.body.TYPE==n.alternative.TYPE)return e(n.body.CTOR,n,{value:e(Ue,n,{condition:n.condition,consequent:n.body.value||e(vt,n.body).optimize(t),alternative:n.alternative.value||e(vt,n.alternative).optimize(t)})}).transform(t);if(n.body instanceof Ae&&!n.body.alternative&&!n.alternative&&(n.condition=e(Ie,n.condition,{operator:"&&",left:n.condition,right:n.body.condition}).transform(t),n.body=n.body.body),m(n.body)&&n.alternative){var l=n.alternative;return n.alternative=null,e(Z,n,{body:[n,l]}).transform(t)}if(m(n.alternative)){var p=n.body;return n.body=n.alternative,n.condition=u?a:n.condition.negate(t),n.alternative=null,e(Z,n,{body:[n,p]}).transform(t)}return n}),n(we,function(n,t){if(0==n.body.length&&t.option("conditionals"))return e(J,n,{body:n.expression}).transform(t);for(;;){var i=n.body[n.body.length-1];if(i){var r=i.body[i.body.length-1];if(r instanceof ye&&u(t.loopcontrol_target(r.label))===n&&i.body.pop(),i instanceof De&&0==i.body.length){n.body.pop();continue}}break}var o=n.expression.evaluate(t);n:if(2==o.length)try{if(n.expression=o[0],!t.option("dead_code"))break n;var a=o[1],s=!1,c=!1,f=!1,l=!1,p=!1,d=new z(function(i,r,o){if(i instanceof fe||i instanceof J)return i;if(i instanceof we&&i===n)return i=i.clone(),r(i,this),p?i:e(Z,i,{body:i.body.reduce(function(n,e){return n.concat(e.body)},[])}).transform(t);if(i instanceof Ae||i instanceof Se){var u=s;return s=!c,r(i,this),s=u,i}if(i instanceof ne||i instanceof we){var u=c;return c=!0,r(i,this),c=u,i}if(i instanceof ye&&this.loopcontrol_target(i.label)===n)return s?(p=!0,i):c?i:(l=!0,o?L.skip:e(Q,i));if(i instanceof Ee&&this.parent()===n){if(l)return L.skip;if(i instanceof Fe){var d=i.expression.evaluate(t);if(d.length<2)throw n;return d[1]===a||f?(f=!0,m(i)&&(l=!0),r(i,this),i):L.skip}return r(i,this),i}});d.stack=t.stack.slice(),n=n.transform(d)}catch(h){if(h!==n)throw h}return n}),n(Fe,function(n,e){return n.body=s(n.body,e),n}),n(Se,function(n,e){return n.body=s(n.body,e),n}),Be.DEFMETHOD("remove_initializers",function(){this.definitions.forEach(function(n){n.value=null})}),Be.DEFMETHOD("to_assignments",function(){var n=this.definitions.reduce(function(n,t){if(t.value){var i=e(ut,t.name,t.name);n.push(e(Le,t,{operator:"=",left:i,right:t.value}))}return n},[]);return 0==n.length?null:Ne.from_array(n)}),n(Be,function(n){return 0==n.definitions.length?e(Q,n):n}),n(pe,function(n,e){return n=fe.prototype.optimize.call(n,e),e.option("unused")&&n.name&&n.name.unreferenced()&&(n.name=null),n}),n(Oe,function(n,t){if(t.option("unsafe")){var i=n.expression;if(i instanceof ut&&i.undeclared())switch(i.name){case"Array":if(1!=n.args.length)return e(Ve,n,{elements:n.args});break;case"Object":if(0==n.args.length)return e(We,n,{properties:[]});break;case"String":return 0==n.args.length?e(lt,n,{value:""}):e(Ie,n,{left:n.args[0],operator:"+",right:e(lt,n,{value:""})});case"Function":if(y(n.args,function(n){return n instanceof lt}))try{var r="(function("+n.args.slice(0,-1).map(function(n){return n.value}).join(",")+"){"+n.args[n.args.length-1].value+"})()",o=q(r);o.figure_out_scope();var a=new I(t.options);o=o.transform(a),o.figure_out_scope(),o.mangle_names();var u=o.body[0].body.expression,s=u.argnames.map(function(t,i){return e(lt,n.args[i],{value:t.print_to_string()})}),r=j();return Z.prototype._codegen.call(u,u,r),r=r.toString().replace(/^\{|\}$/g,""),s.push(e(lt,n.args[n.args.length-1],{value:r})),n.args=s,n}catch(c){c instanceof M?(t.warn("Error parsing code passed to new Function [{file}:{line},{col}]",n.args[n.args.length-1].start),t.warn(c.toString())):console.log(c)}}else if(i instanceof He&&"toString"==i.property&&0==n.args.length)return e(Ie,n,{left:e(lt,n,{value:""}),operator:"+",right:i.expression}).transform(t)}return t.option("side_effects")&&n.expression instanceof pe&&0==n.args.length&&!K.prototype.has_side_effects.call(n.expression)?e(vt,n).transform(t):n}),n(Me,function(n,t){if(t.option("unsafe")){var i=n.expression;if(i instanceof ut&&i.undeclared())switch(i.name){case"Object":case"RegExp":case"Function":case"Error":case"Array":return e(Oe,n,n).transform(t)}}return n}),n(Ne,function(n,e){if(!e.option("side_effects"))return n;if(!n.car.has_side_effects()){var t;if(!(n.cdr instanceof ut&&"eval"==n.cdr.name&&n.cdr.undeclared()&&(t=e.parent())instanceof Oe&&t.expression===n))return n.cdr}if(e.option("cascade")){if(n.car instanceof Le&&!n.car.left.has_side_effects()&&n.car.left.equivalent_to(n.cdr))return n.car;if(!n.car.has_side_effects()&&!n.cdr.has_side_effects()&&n.car.equivalent_to(n.cdr))return n.car}return n}),ze.DEFMETHOD("lift_sequences",function(n){if(n.option("sequences")&&this.expression instanceof Ne){var e=this.expression,t=e.to_array();return this.expression=t.pop(),t.push(this),e=Ne.from_array(t).transform(n)}return this}),n(je,function(n,e){return n.lift_sequences(e)}),n(Pe,function(n,t){n=n.lift_sequences(t);var i=n.expression;if(t.option("booleans")&&t.in_boolean_context()){switch(n.operator){case"!":if(i instanceof Pe&&"!"==i.operator)return i.expression;break;case"typeof":return t.warn("Boolean expression always true [{file}:{line},{col}]",n.start),e(wt,n)}i instanceof Ie&&"!"==n.operator&&(n=f(n,i.negate(t)))}return n.evaluate(t)[0]}),Ie.DEFMETHOD("lift_sequences",function(n){if(n.option("sequences")){if(this.left instanceof Ne){var e=this.left,t=e.to_array();return this.left=t.pop(),t.push(this),e=Ne.from_array(t).transform(n)}if(this.right instanceof Ne&&"||"!=this.operator&&"&&"!=this.operator&&!this.left.has_side_effects()){var e=this.right,t=e.to_array();return this.right=t.pop(),t.push(this),e=Ne.from_array(t).transform(n)}}return this});var w=b("== === != !== * & | ^");n(Ie,function(n,t){var i=t.has_directive("use asm")?l:function(e,t){if(t||!n.left.has_side_effects()&&!n.right.has_side_effects()){e&&(n.operator=e);var i=n.left;n.left=n.right,n.right=i}};if(w(n.operator)&&n.right instanceof ft&&!(n.left instanceof ft)&&i(null,!0),n=n.lift_sequences(t),t.option("comparisons"))switch(n.operator){case"===":case"!==":(n.left.is_string(t)&&n.right.is_string(t)||n.left.is_boolean()&&n.right.is_boolean())&&(n.operator=n.operator.substr(0,2));case"==":case"!=":n.left instanceof lt&&"undefined"==n.left.value&&n.right instanceof Pe&&"typeof"==n.right.operator&&t.option("unsafe")&&(n.right.expression instanceof ut&&n.right.expression.undeclared()||(n.right=n.right.expression,n.left=e(vt,n.left).optimize(t),2==n.operator.length&&(n.operator+="=")))}if(t.option("booleans")&&t.in_boolean_context())switch(n.operator){case"&&":var r=n.left.evaluate(t),o=n.right.evaluate(t);
-if(r.length>1&&!r[1]||o.length>1&&!o[1])return t.warn("Boolean && always false [{file}:{line},{col}]",n.start),e(At,n);if(r.length>1&&r[1])return o[0];if(o.length>1&&o[1])return r[0];break;case"||":var r=n.left.evaluate(t),o=n.right.evaluate(t);if(r.length>1&&r[1]||o.length>1&&o[1])return t.warn("Boolean || always true [{file}:{line},{col}]",n.start),e(wt,n);if(r.length>1&&!r[1])return o[0];if(o.length>1&&!o[1])return r[0];break;case"+":var r=n.left.evaluate(t),o=n.right.evaluate(t);if(r.length>1&&r[0]instanceof lt&&r[1]||o.length>1&&o[0]instanceof lt&&o[1])return t.warn("+ in boolean context always true [{file}:{line},{col}]",n.start),e(wt,n)}var a=n.evaluate(t);if(a.length>1&&f(a[0],n)!==n)return a[0];if(t.option("comparisons")){if(!(t.parent()instanceof Ie)||t.parent()instanceof Le){var u=e(Pe,n,{operator:"!",expression:n.negate(t)});n=f(n,u)}switch(n.operator){case"<":i(">");break;case"<=":i(">=")}}return"+"==n.operator&&n.right instanceof lt&&""===n.right.getValue()&&n.left instanceof Ie&&"+"==n.left.operator&&n.left.is_string(t)?n.left:n}),n(ut,function(n,i){if(n.undeclared()){var r=i.option("global_defs");if(r&&r.hasOwnProperty(n.name))return t(i,r[n.name],n);switch(n.name){case"undefined":return e(vt,n);case"NaN":return e(mt,n);case"Infinity":return e(yt,n)}}return n}),n(vt,function(n,t){if(t.option("unsafe")){var i=t.find_parent(se),r=i.find_variable("undefined");if(r){var o=e(ut,n,{name:"undefined",scope:i,thedef:r});return o.reference(),o}}return n});var D=["+","-","/","*","%",">>","<<",">>>","|","^","&"];n(Le,function(n,e){return n=n.lift_sequences(e),"="==n.operator&&n.left instanceof ut&&n.right instanceof Ie&&n.right.left instanceof ut&&n.right.left.name==n.left.name&&o(n.right.operator,D)&&(n.operator=n.right.operator+"=",n.right=n.right.right),n}),n(Ue,function(n,t){if(!t.option("conditionals"))return n;if(n.condition instanceof Ne){var i=n.condition.car;return n.condition=n.condition.cdr,Ne.cons(i,n)}var r=n.condition.evaluate(t);if(r.length>1)return r[1]?(t.warn("Condition always true [{file}:{line},{col}]",n.start),n.consequent):(t.warn("Condition always false [{file}:{line},{col}]",n.start),n.alternative);var o=r[0].negate(t);f(r[0],o)===o&&(n=e(Ue,n,{condition:o,consequent:n.alternative,alternative:n.consequent}));var a=n.consequent,u=n.alternative;return a instanceof Le&&u instanceof Le&&a.operator==u.operator&&a.left.equivalent_to(u.left)&&(n=e(Le,n,{operator:a.operator,left:a.left,right:e(Ue,n,{condition:n.condition,consequent:a.right,alternative:u.right})})),n}),n(gt,function(n,t){if(t.option("booleans")){var i=t.parent();return i instanceof Ie&&("=="==i.operator||"!="==i.operator)?(t.warn("Non-strict equality against boolean: {operator} {value} [{file}:{line},{col}]",{operator:i.operator,value:n.value,file:i.start.file,line:i.start.line,col:i.start.col}),e(pt,n,{value:+n.value})):e(Pe,n,{operator:"!",expression:e(pt,n,{value:1-n.value})})}return n}),n(qe,function(n,t){var i=n.property;return i instanceof lt&&t.option("properties")&&(i=i.getValue(),Ft(i)?t.option("screw_ie8"):$(i))?e(He,n,{expression:n.expression,property:i}):n}),n(Ve,A),n(We,A),n(dt,A)}(),function(){function n(n){var i="prefix"in n?n.prefix:"UnaryExpression"==n.type?!0:!1;return new(i?Pe:je)({start:e(n),end:t(n),operator:n.operator,expression:r(n.argument)})}function e(n){return new V({file:n.loc&&n.loc.source,line:n.loc&&n.loc.start.line,col:n.loc&&n.loc.start.column,pos:n.start,endpos:n.start})}function t(n){return new V({file:n.loc&&n.loc.source,line:n.loc&&n.loc.end.line,col:n.loc&&n.loc.end.column,pos:n.end,endpos:n.end})}function i(n,i,a){var u="function From_Moz_"+n+"(M){\n";return u+="return new mytype({\nstart: my_start_token(M),\nend: my_end_token(M)",a&&a.split(/\s*,\s*/).forEach(function(n){var e=/([a-z0-9$_]+)(=|@|>|%)([a-z0-9$_]+)/i.exec(n);if(!e)throw new Error("Can't understand property map: "+n);var t="M."+e[1],i=e[2],r=e[3];if(u+=",\n"+r+": ","@"==i)u+=t+".map(from_moz)";else if(">"==i)u+="from_moz("+t+")";else if("="==i)u+=t;else{if("%"!=i)throw new Error("Can't understand operator in propmap: "+n);u+="from_moz("+t+").body"}}),u+="\n})}",u=new Function("mytype","my_start_token","my_end_token","from_moz","return("+u+")")(i,e,t,r),o[n]=u}function r(n){a.push(n);var e=null!=n?o[n.type](n):null;return a.pop(),e}var o={TryStatement:function(n){return new Se({start:e(n),end:t(n),body:r(n.block).body,bcatch:r(n.handlers[0]),bfinally:n.finalizer?new ke(r(n.finalizer)):null})},CatchClause:function(n){return new Ce({start:e(n),end:t(n),argname:r(n.param),body:r(n.body).body})},ObjectExpression:function(n){return new We({start:e(n),end:t(n),properties:n.properties.map(function(n){var i=n.key,o="Identifier"==i.type?i.name:i.value,a={start:e(i),end:t(n.value),key:o,value:r(n.value)};switch(n.kind){case"init":return new Xe(a);case"set":return a.value.name=r(i),new Ge(a);case"get":return a.value.name=r(i),new Je(a)}})})},SequenceExpression:function(n){return Ne.from_array(n.expressions.map(r))},MemberExpression:function(n){return new(n.computed?qe:He)({start:e(n),end:t(n),property:n.computed?r(n.property):n.property.name,expression:r(n.object)})},SwitchCase:function(n){return new(n.test?Fe:De)({start:e(n),end:t(n),expression:r(n.test),body:n.consequent.map(r)})},Literal:function(n){var i=n.value,r={start:e(n),end:t(n)};if(null===i)return new _t(r);switch(typeof i){case"string":return r.value=i,new lt(r);case"number":return r.value=i,new pt(r);case"boolean":return new(i?wt:At)(r);default:return r.value=i,new dt(r)}},UnaryExpression:n,UpdateExpression:n,Identifier:function(n){var i=a[a.length-2];return new("this"==n.name?ct:"LabeledStatement"==i.type?at:"VariableDeclarator"==i.type&&i.id===n?"const"==i.kind?et:nt:"FunctionExpression"==i.type?i.id===n?rt:tt:"FunctionDeclaration"==i.type?i.id===n?it:tt:"CatchClause"==i.type?ot:"BreakStatement"==i.type||"ContinueStatement"==i.type?st:ut)({start:e(n),end:t(n),name:n.name})}};i("Node",W),i("Program",ce,"body@body"),i("Function",pe,"id>name, params@argnames, body%body"),i("EmptyStatement",Q),i("BlockStatement",Z,"body@body"),i("ExpressionStatement",J,"expression>body"),i("IfStatement",Ae,"test>condition, consequent>body, alternate>alternative"),i("LabeledStatement",ee,"label>label, body>body"),i("BreakStatement",ye,"label>label"),i("ContinueStatement",ge,"label>label"),i("WithStatement",ue,"object>expression, body>body"),i("SwitchStatement",we,"discriminant>expression, cases@body"),i("ReturnStatement",me,"argument>value"),i("ThrowStatement",ve,"argument>value"),i("WhileStatement",re,"test>condition, body>body"),i("DoWhileStatement",ie,"test>condition, body>body"),i("ForStatement",oe,"init>init, test>condition, update>step, body>body"),i("ForInStatement",ae,"left>init, right>object, body>body"),i("DebuggerStatement",X),i("FunctionDeclaration",de,"id>name, params@argnames, body%body"),i("VariableDeclaration",Te,"declarations@definitions"),i("VariableDeclarator",$e,"id>name, init>value"),i("ThisExpression",ct),i("ArrayExpression",Ve,"elements@elements"),i("FunctionExpression",pe,"id>name, params@argnames, body%body"),i("BinaryExpression",Ie,"operator=operator, left>left, right>right"),i("AssignmentExpression",Le,"operator=operator, left>left, right>right"),i("LogicalExpression",Ie,"operator=operator, left>left, right>right"),i("ConditionalExpression",Ue,"test>condition, consequent>consequent, alternate>alternative"),i("NewExpression",Me,"callee>expression, arguments@args"),i("CallExpression",Oe,"callee>expression, arguments@args");var a=null;W.from_mozilla_ast=function(n){var e=a;a=[];var t=r(n);return a=e,t}}(),n.array_to_hash=t,n.slice=i,n.characters=r,n.member=o,n.find_if=a,n.repeat_string=u,n.DefaultsError=s,n.defaults=c,n.merge=f,n.noop=l,n.MAP=L,n.push_uniq=p,n.string_template=d,n.remove=h,n.mergeSort=_,n.set_difference=m,n.set_intersection=v,n.makePredicate=b,n.all=y,n.Dictionary=g,n.DEFNODE=A,n.AST_Token=V,n.AST_Node=W,n.AST_Statement=Y,n.AST_Debugger=X,n.AST_Directive=G,n.AST_SimpleStatement=J,n.walk_body=w,n.AST_Block=K,n.AST_BlockStatement=Z,n.AST_EmptyStatement=Q,n.AST_StatementWithBody=ne,n.AST_LabeledStatement=ee,n.AST_DWLoop=te,n.AST_Do=ie,n.AST_While=re,n.AST_For=oe,n.AST_ForIn=ae,n.AST_With=ue,n.AST_Scope=se,n.AST_Toplevel=ce,n.AST_Lambda=fe,n.AST_Accessor=le,n.AST_Function=pe,n.AST_Defun=de,n.AST_Jump=he,n.AST_Exit=_e,n.AST_Return=me,n.AST_Throw=ve,n.AST_LoopControl=be,n.AST_Break=ye,n.AST_Continue=ge,n.AST_If=Ae,n.AST_Switch=we,n.AST_SwitchBranch=Ee,n.AST_Default=De,n.AST_Case=Fe,n.AST_Try=Se,n.AST_Catch=Ce,n.AST_Finally=ke,n.AST_Definitions=Be,n.AST_Var=Te,n.AST_Const=xe,n.AST_VarDef=$e,n.AST_Call=Oe,n.AST_New=Me,n.AST_Seq=Ne,n.AST_PropAccess=Re,n.AST_Dot=He,n.AST_Sub=qe,n.AST_Unary=ze,n.AST_UnaryPrefix=Pe,n.AST_UnaryPostfix=je,n.AST_Binary=Ie,n.AST_Conditional=Ue,n.AST_Assign=Le,n.AST_Array=Ve,n.AST_Object=We,n.AST_ObjectProperty=Ye,n.AST_ObjectKeyVal=Xe,n.AST_ObjectSetter=Ge,n.AST_ObjectGetter=Je,n.AST_Symbol=Ke,n.AST_SymbolAccessor=Ze,n.AST_SymbolDeclaration=Qe,n.AST_SymbolVar=nt,n.AST_SymbolConst=et,n.AST_SymbolFunarg=tt,n.AST_SymbolDefun=it,n.AST_SymbolLambda=rt,n.AST_SymbolCatch=ot,n.AST_Label=at,n.AST_SymbolRef=ut,n.AST_LabelRef=st,n.AST_This=ct,n.AST_Constant=ft,n.AST_String=lt,n.AST_Number=pt,n.AST_RegExp=dt,n.AST_Atom=ht,n.AST_Null=_t,n.AST_NaN=mt,n.AST_Undefined=vt,n.AST_Hole=bt,n.AST_Infinity=yt,n.AST_Boolean=gt,n.AST_False=At,n.AST_True=wt,n.TreeWalker=E,n.KEYWORDS=Et,n.KEYWORDS_ATOM=Dt,n.RESERVED_WORDS=Ft,n.KEYWORDS_BEFORE_EXPRESSION=St,n.OPERATOR_CHARS=Ct,n.RE_HEX_NUMBER=kt,n.RE_OCT_NUMBER=Bt,n.RE_DEC_NUMBER=Tt,n.OPERATORS=xt,n.WHITESPACE_CHARS=$t,n.PUNC_BEFORE_EXPRESSION=Ot,n.PUNC_CHARS=Mt,n.REGEXP_MODIFIERS=Nt,n.UNICODE=Rt,n.is_letter=D,n.is_digit=F,n.is_alphanumeric_char=S,n.is_unicode_combining_mark=C,n.is_unicode_connector_punctuation=k,n.is_identifier=B,n.is_identifier_start=T,n.is_identifier_char=x,n.is_identifier_string=$,n.parse_js_number=O,n.JS_Parse_Error=M,n.js_error=N,n.is_token=R,n.EX_EOF=Ht,n.tokenizer=H,n.UNARY_PREFIX=qt,n.UNARY_POSTFIX=zt,n.ASSIGNMENT=Pt,n.PRECEDENCE=jt,n.STATEMENTS_WITH_LABELS=It,n.ATOMIC_START_TOKEN=Ut,n.parse=q,n.TreeTransformer=z,n.SymbolDef=P,n.base54=Lt,n.OutputStream=j,n.Compressor=I,n.SourceMap=U}({},function(){return this}());
+(function(exports, global) {
+    global["UglifyJS"] = exports;
+    "use strict";
+    function array_to_hash(a) {
+        var ret = Object.create(null);
+        for (var i = 0; i < a.length; ++i) ret[a[i]] = true;
+        return ret;
+    }
+    function slice(a, start) {
+        return Array.prototype.slice.call(a, start || 0);
+    }
+    function characters(str) {
+        return str.split("");
+    }
+    function member(name, array) {
+        for (var i = array.length; --i >= 0; ) if (array[i] == name) return true;
+        return false;
+    }
+    function find_if(func, array) {
+        for (var i = 0, n = array.length; i < n; ++i) {
+            if (func(array[i])) return array[i];
+        }
+    }
+    function repeat_string(str, i) {
+        if (i <= 0) return "";
+        if (i == 1) return str;
+        var d = repeat_string(str, i >> 1);
+        d += d;
+        if (i & 1) d += str;
+        return d;
+    }
+    function DefaultsError(msg, defs) {
+        Error.call(this, msg);
+        this.msg = msg;
+        this.defs = defs;
+    }
+    DefaultsError.prototype = Object.create(Error.prototype);
+    DefaultsError.prototype.constructor = DefaultsError;
+    DefaultsError.croak = function(msg, defs) {
+        throw new DefaultsError(msg, defs);
+    };
+    function defaults(args, defs, croak) {
+        if (args === true) args = {};
+        var ret = args || {};
+        if (croak) for (var i in ret) if (ret.hasOwnProperty(i) && !defs.hasOwnProperty(i)) DefaultsError.croak("`" + i + "` is not a supported option", defs);
+        for (var i in defs) if (defs.hasOwnProperty(i)) {
+            ret[i] = args && args.hasOwnProperty(i) ? args[i] : defs[i];
+        }
+        return ret;
+    }
+    function merge(obj, ext) {
+        for (var i in ext) if (ext.hasOwnProperty(i)) {
+            obj[i] = ext[i];
+        }
+        return obj;
+    }
+    function noop() {}
+    var MAP = function() {
+        function MAP(a, f, backwards) {
+            var ret = [], top = [], i;
+            function doit() {
+                var val = f(a[i], i);
+                var is_last = val instanceof Last;
+                if (is_last) val = val.v;
+                if (val instanceof AtTop) {
+                    val = val.v;
+                    if (val instanceof Splice) {
+                        top.push.apply(top, backwards ? val.v.slice().reverse() : val.v);
+                    } else {
+                        top.push(val);
+                    }
+                } else if (val !== skip) {
+                    if (val instanceof Splice) {
+                        ret.push.apply(ret, backwards ? val.v.slice().reverse() : val.v);
+                    } else {
+                        ret.push(val);
+                    }
+                }
+                return is_last;
+            }
+            if (a instanceof Array) {
+                if (backwards) {
+                    for (i = a.length; --i >= 0; ) if (doit()) break;
+                    ret.reverse();
+                    top.reverse();
+                } else {
+                    for (i = 0; i < a.length; ++i) if (doit()) break;
+                }
+            } else {
+                for (i in a) if (a.hasOwnProperty(i)) if (doit()) break;
+            }
+            return top.concat(ret);
+        }
+        MAP.at_top = function(val) {
+            return new AtTop(val);
+        };
+        MAP.splice = function(val) {
+            return new Splice(val);
+        };
+        MAP.last = function(val) {
+            return new Last(val);
+        };
+        var skip = MAP.skip = {};
+        function AtTop(val) {
+            this.v = val;
+        }
+        function Splice(val) {
+            this.v = val;
+        }
+        function Last(val) {
+            this.v = val;
+        }
+        return MAP;
+    }();
+    function push_uniq(array, el) {
+        if (array.indexOf(el) < 0) array.push(el);
+    }
+    function string_template(text, props) {
+        return text.replace(/\{(.+?)\}/g, function(str, p) {
+            return props[p];
+        });
+    }
+    function remove(array, el) {
+        for (var i = array.length; --i >= 0; ) {
+            if (array[i] === el) array.splice(i, 1);
+        }
+    }
+    function mergeSort(array, cmp) {
+        if (array.length < 2) return array.slice();
+        function merge(a, b) {
+            var r = [], ai = 0, bi = 0, i = 0;
+            while (ai < a.length && bi < b.length) {
+                cmp(a[ai], b[bi]) <= 0 ? r[i++] = a[ai++] : r[i++] = b[bi++];
+            }
+            if (ai < a.length) r.push.apply(r, a.slice(ai));
+            if (bi < b.length) r.push.apply(r, b.slice(bi));
+            return r;
+        }
+        function _ms(a) {
+            if (a.length <= 1) return a;
+            var m = Math.floor(a.length / 2), left = a.slice(0, m), right = a.slice(m);
+            left = _ms(left);
+            right = _ms(right);
+            return merge(left, right);
+        }
+        return _ms(array);
+    }
+    function set_difference(a, b) {
+        return a.filter(function(el) {
+            return b.indexOf(el) < 0;
+        });
+    }
+    function set_intersection(a, b) {
+        return a.filter(function(el) {
+            return b.indexOf(el) >= 0;
+        });
+    }
+    function makePredicate(words) {
+        if (!(words instanceof Array)) words = words.split(" ");
+        var f = "", cats = [];
+        out: for (var i = 0; i < words.length; ++i) {
+            for (var j = 0; j < cats.length; ++j) if (cats[j][0].length == words[i].length) {
+                cats[j].push(words[i]);
+                continue out;
+            }
+            cats.push([ words[i] ]);
+        }
+        function compareTo(arr) {
+            if (arr.length == 1) return f += "return str === " + JSON.stringify(arr[0]) + ";";
+            f += "switch(str){";
+            for (var i = 0; i < arr.length; ++i) f += "case " + JSON.stringify(arr[i]) + ":";
+            f += "return true}return false;";
+        }
+        if (cats.length > 3) {
+            cats.sort(function(a, b) {
+                return b.length - a.length;
+            });
+            f += "switch(str.length){";
+            for (var i = 0; i < cats.length; ++i) {
+                var cat = cats[i];
+                f += "case " + cat[0].length + ":";
+                compareTo(cat);
+            }
+            f += "}";
+        } else {
+            compareTo(words);
+        }
+        return new Function("str", f);
+    }
+    function all(array, predicate) {
+        for (var i = array.length; --i >= 0; ) if (!predicate(array[i])) return false;
+        return true;
+    }
+    function Dictionary() {
+        this._values = Object.create(null);
+        this._size = 0;
+    }
+    Dictionary.prototype = {
+        set: function(key, val) {
+            if (!this.has(key)) ++this._size;
+            this._values["$" + key] = val;
+            return this;
+        },
+        add: function(key, val) {
+            if (this.has(key)) {
+                this.get(key).push(val);
+            } else {
+                this.set(key, [ val ]);
+            }
+            return this;
+        },
+        get: function(key) {
+            return this._values["$" + key];
+        },
+        del: function(key) {
+            if (this.has(key)) {
+                --this._size;
+                delete this._values["$" + key];
+            }
+            return this;
+        },
+        has: function(key) {
+            return "$" + key in this._values;
+        },
+        each: function(f) {
+            for (var i in this._values) f(this._values[i], i.substr(1));
+        },
+        size: function() {
+            return this._size;
+        },
+        map: function(f) {
+            var ret = [];
+            for (var i in this._values) ret.push(f(this._values[i], i.substr(1)));
+            return ret;
+        }
+    };
+    "use strict";
+    function DEFNODE(type, props, methods, base) {
+        if (arguments.length < 4) base = AST_Node;
+        if (!props) props = []; else props = props.split(/\s+/);
+        var self_props = props;
+        if (base && base.PROPS) props = props.concat(base.PROPS);
+        var code = "return function AST_" + type + "(props){ if (props) { ";
+        for (var i = props.length; --i >= 0; ) {
+            code += "this." + props[i] + " = props." + props[i] + ";";
+        }
+        var proto = base && new base();
+        if (proto && proto.initialize || methods && methods.initialize) code += "this.initialize();";
+        code += "}}";
+        var ctor = new Function(code)();
+        if (proto) {
+            ctor.prototype = proto;
+            ctor.BASE = base;
+        }
+        if (base) base.SUBCLASSES.push(ctor);
+        ctor.prototype.CTOR = ctor;
+        ctor.PROPS = props || null;
+        ctor.SELF_PROPS = self_props;
+        ctor.SUBCLASSES = [];
+        if (type) {
+            ctor.prototype.TYPE = ctor.TYPE = type;
+        }
+        if (methods) for (i in methods) if (methods.hasOwnProperty(i)) {
+            if (/^\$/.test(i)) {
+                ctor[i.substr(1)] = methods[i];
+            } else {
+                ctor.prototype[i] = methods[i];
+            }
+        }
+        ctor.DEFMETHOD = function(name, method) {
+            this.prototype[name] = method;
+        };
+        return ctor;
+    }
+    var AST_Token = DEFNODE("Token", "type value line col pos endpos nlb comments_before file", {}, null);
+    var AST_Node = DEFNODE("Node", "start end", {
+        clone: function() {
+            return new this.CTOR(this);
+        },
+        $documentation: "Base class of all AST nodes",
+        $propdoc: {
+            start: "[AST_Token] The first token of this node",
+            end: "[AST_Token] The last token of this node"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this);
+        },
+        walk: function(visitor) {
+            return this._walk(visitor);
+        }
+    }, null);
+    AST_Node.warn_function = null;
+    AST_Node.warn = function(txt, props) {
+        if (AST_Node.warn_function) AST_Node.warn_function(string_template(txt, props));
+    };
+    var AST_Statement = DEFNODE("Statement", null, {
+        $documentation: "Base class of all statements"
+    });
+    var AST_Debugger = DEFNODE("Debugger", null, {
+        $documentation: "Represents a debugger statement"
+    }, AST_Statement);
+    var AST_Directive = DEFNODE("Directive", "value scope", {
+        $documentation: 'Represents a directive, like "use strict";',
+        $propdoc: {
+            value: "[string] The value of this directive as a plain string (it's not an AST_String!)",
+            scope: "[AST_Scope/S] The scope that this directive affects"
+        }
+    }, AST_Statement);
+    var AST_SimpleStatement = DEFNODE("SimpleStatement", "body", {
+        $documentation: "A statement consisting of an expression, i.e. a = 1 + 2",
+        $propdoc: {
+            body: "[AST_Node] an expression node (should not be instanceof AST_Statement)"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.body._walk(visitor);
+            });
+        }
+    }, AST_Statement);
+    function walk_body(node, visitor) {
+        if (node.body instanceof AST_Statement) {
+            node.body._walk(visitor);
+        } else node.body.forEach(function(stat) {
+            stat._walk(visitor);
+        });
+    }
+    var AST_Block = DEFNODE("Block", "body", {
+        $documentation: "A body of statements (usually bracketed)",
+        $propdoc: {
+            body: "[AST_Statement*] an array of statements"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                walk_body(this, visitor);
+            });
+        }
+    }, AST_Statement);
+    var AST_BlockStatement = DEFNODE("BlockStatement", null, {
+        $documentation: "A block statement"
+    }, AST_Block);
+    var AST_EmptyStatement = DEFNODE("EmptyStatement", null, {
+        $documentation: "The empty statement (empty block or simply a semicolon)",
+        _walk: function(visitor) {
+            return visitor._visit(this);
+        }
+    }, AST_Statement);
+    var AST_StatementWithBody = DEFNODE("StatementWithBody", "body", {
+        $documentation: "Base class for all statements that contain one nested body: `For`, `ForIn`, `Do`, `While`, `With`",
+        $propdoc: {
+            body: "[AST_Statement] the body; this should always be present, even if it's an AST_EmptyStatement"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.body._walk(visitor);
+            });
+        }
+    }, AST_Statement);
+    var AST_LabeledStatement = DEFNODE("LabeledStatement", "label", {
+        $documentation: "Statement with a label",
+        $propdoc: {
+            label: "[AST_Label] a label definition"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.label._walk(visitor);
+                this.body._walk(visitor);
+            });
+        }
+    }, AST_StatementWithBody);
+    var AST_IterationStatement = DEFNODE("IterationStatement", null, {
+        $documentation: "Internal class.  All loops inherit from it."
+    }, AST_StatementWithBody);
+    var AST_DWLoop = DEFNODE("DWLoop", "condition", {
+        $documentation: "Base class for do/while statements",
+        $propdoc: {
+            condition: "[AST_Node] the loop condition.  Should not be instanceof AST_Statement"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.condition._walk(visitor);
+                this.body._walk(visitor);
+            });
+        }
+    }, AST_IterationStatement);
+    var AST_Do = DEFNODE("Do", null, {
+        $documentation: "A `do` statement"
+    }, AST_DWLoop);
+    var AST_While = DEFNODE("While", null, {
+        $documentation: "A `while` statement"
+    }, AST_DWLoop);
+    var AST_For = DEFNODE("For", "init condition step", {
+        $documentation: "A `for` statement",
+        $propdoc: {
+            init: "[AST_Node?] the `for` initialization code, or null if empty",
+            condition: "[AST_Node?] the `for` termination clause, or null if empty",
+            step: "[AST_Node?] the `for` update clause, or null if empty"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                if (this.init) this.init._walk(visitor);
+                if (this.condition) this.condition._walk(visitor);
+                if (this.step) this.step._walk(visitor);
+                this.body._walk(visitor);
+            });
+        }
+    }, AST_IterationStatement);
+    var AST_ForIn = DEFNODE("ForIn", "init name object", {
+        $documentation: "A `for ... in` statement",
+        $propdoc: {
+            init: "[AST_Node] the `for/in` initialization code",
+            name: "[AST_SymbolRef?] the loop variable, only if `init` is AST_Var",
+            object: "[AST_Node] the object that we're looping through"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.init._walk(visitor);
+                this.object._walk(visitor);
+                this.body._walk(visitor);
+            });
+        }
+    }, AST_IterationStatement);
+    var AST_With = DEFNODE("With", "expression", {
+        $documentation: "A `with` statement",
+        $propdoc: {
+            expression: "[AST_Node] the `with` expression"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.expression._walk(visitor);
+                this.body._walk(visitor);
+            });
+        }
+    }, AST_StatementWithBody);
+    var AST_Scope = DEFNODE("Scope", "directives variables functions uses_with uses_eval parent_scope enclosed cname", {
+        $documentation: "Base class for all statements introducing a lexical scope",
+        $propdoc: {
+            directives: "[string*/S] an array of directives declared in this scope",
+            variables: "[Object/S] a map of name -> SymbolDef for all variables/functions defined in this scope",
+            functions: "[Object/S] like `variables`, but only lists function declarations",
+            uses_with: "[boolean/S] tells whether this scope uses the `with` statement",
+            uses_eval: "[boolean/S] tells whether this scope contains a direct call to the global `eval`",
+            parent_scope: "[AST_Scope?/S] link to the parent scope",
+            enclosed: "[SymbolDef*/S] a list of all symbol definitions that are accessed from this scope or any subscopes",
+            cname: "[integer/S] current index for mangling variables (used internally by the mangler)"
+        }
+    }, AST_Block);
+    var AST_Toplevel = DEFNODE("Toplevel", "globals", {
+        $documentation: "The toplevel scope",
+        $propdoc: {
+            globals: "[Object/S] a map of name -> SymbolDef for all undeclared names"
+        },
+        wrap_enclose: function(arg_parameter_pairs) {
+            var self = this;
+            var args = [];
+            var parameters = [];
+            arg_parameter_pairs.forEach(function(pair) {
+                var split = pair.split(":");
+                args.push(split[0]);
+                parameters.push(split[1]);
+            });
+            var wrapped_tl = "(function(" + parameters.join(",") + "){ '$ORIG'; })(" + args.join(",") + ")";
+            wrapped_tl = parse(wrapped_tl);
+            wrapped_tl = wrapped_tl.transform(new TreeTransformer(function before(node) {
+                if (node instanceof AST_Directive && node.value == "$ORIG") {
+                    return MAP.splice(self.body);
+                }
+            }));
+            return wrapped_tl;
+        },
+        wrap_commonjs: function(name, export_all) {
+            var self = this;
+            var to_export = [];
+            if (export_all) {
+                self.figure_out_scope();
+                self.walk(new TreeWalker(function(node) {
+                    if (node instanceof AST_SymbolDeclaration && node.definition().global) {
+                        if (!find_if(function(n) {
+                            return n.name == node.name;
+                        }, to_export)) to_export.push(node);
+                    }
+                }));
+            }
+            var wrapped_tl = "(function(exports, global){ global['" + name + "'] = exports; '$ORIG'; '$EXPORTS'; }({}, (function(){return this}())))";
+            wrapped_tl = parse(wrapped_tl);
+            wrapped_tl = wrapped_tl.transform(new TreeTransformer(function before(node) {
+                if (node instanceof AST_SimpleStatement) {
+                    node = node.body;
+                    if (node instanceof AST_String) switch (node.getValue()) {
+                      case "$ORIG":
+                        return MAP.splice(self.body);
+
+                      case "$EXPORTS":
+                        var body = [];
+                        to_export.forEach(function(sym) {
+                            body.push(new AST_SimpleStatement({
+                                body: new AST_Assign({
+                                    left: new AST_Sub({
+                                        expression: new AST_SymbolRef({
+                                            name: "exports"
+                                        }),
+                                        property: new AST_String({
+                                            value: sym.name
+                                        })
+                                    }),
+                                    operator: "=",
+                                    right: new AST_SymbolRef(sym)
+                                })
+                            }));
+                        });
+                        return MAP.splice(body);
+                    }
+                }
+            }));
+            return wrapped_tl;
+        }
+    }, AST_Scope);
+    var AST_Lambda = DEFNODE("Lambda", "name argnames uses_arguments", {
+        $documentation: "Base class for functions",
+        $propdoc: {
+            name: "[AST_SymbolDeclaration?] the name of this function",
+            argnames: "[AST_SymbolFunarg*] array of function arguments",
+            uses_arguments: "[boolean/S] tells whether this function accesses the arguments array"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                if (this.name) this.name._walk(visitor);
+                this.argnames.forEach(function(arg) {
+                    arg._walk(visitor);
+                });
+                walk_body(this, visitor);
+            });
+        }
+    }, AST_Scope);
+    var AST_Accessor = DEFNODE("Accessor", null, {
+        $documentation: "A setter/getter function.  The `name` property is always null."
+    }, AST_Lambda);
+    var AST_Function = DEFNODE("Function", null, {
+        $documentation: "A function expression"
+    }, AST_Lambda);
+    var AST_Defun = DEFNODE("Defun", null, {
+        $documentation: "A function definition"
+    }, AST_Lambda);
+    var AST_Jump = DEFNODE("Jump", null, {
+        $documentation: "Base class for “jumps” (for now that's `return`, `throw`, `break` and `continue`)"
+    }, AST_Statement);
+    var AST_Exit = DEFNODE("Exit", "value", {
+        $documentation: "Base class for “exits” (`return` and `throw`)",
+        $propdoc: {
+            value: "[AST_Node?] the value returned or thrown by this statement; could be null for AST_Return"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, this.value && function() {
+                this.value._walk(visitor);
+            });
+        }
+    }, AST_Jump);
+    var AST_Return = DEFNODE("Return", null, {
+        $documentation: "A `return` statement"
+    }, AST_Exit);
+    var AST_Throw = DEFNODE("Throw", null, {
+        $documentation: "A `throw` statement"
+    }, AST_Exit);
+    var AST_LoopControl = DEFNODE("LoopControl", "label", {
+        $documentation: "Base class for loop control statements (`break` and `continue`)",
+        $propdoc: {
+            label: "[AST_LabelRef?] the label, or null if none"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, this.label && function() {
+                this.label._walk(visitor);
+            });
+        }
+    }, AST_Jump);
+    var AST_Break = DEFNODE("Break", null, {
+        $documentation: "A `break` statement"
+    }, AST_LoopControl);
+    var AST_Continue = DEFNODE("Continue", null, {
+        $documentation: "A `continue` statement"
+    }, AST_LoopControl);
+    var AST_If = DEFNODE("If", "condition alternative", {
+        $documentation: "A `if` statement",
+        $propdoc: {
+            condition: "[AST_Node] the `if` condition",
+            alternative: "[AST_Statement?] the `else` part, or null if not present"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.condition._walk(visitor);
+                this.body._walk(visitor);
+                if (this.alternative) this.alternative._walk(visitor);
+            });
+        }
+    }, AST_StatementWithBody);
+    var AST_Switch = DEFNODE("Switch", "expression", {
+        $documentation: "A `switch` statement",
+        $propdoc: {
+            expression: "[AST_Node] the `switch` “discriminant”"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.expression._walk(visitor);
+                walk_body(this, visitor);
+            });
+        }
+    }, AST_Block);
+    var AST_SwitchBranch = DEFNODE("SwitchBranch", null, {
+        $documentation: "Base class for `switch` branches"
+    }, AST_Block);
+    var AST_Default = DEFNODE("Default", null, {
+        $documentation: "A `default` switch branch"
+    }, AST_SwitchBranch);
+    var AST_Case = DEFNODE("Case", "expression", {
+        $documentation: "A `case` switch branch",
+        $propdoc: {
+            expression: "[AST_Node] the `case` expression"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.expression._walk(visitor);
+                walk_body(this, visitor);
+            });
+        }
+    }, AST_SwitchBranch);
+    var AST_Try = DEFNODE("Try", "bcatch bfinally", {
+        $documentation: "A `try` statement",
+        $propdoc: {
+            bcatch: "[AST_Catch?] the catch block, or null if not present",
+            bfinally: "[AST_Finally?] the finally block, or null if not present"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                walk_body(this, visitor);
+                if (this.bcatch) this.bcatch._walk(visitor);
+                if (this.bfinally) this.bfinally._walk(visitor);
+            });
+        }
+    }, AST_Block);
+    var AST_Catch = DEFNODE("Catch", "argname", {
+        $documentation: "A `catch` node; only makes sense as part of a `try` statement",
+        $propdoc: {
+            argname: "[AST_SymbolCatch] symbol for the exception"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.argname._walk(visitor);
+                walk_body(this, visitor);
+            });
+        }
+    }, AST_Block);
+    var AST_Finally = DEFNODE("Finally", null, {
+        $documentation: "A `finally` node; only makes sense as part of a `try` statement"
+    }, AST_Block);
+    var AST_Definitions = DEFNODE("Definitions", "definitions", {
+        $documentation: "Base class for `var` or `const` nodes (variable declarations/initializations)",
+        $propdoc: {
+            definitions: "[AST_VarDef*] array of variable definitions"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.definitions.forEach(function(def) {
+                    def._walk(visitor);
+                });
+            });
+        }
+    }, AST_Statement);
+    var AST_Var = DEFNODE("Var", null, {
+        $documentation: "A `var` statement"
+    }, AST_Definitions);
+    var AST_Const = DEFNODE("Const", null, {
+        $documentation: "A `const` statement"
+    }, AST_Definitions);
+    var AST_VarDef = DEFNODE("VarDef", "name value", {
+        $documentation: "A variable declaration; only appears in a AST_Definitions node",
+        $propdoc: {
+            name: "[AST_SymbolVar|AST_SymbolConst] name of the variable",
+            value: "[AST_Node?] initializer, or null of there's no initializer"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.name._walk(visitor);
+                if (this.value) this.value._walk(visitor);
+            });
+        }
+    });
+    var AST_Call = DEFNODE("Call", "expression args", {
+        $documentation: "A function call expression",
+        $propdoc: {
+            expression: "[AST_Node] expression to invoke as function",
+            args: "[AST_Node*] array of arguments"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.expression._walk(visitor);
+                this.args.forEach(function(arg) {
+                    arg._walk(visitor);
+                });
+            });
+        }
+    });
+    var AST_New = DEFNODE("New", null, {
+        $documentation: "An object instantiation.  Derives from a function call since it has exactly the same properties"
+    }, AST_Call);
+    var AST_Seq = DEFNODE("Seq", "car cdr", {
+        $documentation: "A sequence expression (two comma-separated expressions)",
+        $propdoc: {
+            car: "[AST_Node] first element in sequence",
+            cdr: "[AST_Node] second element in sequence"
+        },
+        $cons: function(x, y) {
+            var seq = new AST_Seq(x);
+            seq.car = x;
+            seq.cdr = y;
+            return seq;
+        },
+        $from_array: function(array) {
+            if (array.length == 0) return null;
+            if (array.length == 1) return array[0].clone();
+            var list = null;
+            for (var i = array.length; --i >= 0; ) {
+                list = AST_Seq.cons(array[i], list);
+            }
+            var p = list;
+            while (p) {
+                if (p.cdr && !p.cdr.cdr) {
+                    p.cdr = p.cdr.car;
+                    break;
+                }
+                p = p.cdr;
+            }
+            return list;
+        },
+        to_array: function() {
+            var p = this, a = [];
+            while (p) {
+                a.push(p.car);
+                if (p.cdr && !(p.cdr instanceof AST_Seq)) {
+                    a.push(p.cdr);
+                    break;
+                }
+                p = p.cdr;
+            }
+            return a;
+        },
+        add: function(node) {
+            var p = this;
+            while (p) {
+                if (!(p.cdr instanceof AST_Seq)) {
+                    var cell = AST_Seq.cons(p.cdr, node);
+                    return p.cdr = cell;
+                }
+                p = p.cdr;
+            }
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.car._walk(visitor);
+                if (this.cdr) this.cdr._walk(visitor);
+            });
+        }
+    });
+    var AST_PropAccess = DEFNODE("PropAccess", "expression property", {
+        $documentation: 'Base class for property access expressions, i.e. `a.foo` or `a["foo"]`',
+        $propdoc: {
+            expression: "[AST_Node] the “container” expression",
+            property: "[AST_Node|string] the property to access.  For AST_Dot this is always a plain string, while for AST_Sub it's an arbitrary AST_Node"
+        }
+    });
+    var AST_Dot = DEFNODE("Dot", null, {
+        $documentation: "A dotted property access expression",
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.expression._walk(visitor);
+            });
+        }
+    }, AST_PropAccess);
+    var AST_Sub = DEFNODE("Sub", null, {
+        $documentation: 'Index-style property access, i.e. `a["foo"]`',
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.expression._walk(visitor);
+                this.property._walk(visitor);
+            });
+        }
+    }, AST_PropAccess);
+    var AST_Unary = DEFNODE("Unary", "operator expression", {
+        $documentation: "Base class for unary expressions",
+        $propdoc: {
+            operator: "[string] the operator",
+            expression: "[AST_Node] expression that this unary operator applies to"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.expression._walk(visitor);
+            });
+        }
+    });
+    var AST_UnaryPrefix = DEFNODE("UnaryPrefix", null, {
+        $documentation: "Unary prefix expression, i.e. `typeof i` or `++i`"
+    }, AST_Unary);
+    var AST_UnaryPostfix = DEFNODE("UnaryPostfix", null, {
+        $documentation: "Unary postfix expression, i.e. `i++`"
+    }, AST_Unary);
+    var AST_Binary = DEFNODE("Binary", "left operator right", {
+        $documentation: "Binary expression, i.e. `a + b`",
+        $propdoc: {
+            left: "[AST_Node] left-hand side expression",
+            operator: "[string] the operator",
+            right: "[AST_Node] right-hand side expression"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.left._walk(visitor);
+                this.right._walk(visitor);
+            });
+        }
+    });
+    var AST_Conditional = DEFNODE("Conditional", "condition consequent alternative", {
+        $documentation: "Conditional expression using the ternary operator, i.e. `a ? b : c`",
+        $propdoc: {
+            condition: "[AST_Node]",
+            consequent: "[AST_Node]",
+            alternative: "[AST_Node]"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.condition._walk(visitor);
+                this.consequent._walk(visitor);
+                this.alternative._walk(visitor);
+            });
+        }
+    });
+    var AST_Assign = DEFNODE("Assign", null, {
+        $documentation: "An assignment expression — `a = b + 5`"
+    }, AST_Binary);
+    var AST_Array = DEFNODE("Array", "elements", {
+        $documentation: "An array literal",
+        $propdoc: {
+            elements: "[AST_Node*] array of elements"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.elements.forEach(function(el) {
+                    el._walk(visitor);
+                });
+            });
+        }
+    });
+    var AST_Object = DEFNODE("Object", "properties", {
+        $documentation: "An object literal",
+        $propdoc: {
+            properties: "[AST_ObjectProperty*] array of properties"
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.properties.forEach(function(prop) {
+                    prop._walk(visitor);
+                });
+            });
+        }
+    });
+    var AST_ObjectProperty = DEFNODE("ObjectProperty", "key value", {
+        $documentation: "Base class for literal object properties",
+        $propdoc: {
+            key: "[string] the property name converted to a string for ObjectKeyVal.  For setters and getters this is an arbitrary AST_Node.",
+            value: "[AST_Node] property value.  For setters and getters this is an AST_Function."
+        },
+        _walk: function(visitor) {
+            return visitor._visit(this, function() {
+                this.value._walk(visitor);
+            });
+        }
+    });
+    var AST_ObjectKeyVal = DEFNODE("ObjectKeyVal", null, {
+        $documentation: "A key: value object property"
+    }, AST_ObjectProperty);
+    var AST_ObjectSetter = DEFNODE("ObjectSetter", null, {
+        $documentation: "An object setter property"
+    }, AST_ObjectProperty);
+    var AST_ObjectGetter = DEFNODE("ObjectGetter", null, {
+        $documentation: "An object getter property"
+    }, AST_ObjectProperty);
+    var AST_Symbol = DEFNODE("Symbol", "scope name thedef", {
+        $propdoc: {
+            name: "[string] name of this symbol",
+            scope: "[AST_Scope/S] the current scope (not necessarily the definition scope)",
+            thedef: "[SymbolDef/S] the definition of this symbol"
+        },
+        $documentation: "Base class for all symbols"
+    });
+    var AST_SymbolAccessor = DEFNODE("SymbolAccessor", null, {
+        $documentation: "The name of a property accessor (setter/getter function)"
+    }, AST_Symbol);
+    var AST_SymbolDeclaration = DEFNODE("SymbolDeclaration", "init", {
+        $documentation: "A declaration symbol (symbol in var/const, function name or argument, symbol in catch)",
+        $propdoc: {
+            init: "[AST_Node*/S] array of initializers for this declaration."
+        }
+    }, AST_Symbol);
+    var AST_SymbolVar = DEFNODE("SymbolVar", null, {
+        $documentation: "Symbol defining a variable"
+    }, AST_SymbolDeclaration);
+    var AST_SymbolConst = DEFNODE("SymbolConst", null, {
+        $documentation: "A constant declaration"
+    }, AST_SymbolDeclaration);
+    var AST_SymbolFunarg = DEFNODE("SymbolFunarg", null, {
+        $documentation: "Symbol naming a function argument"
+    }, AST_SymbolVar);
+    var AST_SymbolDefun = DEFNODE("SymbolDefun", null, {
+        $documentation: "Symbol defining a function"
+    }, AST_SymbolDeclaration);
+    var AST_SymbolLambda = DEFNODE("SymbolLambda", null, {
+        $documentation: "Symbol naming a function expression"
+    }, AST_SymbolDeclaration);
+    var AST_SymbolCatch = DEFNODE("SymbolCatch", null, {
+        $documentation: "Symbol naming the exception in catch"
+    }, AST_SymbolDeclaration);
+    var AST_Label = DEFNODE("Label", "references", {
+        $documentation: "Symbol naming a label (declaration)",
+        $propdoc: {
+            references: "[AST_LoopControl*] a list of nodes referring to this label"
+        },
+        initialize: function() {
+            this.references = [];
+            this.thedef = this;
+        }
+    }, AST_Symbol);
+    var AST_SymbolRef = DEFNODE("SymbolRef", null, {
+        $documentation: "Reference to some symbol (not definition/declaration)"
+    }, AST_Symbol);
+    var AST_LabelRef = DEFNODE("LabelRef", null, {
+        $documentation: "Reference to a label symbol"
+    }, AST_Symbol);
+    var AST_This = DEFNODE("This", null, {
+        $documentation: "The `this` symbol"
+    }, AST_Symbol);
+    var AST_Constant = DEFNODE("Constant", null, {
+        $documentation: "Base class for all constants",
+        getValue: function() {
+            return this.value;
+        }
+    });
+    var AST_String = DEFNODE("String", "value", {
+        $documentation: "A string literal",
+        $propdoc: {
+            value: "[string] the contents of this string"
+        }
+    }, AST_Constant);
+    var AST_Number = DEFNODE("Number", "value", {
+        $documentation: "A number literal",
+        $propdoc: {
+            value: "[number] the numeric value"
+        }
+    }, AST_Constant);
+    var AST_RegExp = DEFNODE("RegExp", "value", {
+        $documentation: "A regexp literal",
+        $propdoc: {
+            value: "[RegExp] the actual regexp"
+        }
+    }, AST_Constant);
+    var AST_Atom = DEFNODE("Atom", null, {
+        $documentation: "Base class for atoms"
+    }, AST_Constant);
+    var AST_Null = DEFNODE("Null", null, {
+        $documentation: "The `null` atom",
+        value: null
+    }, AST_Atom);
+    var AST_NaN = DEFNODE("NaN", null, {
+        $documentation: "The impossible value",
+        value: 0 / 0
+    }, AST_Atom);
+    var AST_Undefined = DEFNODE("Undefined", null, {
+        $documentation: "The `undefined` value",
+        value: function() {}()
+    }, AST_Atom);
+    var AST_Hole = DEFNODE("Hole", null, {
+        $documentation: "A hole in an array",
+        value: function() {}()
+    }, AST_Atom);
+    var AST_Infinity = DEFNODE("Infinity", null, {
+        $documentation: "The `Infinity` value",
+        value: 1 / 0
+    }, AST_Atom);
+    var AST_Boolean = DEFNODE("Boolean", null, {
+        $documentation: "Base class for booleans"
+    }, AST_Atom);
+    var AST_False = DEFNODE("False", null, {
+        $documentation: "The `false` atom",
+        value: false
+    }, AST_Boolean);
+    var AST_True = DEFNODE("True", null, {
+        $documentation: "The `true` atom",
+        value: true
+    }, AST_Boolean);
+    function TreeWalker(callback) {
+        this.visit = callback;
+        this.stack = [];
+    }
+    TreeWalker.prototype = {
+        _visit: function(node, descend) {
+            this.stack.push(node);
+            var ret = this.visit(node, descend ? function() {
+                descend.call(node);
+            } : noop);
+            if (!ret && descend) {
+                descend.call(node);
+            }
+            this.stack.pop();
+            return ret;
+        },
+        parent: function(n) {
+            return this.stack[this.stack.length - 2 - (n || 0)];
+        },
+        push: function(node) {
+            this.stack.push(node);
+        },
+        pop: function() {
+            return this.stack.pop();
+        },
+        self: function() {
+            return this.stack[this.stack.length - 1];
+        },
+        find_parent: function(type) {
+            var stack = this.stack;
+            for (var i = stack.length; --i >= 0; ) {
+                var x = stack[i];
+                if (x instanceof type) return x;
+            }
+        },
+        has_directive: function(type) {
+            return this.find_parent(AST_Scope).has_directive(type);
+        },
+        in_boolean_context: function() {
+            var stack = this.stack;
+            var i = stack.length, self = stack[--i];
+            while (i > 0) {
+                var p = stack[--i];
+                if (p instanceof AST_If && p.condition === self || p instanceof AST_Conditional && p.condition === self || p instanceof AST_DWLoop && p.condition === self || p instanceof AST_For && p.condition === self || p instanceof AST_UnaryPrefix && p.operator == "!" && p.expression === self) {
+                    return true;
+                }
+                if (!(p instanceof AST_Binary && (p.operator == "&&" || p.operator == "||"))) return false;
+                self = p;
+            }
+        },
+        loopcontrol_target: function(label) {
+            var stack = this.stack;
+            if (label) for (var i = stack.length; --i >= 0; ) {
+                var x = stack[i];
+                if (x instanceof AST_LabeledStatement && x.label.name == label.name) {
+                    return x.body;
+                }
+            } else for (var i = stack.length; --i >= 0; ) {
+                var x = stack[i];
+                if (x instanceof AST_Switch || x instanceof AST_IterationStatement) return x;
+            }
+        }
+    };
+    "use strict";
+    var KEYWORDS = "break case catch const continue debugger default delete do else finally for function if in instanceof new return switch throw try typeof var void while with";
+    var KEYWORDS_ATOM = "false null true";
+    var RESERVED_WORDS = "abstract boolean byte char class double enum export extends final float goto implements import int interface long native package private protected public short static super synchronized this throws transient volatile" + " " + KEYWORDS_ATOM + " " + KEYWORDS;
+    var KEYWORDS_BEFORE_EXPRESSION = "return new delete throw else case";
+    KEYWORDS = makePredicate(KEYWORDS);
+    RESERVED_WORDS = makePredicate(RESERVED_WORDS);
+    KEYWORDS_BEFORE_EXPRESSION = makePredicate(KEYWORDS_BEFORE_EXPRESSION);
+    KEYWORDS_ATOM = makePredicate(KEYWORDS_ATOM);
+    var OPERATOR_CHARS = makePredicate(characters("+-*&%=<>!?|~^"));
+    var RE_HEX_NUMBER = /^0x[0-9a-f]+$/i;
+    var RE_OCT_NUMBER = /^0[0-7]+$/;
+    var RE_DEC_NUMBER = /^\d*\.?\d*(?:e[+-]?\d*(?:\d\.?|\.?\d)\d*)?$/i;
+    var OPERATORS = makePredicate([ "in", "instanceof", "typeof", "new", "void", "delete", "++", "--", "+", "-", "!", "~", "&", "|", "^", "*", "/", "%", ">>", "<<", ">>>", "<", ">", "<=", ">=", "==", "===", "!=", "!==", "?", "=", "+=", "-=", "/=", "*=", "%=", ">>=", "<<=", ">>>=", "|=", "^=", "&=", "&&", "||" ]);
+    var WHITESPACE_CHARS = makePredicate(characters("  \n\r	\f​᠎             　"));
+    var PUNC_BEFORE_EXPRESSION = makePredicate(characters("[{(,.;:"));
+    var PUNC_CHARS = makePredicate(characters("[]{}(),;:"));
+    var REGEXP_MODIFIERS = makePredicate(characters("gmsiy"));
+    var UNICODE = {
+        letter: new RegExp("[\\u0041-\\u005A\\u0061-\\u007A\\u00AA\\u00B5\\u00BA\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02C1\\u02C6-\\u02D1\\u02E0-\\u02E4\\u02EC\\u02EE\\u0370-\\u0374\\u0376\\u0377\\u037A-\\u037D\\u0386\\u0388-\\u038A\\u038C\\u038E-\\u03A1\\u03A3-\\u03F5\\u03F7-\\u0481\\u048A-\\u0523\\u0531-\\u0556\\u0559\\u0561-\\u0587\\u05D0-\\u05EA\\u05F0-\\u05F2\\u0621-\\u064A\\u066E\\u066F\\u0671-\\u06D3\\u06D5\\u06E5\\u06E6\\u06EE\\u06EF\\u06FA-\\u06FC\\u06FF\\u0710\\u0712-\\u072F\\u074D-\\u07A5\\u07B1\\u07CA-\\u07EA\\u07F4\\u07F5\\u07FA\\u0904-\\u0939\\u093D\\u0950\\u0958-\\u0961\\u0971\\u0972\\u097B-\\u097F\\u0985-\\u098C\\u098F\\u0990\\u0993-\\u09A8\\u09AA-\\u09B0\\u09B2\\u09B6-\\u09B9\\u09BD\\u09CE\\u09DC\\u09DD\\u09DF-\\u09E1\\u09F0\\u09F1\\u0A05-\\u0A0A\\u0A0F\\u0A10\\u0A13-\\u0A28\\u0A2A-\\u0A30\\u0A32\\u0A33\\u0A35\\u0A36\\u0A38\\u0A39\\u0A59-\\u0A5C\\u0A5E\\u0A72-\\u0A74\\u0A85-\\u0A8D\\u0A8F-\\u0A91\\u0A93-\\u0AA8\\u0AAA-\\u0AB0\\u0AB2\\u0AB3\\u0AB5-\\u0AB9\\u0ABD\\u0AD0\\u0AE0\\u0AE1\\u0B05-\\u0B0C\\u0B0F\\u0B10\\u0B13-\\u0B28\\u0B2A-\\u0B30\\u0B32\\u0B33\\u0B35-\\u0B39\\u0B3D\\u0B5C\\u0B5D\\u0B5F-\\u0B61\\u0B71\\u0B83\\u0B85-\\u0B8A\\u0B8E-\\u0B90\\u0B92-\\u0B95\\u0B99\\u0B9A\\u0B9C\\u0B9E\\u0B9F\\u0BA3\\u0BA4\\u0BA8-\\u0BAA\\u0BAE-\\u0BB9\\u0BD0\\u0C05-\\u0C0C\\u0C0E-\\u0C10\\u0C12-\\u0C28\\u0C2A-\\u0C33\\u0C35-\\u0C39\\u0C3D\\u0C58\\u0C59\\u0C60\\u0C61\\u0C85-\\u0C8C\\u0C8E-\\u0C90\\u0C92-\\u0CA8\\u0CAA-\\u0CB3\\u0CB5-\\u0CB9\\u0CBD\\u0CDE\\u0CE0\\u0CE1\\u0D05-\\u0D0C\\u0D0E-\\u0D10\\u0D12-\\u0D28\\u0D2A-\\u0D39\\u0D3D\\u0D60\\u0D61\\u0D7A-\\u0D7F\\u0D85-\\u0D96\\u0D9A-\\u0DB1\\u0DB3-\\u0DBB\\u0DBD\\u0DC0-\\u0DC6\\u0E01-\\u0E30\\u0E32\\u0E33\\u0E40-\\u0E46\\u0E81\\u0E82\\u0E84\\u0E87\\u0E88\\u0E8A\\u0E8D\\u0E94-\\u0E97\\u0E99-\\u0E9F\\u0EA1-\\u0EA3\\u0EA5\\u0EA7\\u0EAA\\u0EAB\\u0EAD-\\u0EB0\\u0EB2\\u0EB3\\u0EBD\\u0EC0-\\u0EC4\\u0EC6\\u0EDC\\u0EDD\\u0F00\\u0F40-\\u0F47\\u0F49-\\u0F6C\\u0F88-\\u0F8B\\u1000-\\u102A\\u103F\\u1050-\\u1055\\u105A-\\u105D\\u1061\\u1065\\u1066\\u106E-\\u1070\\u1075-\\u1081\\u108E\\u10A0-\\u10C5\\u10D0-\\u10FA\\u10FC\\u1100-\\u1159\\u115F-\\u11A2\\u11A8-\\u11F9\\u1200-\\u1248\\u124A-\\u124D\\u1250-\\u1256\\u1258\\u125A-\\u125D\\u1260-\\u1288\\u128A-\\u128D\\u1290-\\u12B0\\u12B2-\\u12B5\\u12B8-\\u12BE\\u12C0\\u12C2-\\u12C5\\u12C8-\\u12D6\\u12D8-\\u1310\\u1312-\\u1315\\u1318-\\u135A\\u1380-\\u138F\\u13A0-\\u13F4\\u1401-\\u166C\\u166F-\\u1676\\u1681-\\u169A\\u16A0-\\u16EA\\u1700-\\u170C\\u170E-\\u1711\\u1720-\\u1731\\u1740-\\u1751\\u1760-\\u176C\\u176E-\\u1770\\u1780-\\u17B3\\u17D7\\u17DC\\u1820-\\u1877\\u1880-\\u18A8\\u18AA\\u1900-\\u191C\\u1950-\\u196D\\u1970-\\u1974\\u1980-\\u19A9\\u19C1-\\u19C7\\u1A00-\\u1A16\\u1B05-\\u1B33\\u1B45-\\u1B4B\\u1B83-\\u1BA0\\u1BAE\\u1BAF\\u1C00-\\u1C23\\u1C4D-\\u1C4F\\u1C5A-\\u1C7D\\u1D00-\\u1DBF\\u1E00-\\u1F15\\u1F18-\\u1F1D\\u1F20-\\u1F45\\u1F48-\\u1F4D\\u1F50-\\u1F57\\u1F59\\u1F5B\\u1F5D\\u1F5F-\\u1F7D\\u1F80-\\u1FB4\\u1FB6-\\u1FBC\\u1FBE\\u1FC2-\\u1FC4\\u1FC6-\\u1FCC\\u1FD0-\\u1FD3\\u1FD6-\\u1FDB\\u1FE0-\\u1FEC\\u1FF2-\\u1FF4\\u1FF6-\\u1FFC\\u2071\\u207F\\u2090-\\u2094\\u2102\\u2107\\u210A-\\u2113\\u2115\\u2119-\\u211D\\u2124\\u2126\\u2128\\u212A-\\u212D\\u212F-\\u2139\\u213C-\\u213F\\u2145-\\u2149\\u214E\\u2183\\u2184\\u2C00-\\u2C2E\\u2C30-\\u2C5E\\u2C60-\\u2C6F\\u2C71-\\u2C7D\\u2C80-\\u2CE4\\u2D00-\\u2D25\\u2D30-\\u2D65\\u2D6F\\u2D80-\\u2D96\\u2DA0-\\u2DA6\\u2DA8-\\u2DAE\\u2DB0-\\u2DB6\\u2DB8-\\u2DBE\\u2DC0-\\u2DC6\\u2DC8-\\u2DCE\\u2DD0-\\u2DD6\\u2DD8-\\u2DDE\\u2E2F\\u3005\\u3006\\u3031-\\u3035\\u303B\\u303C\\u3041-\\u3096\\u309D-\\u309F\\u30A1-\\u30FA\\u30FC-\\u30FF\\u3105-\\u312D\\u3131-\\u318E\\u31A0-\\u31B7\\u31F0-\\u31FF\\u3400\\u4DB5\\u4E00\\u9FC3\\uA000-\\uA48C\\uA500-\\uA60C\\uA610-\\uA61F\\uA62A\\uA62B\\uA640-\\uA65F\\uA662-\\uA66E\\uA67F-\\uA697\\uA717-\\uA71F\\uA722-\\uA788\\uA78B\\uA78C\\uA7FB-\\uA801\\uA803-\\uA805\\uA807-\\uA80A\\uA80C-\\uA822\\uA840-\\uA873\\uA882-\\uA8B3\\uA90A-\\uA925\\uA930-\\uA946\\uAA00-\\uAA28\\uAA40-\\uAA42\\uAA44-\\uAA4B\\uAC00\\uD7A3\\uF900-\\uFA2D\\uFA30-\\uFA6A\\uFA70-\\uFAD9\\uFB00-\\uFB06\\uFB13-\\uFB17\\uFB1D\\uFB1F-\\uFB28\\uFB2A-\\uFB36\\uFB38-\\uFB3C\\uFB3E\\uFB40\\uFB41\\uFB43\\uFB44\\uFB46-\\uFBB1\\uFBD3-\\uFD3D\\uFD50-\\uFD8F\\uFD92-\\uFDC7\\uFDF0-\\uFDFB\\uFE70-\\uFE74\\uFE76-\\uFEFC\\uFF21-\\uFF3A\\uFF41-\\uFF5A\\uFF66-\\uFFBE\\uFFC2-\\uFFC7\\uFFCA-\\uFFCF\\uFFD2-\\uFFD7\\uFFDA-\\uFFDC]"),
+        non_spacing_mark: new RegExp("[\\u0300-\\u036F\\u0483-\\u0487\\u0591-\\u05BD\\u05BF\\u05C1\\u05C2\\u05C4\\u05C5\\u05C7\\u0610-\\u061A\\u064B-\\u065E\\u0670\\u06D6-\\u06DC\\u06DF-\\u06E4\\u06E7\\u06E8\\u06EA-\\u06ED\\u0711\\u0730-\\u074A\\u07A6-\\u07B0\\u07EB-\\u07F3\\u0816-\\u0819\\u081B-\\u0823\\u0825-\\u0827\\u0829-\\u082D\\u0900-\\u0902\\u093C\\u0941-\\u0948\\u094D\\u0951-\\u0955\\u0962\\u0963\\u0981\\u09BC\\u09C1-\\u09C4\\u09CD\\u09E2\\u09E3\\u0A01\\u0A02\\u0A3C\\u0A41\\u0A42\\u0A47\\u0A48\\u0A4B-\\u0A4D\\u0A51\\u0A70\\u0A71\\u0A75\\u0A81\\u0A82\\u0ABC\\u0AC1-\\u0AC5\\u0AC7\\u0AC8\\u0ACD\\u0AE2\\u0AE3\\u0B01\\u0B3C\\u0B3F\\u0B41-\\u0B44\\u0B4D\\u0B56\\u0B62\\u0B63\\u0B82\\u0BC0\\u0BCD\\u0C3E-\\u0C40\\u0C46-\\u0C48\\u0C4A-\\u0C4D\\u0C55\\u0C56\\u0C62\\u0C63\\u0CBC\\u0CBF\\u0CC6\\u0CCC\\u0CCD\\u0CE2\\u0CE3\\u0D41-\\u0D44\\u0D4D\\u0D62\\u0D63\\u0DCA\\u0DD2-\\u0DD4\\u0DD6\\u0E31\\u0E34-\\u0E3A\\u0E47-\\u0E4E\\u0EB1\\u0EB4-\\u0EB9\\u0EBB\\u0EBC\\u0EC8-\\u0ECD\\u0F18\\u0F19\\u0F35\\u0F37\\u0F39\\u0F71-\\u0F7E\\u0F80-\\u0F84\\u0F86\\u0F87\\u0F90-\\u0F97\\u0F99-\\u0FBC\\u0FC6\\u102D-\\u1030\\u1032-\\u1037\\u1039\\u103A\\u103D\\u103E\\u1058\\u1059\\u105E-\\u1060\\u1071-\\u1074\\u1082\\u1085\\u1086\\u108D\\u109D\\u135F\\u1712-\\u1714\\u1732-\\u1734\\u1752\\u1753\\u1772\\u1773\\u17B7-\\u17BD\\u17C6\\u17C9-\\u17D3\\u17DD\\u180B-\\u180D\\u18A9\\u1920-\\u1922\\u1927\\u1928\\u1932\\u1939-\\u193B\\u1A17\\u1A18\\u1A56\\u1A58-\\u1A5E\\u1A60\\u1A62\\u1A65-\\u1A6C\\u1A73-\\u1A7C\\u1A7F\\u1B00-\\u1B03\\u1B34\\u1B36-\\u1B3A\\u1B3C\\u1B42\\u1B6B-\\u1B73\\u1B80\\u1B81\\u1BA2-\\u1BA5\\u1BA8\\u1BA9\\u1C2C-\\u1C33\\u1C36\\u1C37\\u1CD0-\\u1CD2\\u1CD4-\\u1CE0\\u1CE2-\\u1CE8\\u1CED\\u1DC0-\\u1DE6\\u1DFD-\\u1DFF\\u20D0-\\u20DC\\u20E1\\u20E5-\\u20F0\\u2CEF-\\u2CF1\\u2DE0-\\u2DFF\\u302A-\\u302F\\u3099\\u309A\\uA66F\\uA67C\\uA67D\\uA6F0\\uA6F1\\uA802\\uA806\\uA80B\\uA825\\uA826\\uA8C4\\uA8E0-\\uA8F1\\uA926-\\uA92D\\uA947-\\uA951\\uA980-\\uA982\\uA9B3\\uA9B6-\\uA9B9\\uA9BC\\uAA29-\\uAA2E\\uAA31\\uAA32\\uAA35\\uAA36\\uAA43\\uAA4C\\uAAB0\\uAAB2-\\uAAB4\\uAAB7\\uAAB8\\uAABE\\uAABF\\uAAC1\\uABE5\\uABE8\\uABED\\uFB1E\\uFE00-\\uFE0F\\uFE20-\\uFE26]"),
+        space_combining_mark: new RegExp("[\\u0903\\u093E-\\u0940\\u0949-\\u094C\\u094E\\u0982\\u0983\\u09BE-\\u09C0\\u09C7\\u09C8\\u09CB\\u09CC\\u09D7\\u0A03\\u0A3E-\\u0A40\\u0A83\\u0ABE-\\u0AC0\\u0AC9\\u0ACB\\u0ACC\\u0B02\\u0B03\\u0B3E\\u0B40\\u0B47\\u0B48\\u0B4B\\u0B4C\\u0B57\\u0BBE\\u0BBF\\u0BC1\\u0BC2\\u0BC6-\\u0BC8\\u0BCA-\\u0BCC\\u0BD7\\u0C01-\\u0C03\\u0C41-\\u0C44\\u0C82\\u0C83\\u0CBE\\u0CC0-\\u0CC4\\u0CC7\\u0CC8\\u0CCA\\u0CCB\\u0CD5\\u0CD6\\u0D02\\u0D03\\u0D3E-\\u0D40\\u0D46-\\u0D48\\u0D4A-\\u0D4C\\u0D57\\u0D82\\u0D83\\u0DCF-\\u0DD1\\u0DD8-\\u0DDF\\u0DF2\\u0DF3\\u0F3E\\u0F3F\\u0F7F\\u102B\\u102C\\u1031\\u1038\\u103B\\u103C\\u1056\\u1057\\u1062-\\u1064\\u1067-\\u106D\\u1083\\u1084\\u1087-\\u108C\\u108F\\u109A-\\u109C\\u17B6\\u17BE-\\u17C5\\u17C7\\u17C8\\u1923-\\u1926\\u1929-\\u192B\\u1930\\u1931\\u1933-\\u1938\\u19B0-\\u19C0\\u19C8\\u19C9\\u1A19-\\u1A1B\\u1A55\\u1A57\\u1A61\\u1A63\\u1A64\\u1A6D-\\u1A72\\u1B04\\u1B35\\u1B3B\\u1B3D-\\u1B41\\u1B43\\u1B44\\u1B82\\u1BA1\\u1BA6\\u1BA7\\u1BAA\\u1C24-\\u1C2B\\u1C34\\u1C35\\u1CE1\\u1CF2\\uA823\\uA824\\uA827\\uA880\\uA881\\uA8B4-\\uA8C3\\uA952\\uA953\\uA983\\uA9B4\\uA9B5\\uA9BA\\uA9BB\\uA9BD-\\uA9C0\\uAA2F\\uAA30\\uAA33\\uAA34\\uAA4D\\uAA7B\\uABE3\\uABE4\\uABE6\\uABE7\\uABE9\\uABEA\\uABEC]"),
+        connector_punctuation: new RegExp("[\\u005F\\u203F\\u2040\\u2054\\uFE33\\uFE34\\uFE4D-\\uFE4F\\uFF3F]")
+    };
+    function is_letter(code) {
+        return code >= 97 && code <= 122 || code >= 65 && code <= 90 || code >= 170 && UNICODE.letter.test(String.fromCharCode(code));
+    }
+    function is_digit(code) {
+        return code >= 48 && code <= 57;
+    }
+    function is_alphanumeric_char(code) {
+        return is_digit(code) || is_letter(code);
+    }
+    function is_unicode_combining_mark(ch) {
+        return UNICODE.non_spacing_mark.test(ch) || UNICODE.space_combining_mark.test(ch);
+    }
+    function is_unicode_connector_punctuation(ch) {
+        return UNICODE.connector_punctuation.test(ch);
+    }
+    function is_identifier(name) {
+        return !RESERVED_WORDS(name) && /^[a-z_$][a-z0-9_$]*$/i.test(name);
+    }
+    function is_identifier_start(code) {
+        return code == 36 || code == 95 || is_letter(code);
+    }
+    function is_identifier_char(ch) {
+        var code = ch.charCodeAt(0);
+        return is_identifier_start(code) || is_digit(code) || code == 8204 || code == 8205 || is_unicode_combining_mark(ch) || is_unicode_connector_punctuation(ch);
+    }
+    function is_identifier_string(str) {
+        var i = str.length;
+        if (i == 0) return false;
+        if (!is_identifier_start(str.charCodeAt(0))) return false;
+        while (--i >= 0) {
+            if (!is_identifier_char(str.charAt(i))) return false;
+        }
+        return true;
+    }
+    function parse_js_number(num) {
+        if (RE_HEX_NUMBER.test(num)) {
+            return parseInt(num.substr(2), 16);
+        } else if (RE_OCT_NUMBER.test(num)) {
+            return parseInt(num.substr(1), 8);
+        } else if (RE_DEC_NUMBER.test(num)) {
+            return parseFloat(num);
+        }
+    }
+    function JS_Parse_Error(message, line, col, pos) {
+        this.message = message;
+        this.line = line;
+        this.col = col;
+        this.pos = pos;
+        this.stack = new Error().stack;
+    }
+    JS_Parse_Error.prototype.toString = function() {
+        return this.message + " (line: " + this.line + ", col: " + this.col + ", pos: " + this.pos + ")" + "\n\n" + this.stack;
+    };
+    function js_error(message, filename, line, col, pos) {
+        throw new JS_Parse_Error(message, line, col, pos);
+    }
+    function is_token(token, type, val) {
+        return token.type == type && (val == null || token.value == val);
+    }
+    var EX_EOF = {};
+    function tokenizer($TEXT, filename, html5_comments) {
+        var S = {
+            text: $TEXT.replace(/\r\n?|[\n\u2028\u2029]/g, "\n").replace(/\uFEFF/g, ""),
+            filename: filename,
+            pos: 0,
+            tokpos: 0,
+            line: 1,
+            tokline: 0,
+            col: 0,
+            tokcol: 0,
+            newline_before: false,
+            regex_allowed: false,
+            comments_before: []
+        };
+        function peek() {
+            return S.text.charAt(S.pos);
+        }
+        function next(signal_eof, in_string) {
+            var ch = S.text.charAt(S.pos++);
+            if (signal_eof && !ch) throw EX_EOF;
+            if (ch == "\n") {
+                S.newline_before = S.newline_before || !in_string;
+                ++S.line;
+                S.col = 0;
+            } else {
+                ++S.col;
+            }
+            return ch;
+        }
+        function forward(i) {
+            while (i-- > 0) next();
+        }
+        function looking_at(str) {
+            return S.text.substr(S.pos, str.length) == str;
+        }
+        function find(what, signal_eof) {
+            var pos = S.text.indexOf(what, S.pos);
+            if (signal_eof && pos == -1) throw EX_EOF;
+            return pos;
+        }
+        function start_token() {
+            S.tokline = S.line;
+            S.tokcol = S.col;
+            S.tokpos = S.pos;
+        }
+        var prev_was_dot = false;
+        function token(type, value, is_comment) {
+            S.regex_allowed = type == "operator" && !UNARY_POSTFIX(value) || type == "keyword" && KEYWORDS_BEFORE_EXPRESSION(value) || type == "punc" && PUNC_BEFORE_EXPRESSION(value);
+            prev_was_dot = type == "punc" && value == ".";
+            var ret = {
+                type: type,
+                value: value,
+                line: S.tokline,
+                col: S.tokcol,
+                pos: S.tokpos,
+                endpos: S.pos,
+                nlb: S.newline_before,
+                file: filename
+            };
+            if (!is_comment) {
+                ret.comments_before = S.comments_before;
+                S.comments_before = [];
+                for (var i = 0, len = ret.comments_before.length; i < len; i++) {
+                    ret.nlb = ret.nlb || ret.comments_before[i].nlb;
+                }
+            }
+            S.newline_before = false;
+            return new AST_Token(ret);
+        }
+        function skip_whitespace() {
+            while (WHITESPACE_CHARS(peek())) next();
+        }
+        function read_while(pred) {
+            var ret = "", ch, i = 0;
+            while ((ch = peek()) && pred(ch, i++)) ret += next();
+            return ret;
+        }
+        function parse_error(err) {
+            js_error(err, filename, S.tokline, S.tokcol, S.tokpos);
+        }
+        function read_num(prefix) {
+            var has_e = false, after_e = false, has_x = false, has_dot = prefix == ".";
+            var num = read_while(function(ch, i) {
+                var code = ch.charCodeAt(0);
+                switch (code) {
+                  case 120:
+                  case 88:
+                    return has_x ? false : has_x = true;
+
+                  case 101:
+                  case 69:
+                    return has_x ? true : has_e ? false : has_e = after_e = true;
+
+                  case 45:
+                    return after_e || i == 0 && !prefix;
+
+                  case 43:
+                    return after_e;
+
+                  case after_e = false, 46:
+                    return !has_dot && !has_x && !has_e ? has_dot = true : false;
+                }
+                return is_alphanumeric_char(code);
+            });
+            if (prefix) num = prefix + num;
+            var valid = parse_js_number(num);
+            if (!isNaN(valid)) {
+                return token("num", valid);
+            } else {
+                parse_error("Invalid syntax: " + num);
+            }
+        }
+        function read_escaped_char(in_string) {
+            var ch = next(true, in_string);
+            switch (ch.charCodeAt(0)) {
+              case 110:
+                return "\n";
+
+              case 114:
+                return "\r";
+
+              case 116:
+                return "	";
+
+              case 98:
+                return "\b";
+
+              case 118:
+                return "";
+
+              case 102:
+                return "\f";
+
+              case 48:
+                return "\x00";
+
+              case 120:
+                return String.fromCharCode(hex_bytes(2));
+
+              case 117:
+                return String.fromCharCode(hex_bytes(4));
+
+              case 10:
+                return "";
+
+              default:
+                return ch;
+            }
+        }
+        function hex_bytes(n) {
+            var num = 0;
+            for (;n > 0; --n) {
+                var digit = parseInt(next(true), 16);
+                if (isNaN(digit)) parse_error("Invalid hex-character pattern in string");
+                num = num << 4 | digit;
+            }
+            return num;
+        }
+        var read_string = with_eof_error("Unterminated string constant", function() {
+            var quote = next(), ret = "";
+            for (;;) {
+                var ch = next(true);
+                if (ch == "\\") {
+                    var octal_len = 0, first = null;
+                    ch = read_while(function(ch) {
+                        if (ch >= "0" && ch <= "7") {
+                            if (!first) {
+                                first = ch;
+                                return ++octal_len;
+                            } else if (first <= "3" && octal_len <= 2) return ++octal_len; else if (first >= "4" && octal_len <= 1) return ++octal_len;
+                        }
+                        return false;
+                    });
+                    if (octal_len > 0) ch = String.fromCharCode(parseInt(ch, 8)); else ch = read_escaped_char(true);
+                } else if (ch == quote) break;
+                ret += ch;
+            }
+            return token("string", ret);
+        });
+        function skip_line_comment(type) {
+            var regex_allowed = S.regex_allowed;
+            var i = find("\n"), ret;
+            if (i == -1) {
+                ret = S.text.substr(S.pos);
+                S.pos = S.text.length;
+            } else {
+                ret = S.text.substring(S.pos, i);
+                S.pos = i;
+            }
+            S.comments_before.push(token(type, ret, true));
+            S.regex_allowed = regex_allowed;
+            return next_token();
+        }
+        var skip_multiline_comment = with_eof_error("Unterminated multiline comment", function() {
+            var regex_allowed = S.regex_allowed;
+            var i = find("*/", true);
+            var text = S.text.substring(S.pos, i);
+            var a = text.split("\n"), n = a.length;
+            S.pos = i + 2;
+            S.line += n - 1;
+            if (n > 1) S.col = a[n - 1].length; else S.col += a[n - 1].length;
+            S.col += 2;
+            var nlb = S.newline_before = S.newline_before || text.indexOf("\n") >= 0;
+            S.comments_before.push(token("comment2", text, true));
+            S.regex_allowed = regex_allowed;
+            S.newline_before = nlb;
+            return next_token();
+        });
+        function read_name() {
+            var backslash = false, name = "", ch, escaped = false, hex;
+            while ((ch = peek()) != null) {
+                if (!backslash) {
+                    if (ch == "\\") escaped = backslash = true, next(); else if (is_identifier_char(ch)) name += next(); else break;
+                } else {
+                    if (ch != "u") parse_error("Expecting UnicodeEscapeSequence -- uXXXX");
+                    ch = read_escaped_char();
+                    if (!is_identifier_char(ch)) parse_error("Unicode char: " + ch.charCodeAt(0) + " is not valid in identifier");
+                    name += ch;
+                    backslash = false;
+                }
+            }
+            if (KEYWORDS(name) && escaped) {
+                hex = name.charCodeAt(0).toString(16).toUpperCase();
+                name = "\\u" + "0000".substr(hex.length) + hex + name.slice(1);
+            }
+            return name;
+        }
+        var read_regexp = with_eof_error("Unterminated regular expression", function(regexp) {
+            var prev_backslash = false, ch, in_class = false;
+            while (ch = next(true)) if (prev_backslash) {
+                regexp += "\\" + ch;
+                prev_backslash = false;
+            } else if (ch == "[") {
+                in_class = true;
+                regexp += ch;
+            } else if (ch == "]" && in_class) {
+                in_class = false;
+                regexp += ch;
+            } else if (ch == "/" && !in_class) {
+                break;
+            } else if (ch == "\\") {
+                prev_backslash = true;
+            } else {
+                regexp += ch;
+            }
+            var mods = read_name();
+            return token("regexp", new RegExp(regexp, mods));
+        });
+        function read_operator(prefix) {
+            function grow(op) {
+                if (!peek()) return op;
+                var bigger = op + peek();
+                if (OPERATORS(bigger)) {
+                    next();
+                    return grow(bigger);
+                } else {
+                    return op;
+                }
+            }
+            return token("operator", grow(prefix || next()));
+        }
+        function handle_slash() {
+            next();
+            switch (peek()) {
+              case "/":
+                next();
+                return skip_line_comment("comment1");
+
+              case "*":
+                next();
+                return skip_multiline_comment();
+            }
+            return S.regex_allowed ? read_regexp("") : read_operator("/");
+        }
+        function handle_dot() {
+            next();
+            return is_digit(peek().charCodeAt(0)) ? read_num(".") : token("punc", ".");
+        }
+        function read_word() {
+            var word = read_name();
+            if (prev_was_dot) return token("name", word);
+            return KEYWORDS_ATOM(word) ? token("atom", word) : !KEYWORDS(word) ? token("name", word) : OPERATORS(word) ? token("operator", word) : token("keyword", word);
+        }
+        function with_eof_error(eof_error, cont) {
+            return function(x) {
+                try {
+                    return cont(x);
+                } catch (ex) {
+                    if (ex === EX_EOF) parse_error(eof_error); else throw ex;
+                }
+            };
+        }
+        function next_token(force_regexp) {
+            if (force_regexp != null) return read_regexp(force_regexp);
+            skip_whitespace();
+            start_token();
+            if (html5_comments) {
+                if (looking_at("<!--")) {
+                    forward(4);
+                    return skip_line_comment("comment3");
+                }
+                if (looking_at("-->") && S.newline_before) {
+                    forward(3);
+                    return skip_line_comment("comment4");
+                }
+            }
+            var ch = peek();
+            if (!ch) return token("eof");
+            var code = ch.charCodeAt(0);
+            switch (code) {
+              case 34:
+              case 39:
+                return read_string();
+
+              case 46:
+                return handle_dot();
+
+              case 47:
+                return handle_slash();
+            }
+            if (is_digit(code)) return read_num();
+            if (PUNC_CHARS(ch)) return token("punc", next());
+            if (OPERATOR_CHARS(ch)) return read_operator();
+            if (code == 92 || is_identifier_start(code)) return read_word();
+            parse_error("Unexpected character '" + ch + "'");
+        }
+        next_token.context = function(nc) {
+            if (nc) S = nc;
+            return S;
+        };
+        return next_token;
+    }
+    var UNARY_PREFIX = makePredicate([ "typeof", "void", "delete", "--", "++", "!", "~", "-", "+" ]);
+    var UNARY_POSTFIX = makePredicate([ "--", "++" ]);
+    var ASSIGNMENT = makePredicate([ "=", "+=", "-=", "/=", "*=", "%=", ">>=", "<<=", ">>>=", "|=", "^=", "&=" ]);
+    var PRECEDENCE = function(a, ret) {
+        for (var i = 0; i < a.length; ++i) {
+            var b = a[i];
+            for (var j = 0; j < b.length; ++j) {
+                ret[b[j]] = i + 1;
+            }
+        }
+        return ret;
+    }([ [ "||" ], [ "&&" ], [ "|" ], [ "^" ], [ "&" ], [ "==", "===", "!=", "!==" ], [ "<", ">", "<=", ">=", "in", "instanceof" ], [ ">>", "<<", ">>>" ], [ "+", "-" ], [ "*", "/", "%" ] ], {});
+    var STATEMENTS_WITH_LABELS = array_to_hash([ "for", "do", "while", "switch" ]);
+    var ATOMIC_START_TOKEN = array_to_hash([ "atom", "num", "string", "regexp", "name" ]);
+    function parse($TEXT, options) {
+        options = defaults(options, {
+            strict: false,
+            filename: null,
+            toplevel: null,
+            expression: false,
+            html5_comments: true
+        });
+        var S = {
+            input: typeof $TEXT == "string" ? tokenizer($TEXT, options.filename, options.html5_comments) : $TEXT,
+            token: null,
+            prev: null,
+            peeked: null,
+            in_function: 0,
+            in_directives: true,
+            in_loop: 0,
+            labels: []
+        };
+        S.token = next();
+        function is(type, value) {
+            return is_token(S.token, type, value);
+        }
+        function peek() {
+            return S.peeked || (S.peeked = S.input());
+        }
+        function next() {
+            S.prev = S.token;
+            if (S.peeked) {
+                S.token = S.peeked;
+                S.peeked = null;
+            } else {
+                S.token = S.input();
+            }
+            S.in_directives = S.in_directives && (S.token.type == "string" || is("punc", ";"));
+            return S.token;
+        }
+        function prev() {
+            return S.prev;
+        }
+        function croak(msg, line, col, pos) {
+            var ctx = S.input.context();
+            js_error(msg, ctx.filename, line != null ? line : ctx.tokline, col != null ? col : ctx.tokcol, pos != null ? pos : ctx.tokpos);
+        }
+        function token_error(token, msg) {
+            croak(msg, token.line, token.col);
+        }
+        function unexpected(token) {
+            if (token == null) token = S.token;
+            token_error(token, "Unexpected token: " + token.type + " (" + token.value + ")");
+        }
+        function expect_token(type, val) {
+            if (is(type, val)) {
+                return next();
+            }
+            token_error(S.token, "Unexpected token " + S.token.type + " «" + S.token.value + "»" + ", expected " + type + " «" + val + "»");
+        }
+        function expect(punc) {
+            return expect_token("punc", punc);
+        }
+        function can_insert_semicolon() {
+            return !options.strict && (S.token.nlb || is("eof") || is("punc", "}"));
+        }
+        function semicolon() {
+            if (is("punc", ";")) next(); else if (!can_insert_semicolon()) unexpected();
+        }
+        function parenthesised() {
+            expect("(");
+            var exp = expression(true);
+            expect(")");
+            return exp;
+        }
+        function embed_tokens(parser) {
+            return function() {
+                var start = S.token;
+                var expr = parser();
+                var end = prev();
+                expr.start = start;
+                expr.end = end;
+                return expr;
+            };
+        }
+        function handle_regexp() {
+            if (is("operator", "/") || is("operator", "/=")) {
+                S.peeked = null;
+                S.token = S.input(S.token.value.substr(1));
+            }
+        }
+        var statement = embed_tokens(function() {
+            var tmp;
+            handle_regexp();
+            switch (S.token.type) {
+              case "string":
+                var dir = S.in_directives, stat = simple_statement();
+                if (dir && stat.body instanceof AST_String && !is("punc", ",")) return new AST_Directive({
+                    value: stat.body.value
+                });
+                return stat;
+
+              case "num":
+              case "regexp":
+              case "operator":
+              case "atom":
+                return simple_statement();
+
+              case "name":
+                return is_token(peek(), "punc", ":") ? labeled_statement() : simple_statement();
+
+              case "punc":
+                switch (S.token.value) {
+                  case "{":
+                    return new AST_BlockStatement({
+                        start: S.token,
+                        body: block_(),
+                        end: prev()
+                    });
+
+                  case "[":
+                  case "(":
+                    return simple_statement();
+
+                  case ";":
+                    next();
+                    return new AST_EmptyStatement();
+
+                  default:
+                    unexpected();
+                }
+
+              case "keyword":
+                switch (tmp = S.token.value, next(), tmp) {
+                  case "break":
+                    return break_cont(AST_Break);
+
+                  case "continue":
+                    return break_cont(AST_Continue);
+
+                  case "debugger":
+                    semicolon();
+                    return new AST_Debugger();
+
+                  case "do":
+                    return new AST_Do({
+                        body: in_loop(statement),
+                        condition: (expect_token("keyword", "while"), tmp = parenthesised(), semicolon(), 
+                        tmp)
+                    });
+
+                  case "while":
+                    return new AST_While({
+                        condition: parenthesised(),
+                        body: in_loop(statement)
+                    });
+
+                  case "for":
+                    return for_();
+
+                  case "function":
+                    return function_(AST_Defun);
+
+                  case "if":
+                    return if_();
+
+                  case "return":
+                    if (S.in_function == 0) croak("'return' outside of function");
+                    return new AST_Return({
+                        value: is("punc", ";") ? (next(), null) : can_insert_semicolon() ? null : (tmp = expression(true), 
+                        semicolon(), tmp)
+                    });
+
+                  case "switch":
+                    return new AST_Switch({
+                        expression: parenthesised(),
+                        body: in_loop(switch_body_)
+                    });
+
+                  case "throw":
+                    if (S.token.nlb) croak("Illegal newline after 'throw'");
+                    return new AST_Throw({
+                        value: (tmp = expression(true), semicolon(), tmp)
+                    });
+
+                  case "try":
+                    return try_();
+
+                  case "var":
+                    return tmp = var_(), semicolon(), tmp;
+
+                  case "const":
+                    return tmp = const_(), semicolon(), tmp;
+
+                  case "with":
+                    return new AST_With({
+                        expression: parenthesised(),
+                        body: statement()
+                    });
+
+                  default:
+                    unexpected();
+                }
+            }
+        });
+        function labeled_statement() {
+            var label = as_symbol(AST_Label);
+            if (find_if(function(l) {
+                return l.name == label.name;
+            }, S.labels)) {
+                croak("Label " + label.name + " defined twice");
+            }
+            expect(":");
+            S.labels.push(label);
+            var stat = statement();
+            S.labels.pop();
+            if (!(stat instanceof AST_IterationStatement)) {
+                label.references.forEach(function(ref) {
+                    if (ref instanceof AST_Continue) {
+                        ref = ref.label.start;
+                        croak("Continue label `" + label.name + "` refers to non-IterationStatement.", ref.line, ref.col, ref.pos);
+                    }
+                });
+            }
+            return new AST_LabeledStatement({
+                body: stat,
+                label: label
+            });
+        }
+        function simple_statement(tmp) {
+            return new AST_SimpleStatement({
+                body: (tmp = expression(true), semicolon(), tmp)
+            });
+        }
+        function break_cont(type) {
+            var label = null, ldef;
+            if (!can_insert_semicolon()) {
+                label = as_symbol(AST_LabelRef, true);
+            }
+            if (label != null) {
+                ldef = find_if(function(l) {
+                    return l.name == label.name;
+                }, S.labels);
+                if (!ldef) croak("Undefined label " + label.name);
+                label.thedef = ldef;
+            } else if (S.in_loop == 0) croak(type.TYPE + " not inside a loop or switch");
+            semicolon();
+            var stat = new type({
+                label: label
+            });
+            if (ldef) ldef.references.push(stat);
+            return stat;
+        }
+        function for_() {
+            expect("(");
+            var init = null;
+            if (!is("punc", ";")) {
+                init = is("keyword", "var") ? (next(), var_(true)) : expression(true, true);
+                if (is("operator", "in")) {
+                    if (init instanceof AST_Var && init.definitions.length > 1) croak("Only one variable declaration allowed in for..in loop");
+                    next();
+                    return for_in(init);
+                }
+            }
+            return regular_for(init);
+        }
+        function regular_for(init) {
+            expect(";");
+            var test = is("punc", ";") ? null : expression(true);
+            expect(";");
+            var step = is("punc", ")") ? null : expression(true);
+            expect(")");
+            return new AST_For({
+                init: init,
+                condition: test,
+                step: step,
+                body: in_loop(statement)
+            });
+        }
+        function for_in(init) {
+            var lhs = init instanceof AST_Var ? init.definitions[0].name : null;
+            var obj = expression(true);
+            expect(")");
+            return new AST_ForIn({
+                init: init,
+                name: lhs,
+                object: obj,
+                body: in_loop(statement)
+            });
+        }
+        var function_ = function(ctor) {
+            var in_statement = ctor === AST_Defun;
+            var name = is("name") ? as_symbol(in_statement ? AST_SymbolDefun : AST_SymbolLambda) : null;
+            if (in_statement && !name) unexpected();
+            expect("(");
+            return new ctor({
+                name: name,
+                argnames: function(first, a) {
+                    while (!is("punc", ")")) {
+                        if (first) first = false; else expect(",");
+                        a.push(as_symbol(AST_SymbolFunarg));
+                    }
+                    next();
+                    return a;
+                }(true, []),
+                body: function(loop, labels) {
+                    ++S.in_function;
+                    S.in_directives = true;
+                    S.in_loop = 0;
+                    S.labels = [];
+                    var a = block_();
+                    --S.in_function;
+                    S.in_loop = loop;
+                    S.labels = labels;
+                    return a;
+                }(S.in_loop, S.labels)
+            });
+        };
+        function if_() {
+            var cond = parenthesised(), body = statement(), belse = null;
+            if (is("keyword", "else")) {
+                next();
+                belse = statement();
+            }
+            return new AST_If({
+                condition: cond,
+                body: body,
+                alternative: belse
+            });
+        }
+        function block_() {
+            expect("{");
+            var a = [];
+            while (!is("punc", "}")) {
+                if (is("eof")) unexpected();
+                a.push(statement());
+            }
+            next();
+            return a;
+        }
+        function switch_body_() {
+            expect("{");
+            var a = [], cur = null, branch = null, tmp;
+            while (!is("punc", "}")) {
+                if (is("eof")) unexpected();
+                if (is("keyword", "case")) {
+                    if (branch) branch.end = prev();
+                    cur = [];
+                    branch = new AST_Case({
+                        start: (tmp = S.token, next(), tmp),
+                        expression: expression(true),
+                        body: cur
+                    });
+                    a.push(branch);
+                    expect(":");
+                } else if (is("keyword", "default")) {
+                    if (branch) branch.end = prev();
+                    cur = [];
+                    branch = new AST_Default({
+                        start: (tmp = S.token, next(), expect(":"), tmp),
+                        body: cur
+                    });
+                    a.push(branch);
+                } else {
+                    if (!cur) unexpected();
+                    cur.push(statement());
+                }
+            }
+            if (branch) branch.end = prev();
+            next();
+            return a;
+        }
+        function try_() {
+            var body = block_(), bcatch = null, bfinally = null;
+            if (is("keyword", "catch")) {
+                var start = S.token;
+                next();
+                expect("(");
+                var name = as_symbol(AST_SymbolCatch);
+                expect(")");
+                bcatch = new AST_Catch({
+                    start: start,
+                    argname: name,
+                    body: block_(),
+                    end: prev()
+                });
+            }
+            if (is("keyword", "finally")) {
+                var start = S.token;
+                next();
+                bfinally = new AST_Finally({
+                    start: start,
+                    body: block_(),
+                    end: prev()
+                });
+            }
+            if (!bcatch && !bfinally) croak("Missing catch/finally blocks");
+            return new AST_Try({
+                body: body,
+                bcatch: bcatch,
+                bfinally: bfinally
+            });
+        }
+        function vardefs(no_in, in_const) {
+            var a = [];
+            for (;;) {
+                a.push(new AST_VarDef({
+                    start: S.token,
+                    name: as_symbol(in_const ? AST_SymbolConst : AST_SymbolVar),
+                    value: is("operator", "=") ? (next(), expression(false, no_in)) : null,
+                    end: prev()
+                }));
+                if (!is("punc", ",")) break;
+                next();
+            }
+            return a;
+        }
+        var var_ = function(no_in) {
+            return new AST_Var({
+                start: prev(),
+                definitions: vardefs(no_in, false),
+                end: prev()
+            });
+        };
+        var const_ = function() {
+            return new AST_Const({
+                start: prev(),
+                definitions: vardefs(false, true),
+                end: prev()
+            });
+        };
+        var new_ = function() {
+            var start = S.token;
+            expect_token("operator", "new");
+            var newexp = expr_atom(false), args;
+            if (is("punc", "(")) {
+                next();
+                args = expr_list(")");
+            } else {
+                args = [];
+            }
+            return subscripts(new AST_New({
+                start: start,
+                expression: newexp,
+                args: args,
+                end: prev()
+            }), true);
+        };
+        function as_atom_node() {
+            var tok = S.token, ret;
+            switch (tok.type) {
+              case "name":
+              case "keyword":
+                ret = _make_symbol(AST_SymbolRef);
+                break;
+
+              case "num":
+                ret = new AST_Number({
+                    start: tok,
+                    end: tok,
+                    value: tok.value
+                });
+                break;
+
+              case "string":
+                ret = new AST_String({
+                    start: tok,
+                    end: tok,
+                    value: tok.value
+                });
+                break;
+
+              case "regexp":
+                ret = new AST_RegExp({
+                    start: tok,
+                    end: tok,
+                    value: tok.value
+                });
+                break;
+
+              case "atom":
+                switch (tok.value) {
+                  case "false":
+                    ret = new AST_False({
+                        start: tok,
+                        end: tok
+                    });
+                    break;
+
+                  case "true":
+                    ret = new AST_True({
+                        start: tok,
+                        end: tok
+                    });
+                    break;
+
+                  case "null":
+                    ret = new AST_Null({
+                        start: tok,
+                        end: tok
+                    });
+                    break;
+                }
+                break;
+            }
+            next();
+            return ret;
+        }
+        var expr_atom = function(allow_calls) {
+            if (is("operator", "new")) {
+                return new_();
+            }
+            var start = S.token;
+            if (is("punc")) {
+                switch (start.value) {
+                  case "(":
+                    next();
+                    var ex = expression(true);
+                    ex.start = start;
+                    ex.end = S.token;
+                    expect(")");
+                    return subscripts(ex, allow_calls);
+
+                  case "[":
+                    return subscripts(array_(), allow_calls);
+
+                  case "{":
+                    return subscripts(object_(), allow_calls);
+                }
+                unexpected();
+            }
+            if (is("keyword", "function")) {
+                next();
+                var func = function_(AST_Function);
+                func.start = start;
+                func.end = prev();
+                return subscripts(func, allow_calls);
+            }
+            if (ATOMIC_START_TOKEN[S.token.type]) {
+                return subscripts(as_atom_node(), allow_calls);
+            }
+            unexpected();
+        };
+        function expr_list(closing, allow_trailing_comma, allow_empty) {
+            var first = true, a = [];
+            while (!is("punc", closing)) {
+                if (first) first = false; else expect(",");
+                if (allow_trailing_comma && is("punc", closing)) break;
+                if (is("punc", ",") && allow_empty) {
+                    a.push(new AST_Hole({
+                        start: S.token,
+                        end: S.token
+                    }));
+                } else {
+                    a.push(expression(false));
+                }
+            }
+            next();
+            return a;
+        }
+        var array_ = embed_tokens(function() {
+            expect("[");
+            return new AST_Array({
+                elements: expr_list("]", !options.strict, true)
+            });
+        });
+        var object_ = embed_tokens(function() {
+            expect("{");
+            var first = true, a = [];
+            while (!is("punc", "}")) {
+                if (first) first = false; else expect(",");
+                if (!options.strict && is("punc", "}")) break;
+                var start = S.token;
+                var type = start.type;
+                var name = as_property_name();
+                if (type == "name" && !is("punc", ":")) {
+                    if (name == "get") {
+                        a.push(new AST_ObjectGetter({
+                            start: start,
+                            key: as_atom_node(),
+                            value: function_(AST_Accessor),
+                            end: prev()
+                        }));
+                        continue;
+                    }
+                    if (name == "set") {
+                        a.push(new AST_ObjectSetter({
+                            start: start,
+                            key: as_atom_node(),
+                            value: function_(AST_Accessor),
+                            end: prev()
+                        }));
+                        continue;
+                    }
+                }
+                expect(":");
+                a.push(new AST_ObjectKeyVal({
+                    start: start,
+                    key: name,
+                    value: expression(false),
+                    end: prev()
+                }));
+            }
+            next();
+            return new AST_Object({
+                properties: a
+            });
+        });
+        function as_property_name() {
+            var tmp = S.token;
+            next();
+            switch (tmp.type) {
+              case "num":
+              case "string":
+              case "name":
+              case "operator":
+              case "keyword":
+              case "atom":
+                return tmp.value;
+
+              default:
+                unexpected();
+            }
+        }
+        function as_name() {
+            var tmp = S.token;
+            next();
+            switch (tmp.type) {
+              case "name":
+              case "operator":
+              case "keyword":
+              case "atom":
+                return tmp.value;
+
+              default:
+                unexpected();
+            }
+        }
+        function _make_symbol(type) {
+            var name = S.token.value;
+            return new (name == "this" ? AST_This : type)({
+                name: String(name),
+                start: S.token,
+                end: S.token
+            });
+        }
+        function as_symbol(type, noerror) {
+            if (!is("name")) {
+                if (!noerror) croak("Name expected");
+                return null;
+            }
+            var sym = _make_symbol(type);
+            next();
+            return sym;
+        }
+        var subscripts = function(expr, allow_calls) {
+            var start = expr.start;
+            if (is("punc", ".")) {
+                next();
+                return subscripts(new AST_Dot({
+                    start: start,
+                    expression: expr,
+                    property: as_name(),
+                    end: prev()
+                }), allow_calls);
+            }
+            if (is("punc", "[")) {
+                next();
+                var prop = expression(true);
+                expect("]");
+                return subscripts(new AST_Sub({
+                    start: start,
+                    expression: expr,
+                    property: prop,
+                    end: prev()
+                }), allow_calls);
+            }
+            if (allow_calls && is("punc", "(")) {
+                next();
+                return subscripts(new AST_Call({
+                    start: start,
+                    expression: expr,
+                    args: expr_list(")"),
+                    end: prev()
+                }), true);
+            }
+            return expr;
+        };
+        var maybe_unary = function(allow_calls) {
+            var start = S.token;
+            if (is("operator") && UNARY_PREFIX(start.value)) {
+                next();
+                handle_regexp();
+                var ex = make_unary(AST_UnaryPrefix, start.value, maybe_unary(allow_calls));
+                ex.start = start;
+                ex.end = prev();
+                return ex;
+            }
+            var val = expr_atom(allow_calls);
+            while (is("operator") && UNARY_POSTFIX(S.token.value) && !S.token.nlb) {
+                val = make_unary(AST_UnaryPostfix, S.token.value, val);
+                val.start = start;
+                val.end = S.token;
+                next();
+            }
+            return val;
+        };
+        function make_unary(ctor, op, expr) {
+            if ((op == "++" || op == "--") && !is_assignable(expr)) croak("Invalid use of " + op + " operator");
+            return new ctor({
+                operator: op,
+                expression: expr
+            });
+        }
+        var expr_op = function(left, min_prec, no_in) {
+            var op = is("operator") ? S.token.value : null;
+            if (op == "in" && no_in) op = null;
+            var prec = op != null ? PRECEDENCE[op] : null;
+            if (prec != null && prec > min_prec) {
+                next();
+                var right = expr_op(maybe_unary(true), prec, no_in);
+                return expr_op(new AST_Binary({
+                    start: left.start,
+                    left: left,
+                    operator: op,
+                    right: right,
+                    end: right.end
+                }), min_prec, no_in);
+            }
+            return left;
+        };
+        function expr_ops(no_in) {
+            return expr_op(maybe_unary(true), 0, no_in);
+        }
+        var maybe_conditional = function(no_in) {
+            var start = S.token;
+            var expr = expr_ops(no_in);
+            if (is("operator", "?")) {
+                next();
+                var yes = expression(false);
+                expect(":");
+                return new AST_Conditional({
+                    start: start,
+                    condition: expr,
+                    consequent: yes,
+                    alternative: expression(false, no_in),
+                    end: peek()
+                });
+            }
+            return expr;
+        };
+        function is_assignable(expr) {
+            if (!options.strict) return true;
+            if (expr instanceof AST_This) return false;
+            return expr instanceof AST_PropAccess || expr instanceof AST_Symbol;
+        }
+        var maybe_assign = function(no_in) {
+            var start = S.token;
+            var left = maybe_conditional(no_in), val = S.token.value;
+            if (is("operator") && ASSIGNMENT(val)) {
+                if (is_assignable(left)) {
+                    next();
+                    return new AST_Assign({
+                        start: start,
+                        left: left,
+                        operator: val,
+                        right: maybe_assign(no_in),
+                        end: prev()
+                    });
+                }
+                croak("Invalid assignment");
+            }
+            return left;
+        };
+        var expression = function(commas, no_in) {
+            var start = S.token;
+            var expr = maybe_assign(no_in);
+            if (commas && is("punc", ",")) {
+                next();
+                return new AST_Seq({
+                    start: start,
+                    car: expr,
+                    cdr: expression(true, no_in),
+                    end: peek()
+                });
+            }
+            return expr;
+        };
+        function in_loop(cont) {
+            ++S.in_loop;
+            var ret = cont();
+            --S.in_loop;
+            return ret;
+        }
+        if (options.expression) {
+            return expression(true);
+        }
+        return function() {
+            var start = S.token;
+            var body = [];
+            while (!is("eof")) body.push(statement());
+            var end = prev();
+            var toplevel = options.toplevel;
+            if (toplevel) {
+                toplevel.body = toplevel.body.concat(body);
+                toplevel.end = end;
+            } else {
+                toplevel = new AST_Toplevel({
+                    start: start,
+                    body: body,
+                    end: end
+                });
+            }
+            return toplevel;
+        }();
+    }
+    "use strict";
+    function TreeTransformer(before, after) {
+        TreeWalker.call(this);
+        this.before = before;
+        this.after = after;
+    }
+    TreeTransformer.prototype = new TreeWalker();
+    (function(undefined) {
+        function _(node, descend) {
+            node.DEFMETHOD("transform", function(tw, in_list) {
+                var x, y;
+                tw.push(this);
+                if (tw.before) x = tw.before(this, descend, in_list);
+                if (x === undefined) {
+                    if (!tw.after) {
+                        x = this;
+                        descend(x, tw);
+                    } else {
+                        tw.stack[tw.stack.length - 1] = x = this.clone();
+                        descend(x, tw);
+                        y = tw.after(x, in_list);
+                        if (y !== undefined) x = y;
+                    }
+                }
+                tw.pop();
+                return x;
+            });
+        }
+        function do_list(list, tw) {
+            return MAP(list, function(node) {
+                return node.transform(tw, true);
+            });
+        }
+        _(AST_Node, noop);
+        _(AST_LabeledStatement, function(self, tw) {
+            self.label = self.label.transform(tw);
+            self.body = self.body.transform(tw);
+        });
+        _(AST_SimpleStatement, function(self, tw) {
+            self.body = self.body.transform(tw);
+        });
+        _(AST_Block, function(self, tw) {
+            self.body = do_list(self.body, tw);
+        });
+        _(AST_DWLoop, function(self, tw) {
+            self.condition = self.condition.transform(tw);
+            self.body = self.body.transform(tw);
+        });
+        _(AST_For, function(self, tw) {
+            if (self.init) self.init = self.init.transform(tw);
+            if (self.condition) self.condition = self.condition.transform(tw);
+            if (self.step) self.step = self.step.transform(tw);
+            self.body = self.body.transform(tw);
+        });
+        _(AST_ForIn, function(self, tw) {
+            self.init = self.init.transform(tw);
+            self.object = self.object.transform(tw);
+            self.body = self.body.transform(tw);
+        });
+        _(AST_With, function(self, tw) {
+            self.expression = self.expression.transform(tw);
+            self.body = self.body.transform(tw);
+        });
+        _(AST_Exit, function(self, tw) {
+            if (self.value) self.value = self.value.transform(tw);
+        });
+        _(AST_LoopControl, function(self, tw) {
+            if (self.label) self.label = self.label.transform(tw);
+        });
+        _(AST_If, function(self, tw) {
+            self.condition = self.condition.transform(tw);
+            self.body = self.body.transform(tw);
+            if (self.alternative) self.alternative = self.alternative.transform(tw);
+        });
+        _(AST_Switch, function(self, tw) {
+            self.expression = self.expression.transform(tw);
+            self.body = do_list(self.body, tw);
+        });
+        _(AST_Case, function(self, tw) {
+            self.expression = self.expression.transform(tw);
+            self.body = do_list(self.body, tw);
+        });
+        _(AST_Try, function(self, tw) {
+            self.body = do_list(self.body, tw);
+            if (self.bcatch) self.bcatch = self.bcatch.transform(tw);
+            if (self.bfinally) self.bfinally = self.bfinally.transform(tw);
+        });
+        _(AST_Catch, function(self, tw) {
+            self.argname = self.argname.transform(tw);
+            self.body = do_list(self.body, tw);
+        });
+        _(AST_Definitions, function(self, tw) {
+            self.definitions = do_list(self.definitions, tw);
+        });
+        _(AST_VarDef, function(self, tw) {
+            self.name = self.name.transform(tw);
+            if (self.value) self.value = self.value.transform(tw);
+        });
+        _(AST_Lambda, function(self, tw) {
+            if (self.name) self.name = self.name.transform(tw);
+            self.argnames = do_list(self.argnames, tw);
+            self.body = do_list(self.body, tw);
+        });
+        _(AST_Call, function(self, tw) {
+            self.expression = self.expression.transform(tw);
+            self.args = do_list(self.args, tw);
+        });
+        _(AST_Seq, function(self, tw) {
+            self.car = self.car.transform(tw);
+            self.cdr = self.cdr.transform(tw);
+        });
+        _(AST_Dot, function(self, tw) {
+            self.expression = self.expression.transform(tw);
+        });
+        _(AST_Sub, function(self, tw) {
+            self.expression = self.expression.transform(tw);
+            self.property = self.property.transform(tw);
+        });
+        _(AST_Unary, function(self, tw) {
+            self.expression = self.expression.transform(tw);
+        });
+        _(AST_Binary, function(self, tw) {
+            self.left = self.left.transform(tw);
+            self.right = self.right.transform(tw);
+        });
+        _(AST_Conditional, function(self, tw) {
+            self.condition = self.condition.transform(tw);
+            self.consequent = self.consequent.transform(tw);
+            self.alternative = self.alternative.transform(tw);
+        });
+        _(AST_Array, function(self, tw) {
+            self.elements = do_list(self.elements, tw);
+        });
+        _(AST_Object, function(self, tw) {
+            self.properties = do_list(self.properties, tw);
+        });
+        _(AST_ObjectProperty, function(self, tw) {
+            self.value = self.value.transform(tw);
+        });
+    })();
+    "use strict";
+    function SymbolDef(scope, index, orig) {
+        this.name = orig.name;
+        this.orig = [ orig ];
+        this.scope = scope;
+        this.references = [];
+        this.global = false;
+        this.mangled_name = null;
+        this.undeclared = false;
+        this.constant = false;
+        this.index = index;
+    }
+    SymbolDef.prototype = {
+        unmangleable: function(options) {
+            return this.global && !(options && options.toplevel) || this.undeclared || !(options && options.eval) && (this.scope.uses_eval || this.scope.uses_with);
+        },
+        mangle: function(options) {
+            if (!this.mangled_name && !this.unmangleable(options)) {
+                var s = this.scope;
+                if (!options.screw_ie8 && this.orig[0] instanceof AST_SymbolLambda) s = s.parent_scope;
+                this.mangled_name = s.next_mangled(options, this);
+            }
+        }
+    };
+    AST_Toplevel.DEFMETHOD("figure_out_scope", function(options) {
+        options = defaults(options, {
+            screw_ie8: false
+        });
+        var self = this;
+        var scope = self.parent_scope = null;
+        var defun = null;
+        var nesting = 0;
+        var tw = new TreeWalker(function(node, descend) {
+            if (options.screw_ie8 && node instanceof AST_Catch) {
+                var save_scope = scope;
+                scope = new AST_Scope(node);
+                scope.init_scope_vars(nesting);
+                scope.parent_scope = save_scope;
+                descend();
+                scope = save_scope;
+                return true;
+            }
+            if (node instanceof AST_Scope) {
+                node.init_scope_vars(nesting);
+                var save_scope = node.parent_scope = scope;
+                var save_defun = defun;
+                defun = scope = node;
+                ++nesting;
+                descend();
+                --nesting;
+                scope = save_scope;
+                defun = save_defun;
+                return true;
+            }
+            if (node instanceof AST_Directive) {
+                node.scope = scope;
+                push_uniq(scope.directives, node.value);
+                return true;
+            }
+            if (node instanceof AST_With) {
+                for (var s = scope; s; s = s.parent_scope) s.uses_with = true;
+                return;
+            }
+            if (node instanceof AST_Symbol) {
+                node.scope = scope;
+            }
+            if (node instanceof AST_SymbolLambda) {
+                defun.def_function(node);
+            } else if (node instanceof AST_SymbolDefun) {
+                (node.scope = defun.parent_scope).def_function(node);
+            } else if (node instanceof AST_SymbolVar || node instanceof AST_SymbolConst) {
+                var def = defun.def_variable(node);
+                def.constant = node instanceof AST_SymbolConst;
+                def.init = tw.parent().value;
+            } else if (node instanceof AST_SymbolCatch) {
+                (options.screw_ie8 ? scope : defun).def_variable(node);
+            }
+        });
+        self.walk(tw);
+        var func = null;
+        var globals = self.globals = new Dictionary();
+        var tw = new TreeWalker(function(node, descend) {
+            if (node instanceof AST_Lambda) {
+                var prev_func = func;
+                func = node;
+                descend();
+                func = prev_func;
+                return true;
+            }
+            if (node instanceof AST_SymbolRef) {
+                var name = node.name;
+                var sym = node.scope.find_variable(name);
+                if (!sym) {
+                    var g;
+                    if (globals.has(name)) {
+                        g = globals.get(name);
+                    } else {
+                        g = new SymbolDef(self, globals.size(), node);
+                        g.undeclared = true;
+                        g.global = true;
+                        globals.set(name, g);
+                    }
+                    node.thedef = g;
+                    if (name == "eval" && tw.parent() instanceof AST_Call) {
+                        for (var s = node.scope; s && !s.uses_eval; s = s.parent_scope) s.uses_eval = true;
+                    }
+                    if (func && name == "arguments") {
+                        func.uses_arguments = true;
+                    }
+                } else {
+                    node.thedef = sym;
+                }
+                node.reference();
+                return true;
+            }
+        });
+        self.walk(tw);
+    });
+    AST_Scope.DEFMETHOD("init_scope_vars", function(nesting) {
+        this.directives = [];
+        this.variables = new Dictionary();
+        this.functions = new Dictionary();
+        this.uses_with = false;
+        this.uses_eval = false;
+        this.parent_scope = null;
+        this.enclosed = [];
+        this.cname = -1;
+        this.nesting = nesting;
+    });
+    AST_Scope.DEFMETHOD("strict", function() {
+        return this.has_directive("use strict");
+    });
+    AST_Lambda.DEFMETHOD("init_scope_vars", function() {
+        AST_Scope.prototype.init_scope_vars.apply(this, arguments);
+        this.uses_arguments = false;
+    });
+    AST_SymbolRef.DEFMETHOD("reference", function() {
+        var def = this.definition();
+        def.references.push(this);
+        var s = this.scope;
+        while (s) {
+            push_uniq(s.enclosed, def);
+            if (s === def.scope) break;
+            s = s.parent_scope;
+        }
+        this.frame = this.scope.nesting - def.scope.nesting;
+    });
+    AST_Scope.DEFMETHOD("find_variable", function(name) {
+        if (name instanceof AST_Symbol) name = name.name;
+        return this.variables.get(name) || this.parent_scope && this.parent_scope.find_variable(name);
+    });
+    AST_Scope.DEFMETHOD("has_directive", function(value) {
+        return this.parent_scope && this.parent_scope.has_directive(value) || (this.directives.indexOf(value) >= 0 ? this : null);
+    });
+    AST_Scope.DEFMETHOD("def_function", function(symbol) {
+        this.functions.set(symbol.name, this.def_variable(symbol));
+    });
+    AST_Scope.DEFMETHOD("def_variable", function(symbol) {
+        var def;
+        if (!this.variables.has(symbol.name)) {
+            def = new SymbolDef(this, this.variables.size(), symbol);
+            this.variables.set(symbol.name, def);
+            def.global = !this.parent_scope;
+        } else {
+            def = this.variables.get(symbol.name);
+            def.orig.push(symbol);
+        }
+        return symbol.thedef = def;
+    });
+    AST_Scope.DEFMETHOD("next_mangled", function(options) {
+        var ext = this.enclosed;
+        out: while (true) {
+            var m = base54(++this.cname);
+            if (!is_identifier(m)) continue;
+            if (options.except.indexOf(m) >= 0) continue;
+            for (var i = ext.length; --i >= 0; ) {
+                var sym = ext[i];
+                var name = sym.mangled_name || sym.unmangleable(options) && sym.name;
+                if (m == name) continue out;
+            }
+            return m;
+        }
+    });
+    AST_Function.DEFMETHOD("next_mangled", function(options, def) {
+        var tricky_def = def.orig[0] instanceof AST_SymbolFunarg && this.name && this.name.definition();
+        while (true) {
+            var name = AST_Lambda.prototype.next_mangled.call(this, options, def);
+            if (!(tricky_def && tricky_def.mangled_name == name)) return name;
+        }
+    });
+    AST_Scope.DEFMETHOD("references", function(sym) {
+        if (sym instanceof AST_Symbol) sym = sym.definition();
+        return this.enclosed.indexOf(sym) < 0 ? null : sym;
+    });
+    AST_Symbol.DEFMETHOD("unmangleable", function(options) {
+        return this.definition().unmangleable(options);
+    });
+    AST_SymbolAccessor.DEFMETHOD("unmangleable", function() {
+        return true;
+    });
+    AST_Label.DEFMETHOD("unmangleable", function() {
+        return false;
+    });
+    AST_Symbol.DEFMETHOD("unreferenced", function() {
+        return this.definition().references.length == 0 && !(this.scope.uses_eval || this.scope.uses_with);
+    });
+    AST_Symbol.DEFMETHOD("undeclared", function() {
+        return this.definition().undeclared;
+    });
+    AST_LabelRef.DEFMETHOD("undeclared", function() {
+        return false;
+    });
+    AST_Label.DEFMETHOD("undeclared", function() {
+        return false;
+    });
+    AST_Symbol.DEFMETHOD("definition", function() {
+        return this.thedef;
+    });
+    AST_Symbol.DEFMETHOD("global", function() {
+        return this.definition().global;
+    });
+    AST_Toplevel.DEFMETHOD("_default_mangler_options", function(options) {
+        return defaults(options, {
+            except: [],
+            eval: false,
+            sort: false,
+            toplevel: false,
+            screw_ie8: false
+        });
+    });
+    AST_Toplevel.DEFMETHOD("mangle_names", function(options) {
+        options = this._default_mangler_options(options);
+        var lname = -1;
+        var to_mangle = [];
+        var tw = new TreeWalker(function(node, descend) {
+            if (node instanceof AST_LabeledStatement) {
+                var save_nesting = lname;
+                descend();
+                lname = save_nesting;
+                return true;
+            }
+            if (node instanceof AST_Scope) {
+                var p = tw.parent(), a = [];
+                node.variables.each(function(symbol) {
+                    if (options.except.indexOf(symbol.name) < 0) {
+                        a.push(symbol);
+                    }
+                });
+                if (options.sort) a.sort(function(a, b) {
+                    return b.references.length - a.references.length;
+                });
+                to_mangle.push.apply(to_mangle, a);
+                return;
+            }
+            if (node instanceof AST_Label) {
+                var name;
+                do name = base54(++lname); while (!is_identifier(name));
+                node.mangled_name = name;
+                return true;
+            }
+        });
+        this.walk(tw);
+        to_mangle.forEach(function(def) {
+            def.mangle(options);
+        });
+    });
+    AST_Toplevel.DEFMETHOD("compute_char_frequency", function(options) {
+        options = this._default_mangler_options(options);
+        var tw = new TreeWalker(function(node) {
+            if (node instanceof AST_Constant) base54.consider(node.print_to_string()); else if (node instanceof AST_Return) base54.consider("return"); else if (node instanceof AST_Throw) base54.consider("throw"); else if (node instanceof AST_Continue) base54.consider("continue"); else if (node instanceof AST_Break) base54.consider("break"); else if (node instanceof AST_Debugger) base54.consider("debugger"); else if (node instanceof AST_Directive) base54.consider(node.value); else if (node instanceof AST_While) base54.consider("while"); else if (node instanceof AST_Do) base54.consider("do while"); else if (node instanceof AST_If) {
+                base54.consider("if");
+                if (node.alternative) base54.consider("else");
+            } else if (node instanceof AST_Var) base54.consider("var"); else if (node instanceof AST_Const) base54.consider("const"); else if (node instanceof AST_Lambda) base54.consider("function"); else if (node instanceof AST_For) base54.consider("for"); else if (node instanceof AST_ForIn) base54.consider("for in"); else if (node instanceof AST_Switch) base54.consider("switch"); else if (node instanceof AST_Case) base54.consider("case"); else if (node instanceof AST_Default) base54.consider("default"); else if (node instanceof AST_With) base54.consider("with"); else if (node instanceof AST_ObjectSetter) base54.consider("set" + node.key); else if (node instanceof AST_ObjectGetter) base54.consider("get" + node.key); else if (node instanceof AST_ObjectKeyVal) base54.consider(node.key); else if (node instanceof AST_New) base54.consider("new"); else if (node instanceof AST_This) base54.consider("this"); else if (node instanceof AST_Try) base54.consider("try"); else if (node instanceof AST_Catch) base54.consider("catch"); else if (node instanceof AST_Finally) base54.consider("finally"); else if (node instanceof AST_Symbol && node.unmangleable(options)) base54.consider(node.name); else if (node instanceof AST_Unary || node instanceof AST_Binary) base54.consider(node.operator); else if (node instanceof AST_Dot) base54.consider(node.property);
+        });
+        this.walk(tw);
+        base54.sort();
+    });
+    var base54 = function() {
+        var string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";
+        var chars, frequency;
+        function reset() {
+            frequency = Object.create(null);
+            chars = string.split("").map(function(ch) {
+                return ch.charCodeAt(0);
+            });
+            chars.forEach(function(ch) {
+                frequency[ch] = 0;
+            });
+        }
+        base54.consider = function(str) {
+            for (var i = str.length; --i >= 0; ) {
+                var code = str.charCodeAt(i);
+                if (code in frequency) ++frequency[code];
+            }
+        };
+        base54.sort = function() {
+            chars = mergeSort(chars, function(a, b) {
+                if (is_digit(a) && !is_digit(b)) return 1;
+                if (is_digit(b) && !is_digit(a)) return -1;
+                return frequency[b] - frequency[a];
+            });
+        };
+        base54.reset = reset;
+        reset();
+        base54.get = function() {
+            return chars;
+        };
+        base54.freq = function() {
+            return frequency;
+        };
+        function base54(num) {
+            var ret = "", base = 54;
+            do {
+                ret += String.fromCharCode(chars[num % base]);
+                num = Math.floor(num / base);
+                base = 64;
+            } while (num > 0);
+            return ret;
+        }
+        return base54;
+    }();
+    AST_Toplevel.DEFMETHOD("scope_warnings", function(options) {
+        options = defaults(options, {
+            undeclared: false,
+            unreferenced: true,
+            assign_to_global: true,
+            func_arguments: true,
+            nested_defuns: true,
+            eval: true
+        });
+        var tw = new TreeWalker(function(node) {
+            if (options.undeclared && node instanceof AST_SymbolRef && node.undeclared()) {
+                AST_Node.warn("Undeclared symbol: {name} [{file}:{line},{col}]", {
+                    name: node.name,
+                    file: node.start.file,
+                    line: node.start.line,
+                    col: node.start.col
+                });
+            }
+            if (options.assign_to_global) {
+                var sym = null;
+                if (node instanceof AST_Assign && node.left instanceof AST_SymbolRef) sym = node.left; else if (node instanceof AST_ForIn && node.init instanceof AST_SymbolRef) sym = node.init;
+                if (sym && (sym.undeclared() || sym.global() && sym.scope !== sym.definition().scope)) {
+                    AST_Node.warn("{msg}: {name} [{file}:{line},{col}]", {
+                        msg: sym.undeclared() ? "Accidental global?" : "Assignment to global",
+                        name: sym.name,
+                        file: sym.start.file,
+                        line: sym.start.line,
+                        col: sym.start.col
+                    });
+                }
+            }
+            if (options.eval && node instanceof AST_SymbolRef && node.undeclared() && node.name == "eval") {
+                AST_Node.warn("Eval is used [{file}:{line},{col}]", node.start);
+            }
+            if (options.unreferenced && (node instanceof AST_SymbolDeclaration || node instanceof AST_Label) && node.unreferenced()) {
+                AST_Node.warn("{type} {name} is declared but not referenced [{file}:{line},{col}]", {
+                    type: node instanceof AST_Label ? "Label" : "Symbol",
+                    name: node.name,
+                    file: node.start.file,
+                    line: node.start.line,
+                    col: node.start.col
+                });
+            }
+            if (options.func_arguments && node instanceof AST_Lambda && node.uses_arguments) {
+                AST_Node.warn("arguments used in function {name} [{file}:{line},{col}]", {
+                    name: node.name ? node.name.name : "anonymous",
+                    file: node.start.file,
+                    line: node.start.line,
+                    col: node.start.col
+                });
+            }
+            if (options.nested_defuns && node instanceof AST_Defun && !(tw.parent() instanceof AST_Scope)) {
+                AST_Node.warn('Function {name} declared in nested statement "{type}" [{file}:{line},{col}]', {
+                    name: node.name.name,
+                    type: tw.parent().TYPE,
+                    file: node.start.file,
+                    line: node.start.line,
+                    col: node.start.col
+                });
+            }
+        });
+        this.walk(tw);
+    });
+    "use strict";
+    function OutputStream(options) {
+        options = defaults(options, {
+            indent_start: 0,
+            indent_level: 4,
+            quote_keys: false,
+            space_colon: true,
+            ascii_only: false,
+            inline_script: false,
+            width: 80,
+            max_line_len: 32e3,
+            beautify: false,
+            source_map: null,
+            bracketize: false,
+            semicolons: true,
+            comments: false,
+            preserve_line: false,
+            screw_ie8: false,
+            preamble: null
+        }, true);
+        var indentation = 0;
+        var current_col = 0;
+        var current_line = 1;
+        var current_pos = 0;
+        var OUTPUT = "";
+        function to_ascii(str, identifier) {
+            return str.replace(/[\u0080-\uffff]/g, function(ch) {
+                var code = ch.charCodeAt(0).toString(16);
+                if (code.length <= 2 && !identifier) {
+                    while (code.length < 2) code = "0" + code;
+                    return "\\x" + code;
+                } else {
+                    while (code.length < 4) code = "0" + code;
+                    return "\\u" + code;
+                }
+            });
+        }
+        function make_string(str) {
+            var dq = 0, sq = 0;
+            str = str.replace(/[\\\b\f\n\r\t\x22\x27\u2028\u2029\0]/g, function(s) {
+                switch (s) {
+                  case "\\":
+                    return "\\\\";
+
+                  case "\b":
+                    return "\\b";
+
+                  case "\f":
+                    return "\\f";
+
+                  case "\n":
+                    return "\\n";
+
+                  case "\r":
+                    return "\\r";
+
+                  case "\u2028":
+                    return "\\u2028";
+
+                  case "\u2029":
+                    return "\\u2029";
+
+                  case '"':
+                    ++dq;
+                    return '"';
+
+                  case "'":
+                    ++sq;
+                    return "'";
+
+                  case "\x00":
+                    return "\\x00";
+                }
+                return s;
+            });
+            if (options.ascii_only) str = to_ascii(str);
+            if (dq > sq) return "'" + str.replace(/\x27/g, "\\'") + "'"; else return '"' + str.replace(/\x22/g, '\\"') + '"';
+        }
+        function encode_string(str) {
+            var ret = make_string(str);
+            if (options.inline_script) ret = ret.replace(/<\x2fscript([>\/\t\n\f\r ])/gi, "<\\/script$1");
+            return ret;
+        }
+        function make_name(name) {
+            name = name.toString();
+            if (options.ascii_only) name = to_ascii(name, true);
+            return name;
+        }
+        function make_indent(back) {
+            return repeat_string(" ", options.indent_start + indentation - back * options.indent_level);
+        }
+        var might_need_space = false;
+        var might_need_semicolon = false;
+        var last = null;
+        function last_char() {
+            return last.charAt(last.length - 1);
+        }
+        function maybe_newline() {
+            if (options.max_line_len && current_col > options.max_line_len) print("\n");
+        }
+        var requireSemicolonChars = makePredicate("( [ + * / - , .");
+        function print(str) {
+            str = String(str);
+            var ch = str.charAt(0);
+            if (might_need_semicolon) {
+                if ((!ch || ";}".indexOf(ch) < 0) && !/[;]$/.test(last)) {
+                    if (options.semicolons || requireSemicolonChars(ch)) {
+                        OUTPUT += ";";
+                        current_col++;
+                        current_pos++;
+                    } else {
+                        OUTPUT += "\n";
+                        current_pos++;
+                        current_line++;
+                        current_col = 0;
+                    }
+                    if (!options.beautify) might_need_space = false;
+                }
+                might_need_semicolon = false;
+                maybe_newline();
+            }
+            if (!options.beautify && options.preserve_line && stack[stack.length - 1]) {
+                var target_line = stack[stack.length - 1].start.line;
+                while (current_line < target_line) {
+                    OUTPUT += "\n";
+                    current_pos++;
+                    current_line++;
+                    current_col = 0;
+                    might_need_space = false;
+                }
+            }
+            if (might_need_space) {
+                var prev = last_char();
+                if (is_identifier_char(prev) && (is_identifier_char(ch) || ch == "\\") || /^[\+\-\/]$/.test(ch) && ch == prev) {
+                    OUTPUT += " ";
+                    current_col++;
+                    current_pos++;
+                }
+                might_need_space = false;
+            }
+            var a = str.split(/\r?\n/), n = a.length - 1;
+            current_line += n;
+            if (n == 0) {
+                current_col += a[n].length;
+            } else {
+                current_col = a[n].length;
+            }
+            current_pos += str.length;
+            last = str;
+            OUTPUT += str;
+        }
+        var space = options.beautify ? function() {
+            print(" ");
+        } : function() {
+            might_need_space = true;
+        };
+        var indent = options.beautify ? function(half) {
+            if (options.beautify) {
+                print(make_indent(half ? .5 : 0));
+            }
+        } : noop;
+        var with_indent = options.beautify ? function(col, cont) {
+            if (col === true) col = next_indent();
+            var save_indentation = indentation;
+            indentation = col;
+            var ret = cont();
+            indentation = save_indentation;
+            return ret;
+        } : function(col, cont) {
+            return cont();
+        };
+        var newline = options.beautify ? function() {
+            print("\n");
+        } : noop;
+        var semicolon = options.beautify ? function() {
+            print(";");
+        } : function() {
+            might_need_semicolon = true;
+        };
+        function force_semicolon() {
+            might_need_semicolon = false;
+            print(";");
+        }
+        function next_indent() {
+            return indentation + options.indent_level;
+        }
+        function with_block(cont) {
+            var ret;
+            print("{");
+            newline();
+            with_indent(next_indent(), function() {
+                ret = cont();
+            });
+            indent();
+            print("}");
+            return ret;
+        }
+        function with_parens(cont) {
+            print("(");
+            var ret = cont();
+            print(")");
+            return ret;
+        }
+        function with_square(cont) {
+            print("[");
+            var ret = cont();
+            print("]");
+            return ret;
+        }
+        function comma() {
+            print(",");
+            space();
+        }
+        function colon() {
+            print(":");
+            if (options.space_colon) space();
+        }
+        var add_mapping = options.source_map ? function(token, name) {
+            try {
+                if (token) options.source_map.add(token.file || "?", current_line, current_col, token.line, token.col, !name && token.type == "name" ? token.value : name);
+            } catch (ex) {
+                AST_Node.warn("Couldn't figure out mapping for {file}:{line},{col} → {cline},{ccol} [{name}]", {
+                    file: token.file,
+                    line: token.line,
+                    col: token.col,
+                    cline: current_line,
+                    ccol: current_col,
+                    name: name || ""
+                });
+            }
+        } : noop;
+        function get() {
+            return OUTPUT;
+        }
+        if (options.preamble) {
+            print(options.preamble.replace(/\r\n?|[\n\u2028\u2029]|\s*$/g, "\n"));
+        }
+        var stack = [];
+        return {
+            get: get,
+            toString: get,
+            indent: indent,
+            indentation: function() {
+                return indentation;
+            },
+            current_width: function() {
+                return current_col - indentation;
+            },
+            should_break: function() {
+                return options.width && this.current_width() >= options.width;
+            },
+            newline: newline,
+            print: print,
+            space: space,
+            comma: comma,
+            colon: colon,
+            last: function() {
+                return last;
+            },
+            semicolon: semicolon,
+            force_semicolon: force_semicolon,
+            to_ascii: to_ascii,
+            print_name: function(name) {
+                print(make_name(name));
+            },
+            print_string: function(str) {
+                print(encode_string(str));
+            },
+            next_indent: next_indent,
+            with_indent: with_indent,
+            with_block: with_block,
+            with_parens: with_parens,
+            with_square: with_square,
+            add_mapping: add_mapping,
+            option: function(opt) {
+                return options[opt];
+            },
+            line: function() {
+                return current_line;
+            },
+            col: function() {
+                return current_col;
+            },
+            pos: function() {
+                return current_pos;
+            },
+            push_node: function(node) {
+                stack.push(node);
+            },
+            pop_node: function() {
+                return stack.pop();
+            },
+            stack: function() {
+                return stack;
+            },
+            parent: function(n) {
+                return stack[stack.length - 2 - (n || 0)];
+            }
+        };
+    }
+    (function() {
+        function DEFPRINT(nodetype, generator) {
+            nodetype.DEFMETHOD("_codegen", generator);
+        }
+        AST_Node.DEFMETHOD("print", function(stream, force_parens) {
+            var self = this, generator = self._codegen;
+            function doit() {
+                self.add_comments(stream);
+                self.add_source_map(stream);
+                generator(self, stream);
+            }
+            stream.push_node(self);
+            if (force_parens || self.needs_parens(stream)) {
+                stream.with_parens(doit);
+            } else {
+                doit();
+            }
+            stream.pop_node();
+        });
+        AST_Node.DEFMETHOD("print_to_string", function(options) {
+            var s = OutputStream(options);
+            this.print(s);
+            return s.get();
+        });
+        AST_Node.DEFMETHOD("add_comments", function(output) {
+            var c = output.option("comments"), self = this;
+            if (c) {
+                var start = self.start;
+                if (start && !start._comments_dumped) {
+                    start._comments_dumped = true;
+                    var comments = start.comments_before || [];
+                    if (self instanceof AST_Exit && self.value && self.value.start.comments_before && self.value.start.comments_before.length > 0) {
+                        comments = comments.concat(self.value.start.comments_before);
+                        self.value.start.comments_before = [];
+                    }
+                    if (c.test) {
+                        comments = comments.filter(function(comment) {
+                            return c.test(comment.value);
+                        });
+                    } else if (typeof c == "function") {
+                        comments = comments.filter(function(comment) {
+                            return c(self, comment);
+                        });
+                    }
+                    comments.forEach(function(c) {
+                        if (/comment[134]/.test(c.type)) {
+                            output.print("//" + c.value + "\n");
+                            output.indent();
+                        } else if (c.type == "comment2") {
+                            output.print("/*" + c.value + "*/");
+                            if (start.nlb) {
+                                output.print("\n");
+                                output.indent();
+                            } else {
+                                output.space();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        function PARENS(nodetype, func) {
+            nodetype.DEFMETHOD("needs_parens", func);
+        }
+        PARENS(AST_Node, function() {
+            return false;
+        });
+        PARENS(AST_Function, function(output) {
+            return first_in_statement(output);
+        });
+        PARENS(AST_Object, function(output) {
+            return first_in_statement(output);
+        });
+        PARENS(AST_Unary, function(output) {
+            var p = output.parent();
+            return p instanceof AST_PropAccess && p.expression === this;
+        });
+        PARENS(AST_Seq, function(output) {
+            var p = output.parent();
+            return p instanceof AST_Call || p instanceof AST_Unary || p instanceof AST_Binary || p instanceof AST_VarDef || p instanceof AST_Dot || p instanceof AST_Array || p instanceof AST_ObjectProperty || p instanceof AST_Conditional;
+        });
+        PARENS(AST_Binary, function(output) {
+            var p = output.parent();
+            if (p instanceof AST_Call && p.expression === this) return true;
+            if (p instanceof AST_Unary) return true;
+            if (p instanceof AST_PropAccess && p.expression === this) return true;
+            if (p instanceof AST_Binary) {
+                var po = p.operator, pp = PRECEDENCE[po];
+                var so = this.operator, sp = PRECEDENCE[so];
+                if (pp > sp || pp == sp && this === p.right) {
+                    return true;
+                }
+            }
+        });
+        PARENS(AST_PropAccess, function(output) {
+            var p = output.parent();
+            if (p instanceof AST_New && p.expression === this) {
+                try {
+                    this.walk(new TreeWalker(function(node) {
+                        if (node instanceof AST_Call) throw p;
+                    }));
+                } catch (ex) {
+                    if (ex !== p) throw ex;
+                    return true;
+                }
+            }
+        });
+        PARENS(AST_Call, function(output) {
+            var p = output.parent(), p1;
+            if (p instanceof AST_New && p.expression === this) return true;
+            return this.expression instanceof AST_Function && p instanceof AST_PropAccess && p.expression === this && (p1 = output.parent(1)) instanceof AST_Assign && p1.left === p;
+        });
+        PARENS(AST_New, function(output) {
+            var p = output.parent();
+            if (no_constructor_parens(this, output) && (p instanceof AST_PropAccess || p instanceof AST_Call && p.expression === this)) return true;
+        });
+        PARENS(AST_Number, function(output) {
+            var p = output.parent();
+            if (this.getValue() < 0 && p instanceof AST_PropAccess && p.expression === this) return true;
+        });
+        PARENS(AST_NaN, function(output) {
+            var p = output.parent();
+            if (p instanceof AST_PropAccess && p.expression === this) return true;
+        });
+        function assign_and_conditional_paren_rules(output) {
+            var p = output.parent();
+            if (p instanceof AST_Unary) return true;
+            if (p instanceof AST_Binary && !(p instanceof AST_Assign)) return true;
+            if (p instanceof AST_Call && p.expression === this) return true;
+            if (p instanceof AST_Conditional && p.condition === this) return true;
+            if (p instanceof AST_PropAccess && p.expression === this) return true;
+        }
+        PARENS(AST_Assign, assign_and_conditional_paren_rules);
+        PARENS(AST_Conditional, assign_and_conditional_paren_rules);
+        DEFPRINT(AST_Directive, function(self, output) {
+            output.print_string(self.value);
+            output.semicolon();
+        });
+        DEFPRINT(AST_Debugger, function(self, output) {
+            output.print("debugger");
+            output.semicolon();
+        });
+        function display_body(body, is_toplevel, output) {
+            var last = body.length - 1;
+            body.forEach(function(stmt, i) {
+                if (!(stmt instanceof AST_EmptyStatement)) {
+                    output.indent();
+                    stmt.print(output);
+                    if (!(i == last && is_toplevel)) {
+                        output.newline();
+                        if (is_toplevel) output.newline();
+                    }
+                }
+            });
+        }
+        AST_StatementWithBody.DEFMETHOD("_do_print_body", function(output) {
+            force_statement(this.body, output);
+        });
+        DEFPRINT(AST_Statement, function(self, output) {
+            self.body.print(output);
+            output.semicolon();
+        });
+        DEFPRINT(AST_Toplevel, function(self, output) {
+            display_body(self.body, true, output);
+            output.print("");
+        });
+        DEFPRINT(AST_LabeledStatement, function(self, output) {
+            self.label.print(output);
+            output.colon();
+            self.body.print(output);
+        });
+        DEFPRINT(AST_SimpleStatement, function(self, output) {
+            self.body.print(output);
+            output.semicolon();
+        });
+        function print_bracketed(body, output) {
+            if (body.length > 0) output.with_block(function() {
+                display_body(body, false, output);
+            }); else output.print("{}");
+        }
+        DEFPRINT(AST_BlockStatement, function(self, output) {
+            print_bracketed(self.body, output);
+        });
+        DEFPRINT(AST_EmptyStatement, function(self, output) {
+            output.semicolon();
+        });
+        DEFPRINT(AST_Do, function(self, output) {
+            output.print("do");
+            output.space();
+            self._do_print_body(output);
+            output.space();
+            output.print("while");
+            output.space();
+            output.with_parens(function() {
+                self.condition.print(output);
+            });
+            output.semicolon();
+        });
+        DEFPRINT(AST_While, function(self, output) {
+            output.print("while");
+            output.space();
+            output.with_parens(function() {
+                self.condition.print(output);
+            });
+            output.space();
+            self._do_print_body(output);
+        });
+        DEFPRINT(AST_For, function(self, output) {
+            output.print("for");
+            output.space();
+            output.with_parens(function() {
+                if (self.init) {
+                    if (self.init instanceof AST_Definitions) {
+                        self.init.print(output);
+                    } else {
+                        parenthesize_for_noin(self.init, output, true);
+                    }
+                    output.print(";");
+                    output.space();
+                } else {
+                    output.print(";");
+                }
+                if (self.condition) {
+                    self.condition.print(output);
+                    output.print(";");
+                    output.space();
+                } else {
+                    output.print(";");
+                }
+                if (self.step) {
+                    self.step.print(output);
+                }
+            });
+            output.space();
+            self._do_print_body(output);
+        });
+        DEFPRINT(AST_ForIn, function(self, output) {
+            output.print("for");
+            output.space();
+            output.with_parens(function() {
+                self.init.print(output);
+                output.space();
+                output.print("in");
+                output.space();
+                self.object.print(output);
+            });
+            output.space();
+            self._do_print_body(output);
+        });
+        DEFPRINT(AST_With, function(self, output) {
+            output.print("with");
+            output.space();
+            output.with_parens(function() {
+                self.expression.print(output);
+            });
+            output.space();
+            self._do_print_body(output);
+        });
+        AST_Lambda.DEFMETHOD("_do_print", function(output, nokeyword) {
+            var self = this;
+            if (!nokeyword) {
+                output.print("function");
+            }
+            if (self.name) {
+                output.space();
+                self.name.print(output);
+            }
+            output.with_parens(function() {
+                self.argnames.forEach(function(arg, i) {
+                    if (i) output.comma();
+                    arg.print(output);
+                });
+            });
+            output.space();
+            print_bracketed(self.body, output);
+        });
+        DEFPRINT(AST_Lambda, function(self, output) {
+            self._do_print(output);
+        });
+        AST_Exit.DEFMETHOD("_do_print", function(output, kind) {
+            output.print(kind);
+            if (this.value) {
+                output.space();
+                this.value.print(output);
+            }
+            output.semicolon();
+        });
+        DEFPRINT(AST_Return, function(self, output) {
+            self._do_print(output, "return");
+        });
+        DEFPRINT(AST_Throw, function(self, output) {
+            self._do_print(output, "throw");
+        });
+        AST_LoopControl.DEFMETHOD("_do_print", function(output, kind) {
+            output.print(kind);
+            if (this.label) {
+                output.space();
+                this.label.print(output);
+            }
+            output.semicolon();
+        });
+        DEFPRINT(AST_Break, function(self, output) {
+            self._do_print(output, "break");
+        });
+        DEFPRINT(AST_Continue, function(self, output) {
+            self._do_print(output, "continue");
+        });
+        function make_then(self, output) {
+            if (output.option("bracketize")) {
+                make_block(self.body, output);
+                return;
+            }
+            if (!self.body) return output.force_semicolon();
+            if (self.body instanceof AST_Do && !output.option("screw_ie8")) {
+                make_block(self.body, output);
+                return;
+            }
+            var b = self.body;
+            while (true) {
+                if (b instanceof AST_If) {
+                    if (!b.alternative) {
+                        make_block(self.body, output);
+                        return;
+                    }
+                    b = b.alternative;
+                } else if (b instanceof AST_StatementWithBody) {
+                    b = b.body;
+                } else break;
+            }
+            force_statement(self.body, output);
+        }
+        DEFPRINT(AST_If, function(self, output) {
+            output.print("if");
+            output.space();
+            output.with_parens(function() {
+                self.condition.print(output);
+            });
+            output.space();
+            if (self.alternative) {
+                make_then(self, output);
+                output.space();
+                output.print("else");
+                output.space();
+                force_statement(self.alternative, output);
+            } else {
+                self._do_print_body(output);
+            }
+        });
+        DEFPRINT(AST_Switch, function(self, output) {
+            output.print("switch");
+            output.space();
+            output.with_parens(function() {
+                self.expression.print(output);
+            });
+            output.space();
+            if (self.body.length > 0) output.with_block(function() {
+                self.body.forEach(function(stmt, i) {
+                    if (i) output.newline();
+                    output.indent(true);
+                    stmt.print(output);
+                });
+            }); else output.print("{}");
+        });
+        AST_SwitchBranch.DEFMETHOD("_do_print_body", function(output) {
+            if (this.body.length > 0) {
+                output.newline();
+                this.body.forEach(function(stmt) {
+                    output.indent();
+                    stmt.print(output);
+                    output.newline();
+                });
+            }
+        });
+        DEFPRINT(AST_Default, function(self, output) {
+            output.print("default:");
+            self._do_print_body(output);
+        });
+        DEFPRINT(AST_Case, function(self, output) {
+            output.print("case");
+            output.space();
+            self.expression.print(output);
+            output.print(":");
+            self._do_print_body(output);
+        });
+        DEFPRINT(AST_Try, function(self, output) {
+            output.print("try");
+            output.space();
+            print_bracketed(self.body, output);
+            if (self.bcatch) {
+                output.space();
+                self.bcatch.print(output);
+            }
+            if (self.bfinally) {
+                output.space();
+                self.bfinally.print(output);
+            }
+        });
+        DEFPRINT(AST_Catch, function(self, output) {
+            output.print("catch");
+            output.space();
+            output.with_parens(function() {
+                self.argname.print(output);
+            });
+            output.space();
+            print_bracketed(self.body, output);
+        });
+        DEFPRINT(AST_Finally, function(self, output) {
+            output.print("finally");
+            output.space();
+            print_bracketed(self.body, output);
+        });
+        AST_Definitions.DEFMETHOD("_do_print", function(output, kind) {
+            output.print(kind);
+            output.space();
+            this.definitions.forEach(function(def, i) {
+                if (i) output.comma();
+                def.print(output);
+            });
+            var p = output.parent();
+            var in_for = p instanceof AST_For || p instanceof AST_ForIn;
+            var avoid_semicolon = in_for && p.init === this;
+            if (!avoid_semicolon) output.semicolon();
+        });
+        DEFPRINT(AST_Var, function(self, output) {
+            self._do_print(output, "var");
+        });
+        DEFPRINT(AST_Const, function(self, output) {
+            self._do_print(output, "const");
+        });
+        function parenthesize_for_noin(node, output, noin) {
+            if (!noin) node.print(output); else try {
+                node.walk(new TreeWalker(function(node) {
+                    if (node instanceof AST_Binary && node.operator == "in") throw output;
+                }));
+                node.print(output);
+            } catch (ex) {
+                if (ex !== output) throw ex;
+                node.print(output, true);
+            }
+        }
+        DEFPRINT(AST_VarDef, function(self, output) {
+            self.name.print(output);
+            if (self.value) {
+                output.space();
+                output.print("=");
+                output.space();
+                var p = output.parent(1);
+                var noin = p instanceof AST_For || p instanceof AST_ForIn;
+                parenthesize_for_noin(self.value, output, noin);
+            }
+        });
+        DEFPRINT(AST_Call, function(self, output) {
+            self.expression.print(output);
+            if (self instanceof AST_New && no_constructor_parens(self, output)) return;
+            output.with_parens(function() {
+                self.args.forEach(function(expr, i) {
+                    if (i) output.comma();
+                    expr.print(output);
+                });
+            });
+        });
+        DEFPRINT(AST_New, function(self, output) {
+            output.print("new");
+            output.space();
+            AST_Call.prototype._codegen(self, output);
+        });
+        AST_Seq.DEFMETHOD("_do_print", function(output) {
+            this.car.print(output);
+            if (this.cdr) {
+                output.comma();
+                if (output.should_break()) {
+                    output.newline();
+                    output.indent();
+                }
+                this.cdr.print(output);
+            }
+        });
+        DEFPRINT(AST_Seq, function(self, output) {
+            self._do_print(output);
+        });
+        DEFPRINT(AST_Dot, function(self, output) {
+            var expr = self.expression;
+            expr.print(output);
+            if (expr instanceof AST_Number && expr.getValue() >= 0) {
+                if (!/[xa-f.]/i.test(output.last())) {
+                    output.print(".");
+                }
+            }
+            output.print(".");
+            output.add_mapping(self.end);
+            output.print_name(self.property);
+        });
+        DEFPRINT(AST_Sub, function(self, output) {
+            self.expression.print(output);
+            output.print("[");
+            self.property.print(output);
+            output.print("]");
+        });
+        DEFPRINT(AST_UnaryPrefix, function(self, output) {
+            var op = self.operator;
+            output.print(op);
+            if (/^[a-z]/i.test(op)) output.space();
+            self.expression.print(output);
+        });
+        DEFPRINT(AST_UnaryPostfix, function(self, output) {
+            self.expression.print(output);
+            output.print(self.operator);
+        });
+        DEFPRINT(AST_Binary, function(self, output) {
+            self.left.print(output);
+            output.space();
+            output.print(self.operator);
+            if (self.operator == "<" && self.right instanceof AST_UnaryPrefix && self.right.operator == "!" && self.right.expression instanceof AST_UnaryPrefix && self.right.expression.operator == "--") {
+                output.print(" ");
+            } else {
+                output.space();
+            }
+            self.right.print(output);
+        });
+        DEFPRINT(AST_Conditional, function(self, output) {
+            self.condition.print(output);
+            output.space();
+            output.print("?");
+            output.space();
+            self.consequent.print(output);
+            output.space();
+            output.colon();
+            self.alternative.print(output);
+        });
+        DEFPRINT(AST_Array, function(self, output) {
+            output.with_square(function() {
+                var a = self.elements, len = a.length;
+                if (len > 0) output.space();
+                a.forEach(function(exp, i) {
+                    if (i) output.comma();
+                    exp.print(output);
+                    if (i === len - 1 && exp instanceof AST_Hole) output.comma();
+                });
+                if (len > 0) output.space();
+            });
+        });
+        DEFPRINT(AST_Object, function(self, output) {
+            if (self.properties.length > 0) output.with_block(function() {
+                self.properties.forEach(function(prop, i) {
+                    if (i) {
+                        output.print(",");
+                        output.newline();
+                    }
+                    output.indent();
+                    prop.print(output);
+                });
+                output.newline();
+            }); else output.print("{}");
+        });
+        DEFPRINT(AST_ObjectKeyVal, function(self, output) {
+            var key = self.key;
+            if (output.option("quote_keys")) {
+                output.print_string(key + "");
+            } else if ((typeof key == "number" || !output.option("beautify") && +key + "" == key) && parseFloat(key) >= 0) {
+                output.print(make_num(key));
+            } else if (RESERVED_WORDS(key) ? output.option("screw_ie8") : is_identifier_string(key)) {
+                output.print_name(key);
+            } else {
+                output.print_string(key);
+            }
+            output.colon();
+            self.value.print(output);
+        });
+        DEFPRINT(AST_ObjectSetter, function(self, output) {
+            output.print("set");
+            output.space();
+            self.key.print(output);
+            self.value._do_print(output, true);
+        });
+        DEFPRINT(AST_ObjectGetter, function(self, output) {
+            output.print("get");
+            output.space();
+            self.key.print(output);
+            self.value._do_print(output, true);
+        });
+        DEFPRINT(AST_Symbol, function(self, output) {
+            var def = self.definition();
+            output.print_name(def ? def.mangled_name || def.name : self.name);
+        });
+        DEFPRINT(AST_Undefined, function(self, output) {
+            output.print("void 0");
+        });
+        DEFPRINT(AST_Hole, noop);
+        DEFPRINT(AST_Infinity, function(self, output) {
+            output.print("1/0");
+        });
+        DEFPRINT(AST_NaN, function(self, output) {
+            output.print("0/0");
+        });
+        DEFPRINT(AST_This, function(self, output) {
+            output.print("this");
+        });
+        DEFPRINT(AST_Constant, function(self, output) {
+            output.print(self.getValue());
+        });
+        DEFPRINT(AST_String, function(self, output) {
+            output.print_string(self.getValue());
+        });
+        DEFPRINT(AST_Number, function(self, output) {
+            output.print(make_num(self.getValue()));
+        });
+        DEFPRINT(AST_RegExp, function(self, output) {
+            var str = self.getValue().toString();
+            if (output.option("ascii_only")) str = output.to_ascii(str);
+            output.print(str);
+            var p = output.parent();
+            if (p instanceof AST_Binary && /^in/.test(p.operator) && p.left === self) output.print(" ");
+        });
+        function force_statement(stat, output) {
+            if (output.option("bracketize")) {
+                if (!stat || stat instanceof AST_EmptyStatement) output.print("{}"); else if (stat instanceof AST_BlockStatement) stat.print(output); else output.with_block(function() {
+                    output.indent();
+                    stat.print(output);
+                    output.newline();
+                });
+            } else {
+                if (!stat || stat instanceof AST_EmptyStatement) output.force_semicolon(); else stat.print(output);
+            }
+        }
+        function first_in_statement(output) {
+            var a = output.stack(), i = a.length, node = a[--i], p = a[--i];
+            while (i > 0) {
+                if (p instanceof AST_Statement && p.body === node) return true;
+                if (p instanceof AST_Seq && p.car === node || p instanceof AST_Call && p.expression === node && !(p instanceof AST_New) || p instanceof AST_Dot && p.expression === node || p instanceof AST_Sub && p.expression === node || p instanceof AST_Conditional && p.condition === node || p instanceof AST_Binary && p.left === node || p instanceof AST_UnaryPostfix && p.expression === node) {
+                    node = p;
+                    p = a[--i];
+                } else {
+                    return false;
+                }
+            }
+        }
+        function no_constructor_parens(self, output) {
+            return self.args.length == 0 && !output.option("beautify");
+        }
+        function best_of(a) {
+            var best = a[0], len = best.length;
+            for (var i = 1; i < a.length; ++i) {
+                if (a[i].length < len) {
+                    best = a[i];
+                    len = best.length;
+                }
+            }
+            return best;
+        }
+        function make_num(num) {
+            var str = num.toString(10), a = [ str.replace(/^0\./, ".").replace("e+", "e") ], m;
+            if (Math.floor(num) === num) {
+                if (num >= 0) {
+                    a.push("0x" + num.toString(16).toLowerCase(), "0" + num.toString(8));
+                } else {
+                    a.push("-0x" + (-num).toString(16).toLowerCase(), "-0" + (-num).toString(8));
+                }
+                if (m = /^(.*?)(0+)$/.exec(num)) {
+                    a.push(m[1] + "e" + m[2].length);
+                }
+            } else if (m = /^0?\.(0+)(.*)$/.exec(num)) {
+                a.push(m[2] + "e-" + (m[1].length + m[2].length), str.substr(str.indexOf(".")));
+            }
+            return best_of(a);
+        }
+        function make_block(stmt, output) {
+            if (stmt instanceof AST_BlockStatement) {
+                stmt.print(output);
+                return;
+            }
+            output.with_block(function() {
+                output.indent();
+                stmt.print(output);
+                output.newline();
+            });
+        }
+        function DEFMAP(nodetype, generator) {
+            nodetype.DEFMETHOD("add_source_map", function(stream) {
+                generator(this, stream);
+            });
+        }
+        DEFMAP(AST_Node, noop);
+        function basic_sourcemap_gen(self, output) {
+            output.add_mapping(self.start);
+        }
+        DEFMAP(AST_Directive, basic_sourcemap_gen);
+        DEFMAP(AST_Debugger, basic_sourcemap_gen);
+        DEFMAP(AST_Symbol, basic_sourcemap_gen);
+        DEFMAP(AST_Jump, basic_sourcemap_gen);
+        DEFMAP(AST_StatementWithBody, basic_sourcemap_gen);
+        DEFMAP(AST_LabeledStatement, noop);
+        DEFMAP(AST_Lambda, basic_sourcemap_gen);
+        DEFMAP(AST_Switch, basic_sourcemap_gen);
+        DEFMAP(AST_SwitchBranch, basic_sourcemap_gen);
+        DEFMAP(AST_BlockStatement, basic_sourcemap_gen);
+        DEFMAP(AST_Toplevel, noop);
+        DEFMAP(AST_New, basic_sourcemap_gen);
+        DEFMAP(AST_Try, basic_sourcemap_gen);
+        DEFMAP(AST_Catch, basic_sourcemap_gen);
+        DEFMAP(AST_Finally, basic_sourcemap_gen);
+        DEFMAP(AST_Definitions, basic_sourcemap_gen);
+        DEFMAP(AST_Constant, basic_sourcemap_gen);
+        DEFMAP(AST_ObjectProperty, function(self, output) {
+            output.add_mapping(self.start, self.key);
+        });
+    })();
+    "use strict";
+    function Compressor(options, false_by_default) {
+        if (!(this instanceof Compressor)) return new Compressor(options, false_by_default);
+        TreeTransformer.call(this, this.before, this.after);
+        this.options = defaults(options, {
+            sequences: !false_by_default,
+            properties: !false_by_default,
+            dead_code: !false_by_default,
+            drop_debugger: !false_by_default,
+            unsafe: false,
+            unsafe_comps: false,
+            conditionals: !false_by_default,
+            comparisons: !false_by_default,
+            evaluate: !false_by_default,
+            booleans: !false_by_default,
+            loops: !false_by_default,
+            unused: !false_by_default,
+            hoist_funs: !false_by_default,
+            hoist_vars: false,
+            if_return: !false_by_default,
+            join_vars: !false_by_default,
+            cascade: !false_by_default,
+            side_effects: !false_by_default,
+            pure_getters: false,
+            pure_funcs: null,
+            negate_iife: !false_by_default,
+            screw_ie8: false,
+            drop_console: false,
+            warnings: true,
+            global_defs: {}
+        }, true);
+    }
+    Compressor.prototype = new TreeTransformer();
+    merge(Compressor.prototype, {
+        option: function(key) {
+            return this.options[key];
+        },
+        warn: function() {
+            if (this.options.warnings) AST_Node.warn.apply(AST_Node, arguments);
+        },
+        before: function(node, descend, in_list) {
+            if (node._squeezed) return node;
+            var was_scope = false;
+            if (node instanceof AST_Scope) {
+                node = node.hoist_declarations(this);
+                was_scope = true;
+            }
+            descend(node, this);
+            node = node.optimize(this);
+            if (was_scope && node instanceof AST_Scope) {
+                node.drop_unused(this);
+                descend(node, this);
+            }
+            node._squeezed = true;
+            return node;
+        }
+    });
+    (function() {
+        function OPT(node, optimizer) {
+            node.DEFMETHOD("optimize", function(compressor) {
+                var self = this;
+                if (self._optimized) return self;
+                var opt = optimizer(self, compressor);
+                opt._optimized = true;
+                if (opt === self) return opt;
+                return opt.transform(compressor);
+            });
+        }
+        OPT(AST_Node, function(self, compressor) {
+            return self;
+        });
+        AST_Node.DEFMETHOD("equivalent_to", function(node) {
+            return this.print_to_string() == node.print_to_string();
+        });
+        function make_node(ctor, orig, props) {
+            if (!props) props = {};
+            if (orig) {
+                if (!props.start) props.start = orig.start;
+                if (!props.end) props.end = orig.end;
+            }
+            return new ctor(props);
+        }
+        function make_node_from_constant(compressor, val, orig) {
+            if (val instanceof AST_Node) return val.transform(compressor);
+            switch (typeof val) {
+              case "string":
+                return make_node(AST_String, orig, {
+                    value: val
+                }).optimize(compressor);
+
+              case "number":
+                return make_node(isNaN(val) ? AST_NaN : AST_Number, orig, {
+                    value: val
+                }).optimize(compressor);
+
+              case "boolean":
+                return make_node(val ? AST_True : AST_False, orig).optimize(compressor);
+
+              case "undefined":
+                return make_node(AST_Undefined, orig).optimize(compressor);
+
+              default:
+                if (val === null) {
+                    return make_node(AST_Null, orig).optimize(compressor);
+                }
+                if (val instanceof RegExp) {
+                    return make_node(AST_RegExp, orig).optimize(compressor);
+                }
+                throw new Error(string_template("Can't handle constant of type: {type}", {
+                    type: typeof val
+                }));
+            }
+        }
+        function as_statement_array(thing) {
+            if (thing === null) return [];
+            if (thing instanceof AST_BlockStatement) return thing.body;
+            if (thing instanceof AST_EmptyStatement) return [];
+            if (thing instanceof AST_Statement) return [ thing ];
+            throw new Error("Can't convert thing to statement array");
+        }
+        function is_empty(thing) {
+            if (thing === null) return true;
+            if (thing instanceof AST_EmptyStatement) return true;
+            if (thing instanceof AST_BlockStatement) return thing.body.length == 0;
+            return false;
+        }
+        function loop_body(x) {
+            if (x instanceof AST_Switch) return x;
+            if (x instanceof AST_For || x instanceof AST_ForIn || x instanceof AST_DWLoop) {
+                return x.body instanceof AST_BlockStatement ? x.body : x;
+            }
+            return x;
+        }
+        function tighten_body(statements, compressor) {
+            var CHANGED;
+            do {
+                CHANGED = false;
+                statements = eliminate_spurious_blocks(statements);
+                if (compressor.option("dead_code")) {
+                    statements = eliminate_dead_code(statements, compressor);
+                }
+                if (compressor.option("if_return")) {
+                    statements = handle_if_return(statements, compressor);
+                }
+                if (compressor.option("sequences")) {
+                    statements = sequencesize(statements, compressor);
+                }
+                if (compressor.option("join_vars")) {
+                    statements = join_consecutive_vars(statements, compressor);
+                }
+            } while (CHANGED);
+            if (compressor.option("negate_iife")) {
+                negate_iifes(statements, compressor);
+            }
+            return statements;
+            function eliminate_spurious_blocks(statements) {
+                var seen_dirs = [];
+                return statements.reduce(function(a, stat) {
+                    if (stat instanceof AST_BlockStatement) {
+                        CHANGED = true;
+                        a.push.apply(a, eliminate_spurious_blocks(stat.body));
+                    } else if (stat instanceof AST_EmptyStatement) {
+                        CHANGED = true;
+                    } else if (stat instanceof AST_Directive) {
+                        if (seen_dirs.indexOf(stat.value) < 0) {
+                            a.push(stat);
+                            seen_dirs.push(stat.value);
+                        } else {
+                            CHANGED = true;
+                        }
+                    } else {
+                        a.push(stat);
+                    }
+                    return a;
+                }, []);
+            }
+            function handle_if_return(statements, compressor) {
+                var self = compressor.self();
+                var in_lambda = self instanceof AST_Lambda;
+                var ret = [];
+                loop: for (var i = statements.length; --i >= 0; ) {
+                    var stat = statements[i];
+                    switch (true) {
+                      case in_lambda && stat instanceof AST_Return && !stat.value && ret.length == 0:
+                        CHANGED = true;
+                        continue loop;
+
+                      case stat instanceof AST_If:
+                        if (stat.body instanceof AST_Return) {
+                            if ((in_lambda && ret.length == 0 || ret[0] instanceof AST_Return && !ret[0].value) && !stat.body.value && !stat.alternative) {
+                                CHANGED = true;
+                                var cond = make_node(AST_SimpleStatement, stat.condition, {
+                                    body: stat.condition
+                                });
+                                ret.unshift(cond);
+                                continue loop;
+                            }
+                            if (ret[0] instanceof AST_Return && stat.body.value && ret[0].value && !stat.alternative) {
+                                CHANGED = true;
+                                stat = stat.clone();
+                                stat.alternative = ret[0];
+                                ret[0] = stat.transform(compressor);
+                                continue loop;
+                            }
+                            if ((ret.length == 0 || ret[0] instanceof AST_Return) && stat.body.value && !stat.alternative && in_lambda) {
+                                CHANGED = true;
+                                stat = stat.clone();
+                                stat.alternative = ret[0] || make_node(AST_Return, stat, {
+                                    value: make_node(AST_Undefined, stat)
+                                });
+                                ret[0] = stat.transform(compressor);
+                                continue loop;
+                            }
+                            if (!stat.body.value && in_lambda) {
+                                CHANGED = true;
+                                stat = stat.clone();
+                                stat.condition = stat.condition.negate(compressor);
+                                stat.body = make_node(AST_BlockStatement, stat, {
+                                    body: as_statement_array(stat.alternative).concat(ret)
+                                });
+                                stat.alternative = null;
+                                ret = [ stat.transform(compressor) ];
+                                continue loop;
+                            }
+                            if (ret.length == 1 && in_lambda && ret[0] instanceof AST_SimpleStatement && (!stat.alternative || stat.alternative instanceof AST_SimpleStatement)) {
+                                CHANGED = true;
+                                ret.push(make_node(AST_Return, ret[0], {
+                                    value: make_node(AST_Undefined, ret[0])
+                                }).transform(compressor));
+                                ret = as_statement_array(stat.alternative).concat(ret);
+                                ret.unshift(stat);
+                                continue loop;
+                            }
+                        }
+                        var ab = aborts(stat.body);
+                        var lct = ab instanceof AST_LoopControl ? compressor.loopcontrol_target(ab.label) : null;
+                        if (ab && (ab instanceof AST_Return && !ab.value && in_lambda || ab instanceof AST_Continue && self === loop_body(lct) || ab instanceof AST_Break && lct instanceof AST_BlockStatement && self === lct)) {
+                            if (ab.label) {
+                                remove(ab.label.thedef.references, ab);
+                            }
+                            CHANGED = true;
+                            var body = as_statement_array(stat.body).slice(0, -1);
+                            stat = stat.clone();
+                            stat.condition = stat.condition.negate(compressor);
+                            stat.body = make_node(AST_BlockStatement, stat, {
+                                body: ret
+                            });
+                            stat.alternative = make_node(AST_BlockStatement, stat, {
+                                body: body
+                            });
+                            ret = [ stat.transform(compressor) ];
+                            continue loop;
+                        }
+                        var ab = aborts(stat.alternative);
+                        var lct = ab instanceof AST_LoopControl ? compressor.loopcontrol_target(ab.label) : null;
+                        if (ab && (ab instanceof AST_Return && !ab.value && in_lambda || ab instanceof AST_Continue && self === loop_body(lct) || ab instanceof AST_Break && lct instanceof AST_BlockStatement && self === lct)) {
+                            if (ab.label) {
+                                remove(ab.label.thedef.references, ab);
+                            }
+                            CHANGED = true;
+                            stat = stat.clone();
+                            stat.body = make_node(AST_BlockStatement, stat.body, {
+                                body: as_statement_array(stat.body).concat(ret)
+                            });
+                            stat.alternative = make_node(AST_BlockStatement, stat.alternative, {
+                                body: as_statement_array(stat.alternative).slice(0, -1)
+                            });
+                            ret = [ stat.transform(compressor) ];
+                            continue loop;
+                        }
+                        ret.unshift(stat);
+                        break;
+
+                      default:
+                        ret.unshift(stat);
+                        break;
+                    }
+                }
+                return ret;
+            }
+            function eliminate_dead_code(statements, compressor) {
+                var has_quit = false;
+                var orig = statements.length;
+                var self = compressor.self();
+                statements = statements.reduce(function(a, stat) {
+                    if (has_quit) {
+                        extract_declarations_from_unreachable_code(compressor, stat, a);
+                    } else {
+                        if (stat instanceof AST_LoopControl) {
+                            var lct = compressor.loopcontrol_target(stat.label);
+                            if (stat instanceof AST_Break && lct instanceof AST_BlockStatement && loop_body(lct) === self || stat instanceof AST_Continue && loop_body(lct) === self) {
+                                if (stat.label) {
+                                    remove(stat.label.thedef.references, stat);
+                                }
+                            } else {
+                                a.push(stat);
+                            }
+                        } else {
+                            a.push(stat);
+                        }
+                        if (aborts(stat)) has_quit = true;
+                    }
+                    return a;
+                }, []);
+                CHANGED = statements.length != orig;
+                return statements;
+            }
+            function sequencesize(statements, compressor) {
+                if (statements.length < 2) return statements;
+                var seq = [], ret = [];
+                function push_seq() {
+                    seq = AST_Seq.from_array(seq);
+                    if (seq) ret.push(make_node(AST_SimpleStatement, seq, {
+                        body: seq
+                    }));
+                    seq = [];
+                }
+                statements.forEach(function(stat) {
+                    if (stat instanceof AST_SimpleStatement) seq.push(stat.body); else push_seq(), ret.push(stat);
+                });
+                push_seq();
+                ret = sequencesize_2(ret, compressor);
+                CHANGED = ret.length != statements.length;
+                return ret;
+            }
+            function sequencesize_2(statements, compressor) {
+                function cons_seq(right) {
+                    ret.pop();
+                    var left = prev.body;
+                    if (left instanceof AST_Seq) {
+                        left.add(right);
+                    } else {
+                        left = AST_Seq.cons(left, right);
+                    }
+                    return left.transform(compressor);
+                }
+                var ret = [], prev = null;
+                statements.forEach(function(stat) {
+                    if (prev) {
+                        if (stat instanceof AST_For) {
+                            var opera = {};
+                            try {
+                                prev.body.walk(new TreeWalker(function(node) {
+                                    if (node instanceof AST_Binary && node.operator == "in") throw opera;
+                                }));
+                                if (stat.init && !(stat.init instanceof AST_Definitions)) {
+                                    stat.init = cons_seq(stat.init);
+                                } else if (!stat.init) {
+                                    stat.init = prev.body;
+                                    ret.pop();
+                                }
+                            } catch (ex) {
+                                if (ex !== opera) throw ex;
+                            }
+                        } else if (stat instanceof AST_If) {
+                            stat.condition = cons_seq(stat.condition);
+                        } else if (stat instanceof AST_With) {
+                            stat.expression = cons_seq(stat.expression);
+                        } else if (stat instanceof AST_Exit && stat.value) {
+                            stat.value = cons_seq(stat.value);
+                        } else if (stat instanceof AST_Exit) {
+                            stat.value = cons_seq(make_node(AST_Undefined, stat));
+                        } else if (stat instanceof AST_Switch) {
+                            stat.expression = cons_seq(stat.expression);
+                        }
+                    }
+                    ret.push(stat);
+                    prev = stat instanceof AST_SimpleStatement ? stat : null;
+                });
+                return ret;
+            }
+            function join_consecutive_vars(statements, compressor) {
+                var prev = null;
+                return statements.reduce(function(a, stat) {
+                    if (stat instanceof AST_Definitions && prev && prev.TYPE == stat.TYPE) {
+                        prev.definitions = prev.definitions.concat(stat.definitions);
+                        CHANGED = true;
+                    } else if (stat instanceof AST_For && prev instanceof AST_Definitions && (!stat.init || stat.init.TYPE == prev.TYPE)) {
+                        CHANGED = true;
+                        a.pop();
+                        if (stat.init) {
+                            stat.init.definitions = prev.definitions.concat(stat.init.definitions);
+                        } else {
+                            stat.init = prev;
+                        }
+                        a.push(stat);
+                        prev = stat;
+                    } else {
+                        prev = stat;
+                        a.push(stat);
+                    }
+                    return a;
+                }, []);
+            }
+            function negate_iifes(statements, compressor) {
+                statements.forEach(function(stat) {
+                    if (stat instanceof AST_SimpleStatement) {
+                        stat.body = function transform(thing) {
+                            return thing.transform(new TreeTransformer(function(node) {
+                                if (node instanceof AST_Call && node.expression instanceof AST_Function) {
+                                    return make_node(AST_UnaryPrefix, node, {
+                                        operator: "!",
+                                        expression: node
+                                    });
+                                } else if (node instanceof AST_Call) {
+                                    node.expression = transform(node.expression);
+                                } else if (node instanceof AST_Seq) {
+                                    node.car = transform(node.car);
+                                } else if (node instanceof AST_Conditional) {
+                                    var expr = transform(node.condition);
+                                    if (expr !== node.condition) {
+                                        node.condition = expr;
+                                        var tmp = node.consequent;
+                                        node.consequent = node.alternative;
+                                        node.alternative = tmp;
+                                    }
+                                }
+                                return node;
+                            }));
+                        }(stat.body);
+                    }
+                });
+            }
+        }
+        function extract_declarations_from_unreachable_code(compressor, stat, target) {
+            compressor.warn("Dropping unreachable code [{file}:{line},{col}]", stat.start);
+            stat.walk(new TreeWalker(function(node) {
+                if (node instanceof AST_Definitions) {
+                    compressor.warn("Declarations in unreachable code! [{file}:{line},{col}]", node.start);
+                    node.remove_initializers();
+                    target.push(node);
+                    return true;
+                }
+                if (node instanceof AST_Defun) {
+                    target.push(node);
+                    return true;
+                }
+                if (node instanceof AST_Scope) {
+                    return true;
+                }
+            }));
+        }
+        (function(def) {
+            var unary_bool = [ "!", "delete" ];
+            var binary_bool = [ "in", "instanceof", "==", "!=", "===", "!==", "<", "<=", ">=", ">" ];
+            def(AST_Node, function() {
+                return false;
+            });
+            def(AST_UnaryPrefix, function() {
+                return member(this.operator, unary_bool);
+            });
+            def(AST_Binary, function() {
+                return member(this.operator, binary_bool) || (this.operator == "&&" || this.operator == "||") && this.left.is_boolean() && this.right.is_boolean();
+            });
+            def(AST_Conditional, function() {
+                return this.consequent.is_boolean() && this.alternative.is_boolean();
+            });
+            def(AST_Assign, function() {
+                return this.operator == "=" && this.right.is_boolean();
+            });
+            def(AST_Seq, function() {
+                return this.cdr.is_boolean();
+            });
+            def(AST_True, function() {
+                return true;
+            });
+            def(AST_False, function() {
+                return true;
+            });
+        })(function(node, func) {
+            node.DEFMETHOD("is_boolean", func);
+        });
+        (function(def) {
+            def(AST_Node, function() {
+                return false;
+            });
+            def(AST_String, function() {
+                return true;
+            });
+            def(AST_UnaryPrefix, function() {
+                return this.operator == "typeof";
+            });
+            def(AST_Binary, function(compressor) {
+                return this.operator == "+" && (this.left.is_string(compressor) || this.right.is_string(compressor));
+            });
+            def(AST_Assign, function(compressor) {
+                return (this.operator == "=" || this.operator == "+=") && this.right.is_string(compressor);
+            });
+            def(AST_Seq, function(compressor) {
+                return this.cdr.is_string(compressor);
+            });
+            def(AST_Conditional, function(compressor) {
+                return this.consequent.is_string(compressor) && this.alternative.is_string(compressor);
+            });
+            def(AST_Call, function(compressor) {
+                return compressor.option("unsafe") && this.expression instanceof AST_SymbolRef && this.expression.name == "String" && this.expression.undeclared();
+            });
+        })(function(node, func) {
+            node.DEFMETHOD("is_string", func);
+        });
+        function best_of(ast1, ast2) {
+            return ast1.print_to_string().length > ast2.print_to_string().length ? ast2 : ast1;
+        }
+        (function(def) {
+            AST_Node.DEFMETHOD("evaluate", function(compressor) {
+                if (!compressor.option("evaluate")) return [ this ];
+                try {
+                    var val = this._eval(compressor);
+                    return [ best_of(make_node_from_constant(compressor, val, this), this), val ];
+                } catch (ex) {
+                    if (ex !== def) throw ex;
+                    return [ this ];
+                }
+            });
+            def(AST_Statement, function() {
+                throw new Error(string_template("Cannot evaluate a statement [{file}:{line},{col}]", this.start));
+            });
+            def(AST_Function, function() {
+                throw def;
+            });
+            function ev(node, compressor) {
+                if (!compressor) throw new Error("Compressor must be passed");
+                return node._eval(compressor);
+            }
+            def(AST_Node, function() {
+                throw def;
+            });
+            def(AST_Constant, function() {
+                return this.getValue();
+            });
+            def(AST_UnaryPrefix, function(compressor) {
+                var e = this.expression;
+                switch (this.operator) {
+                  case "!":
+                    return !ev(e, compressor);
+
+                  case "typeof":
+                    if (e instanceof AST_Function) return typeof function() {};
+                    e = ev(e, compressor);
+                    if (e instanceof RegExp) throw def;
+                    return typeof e;
+
+                  case "void":
+                    return void ev(e, compressor);
+
+                  case "~":
+                    return ~ev(e, compressor);
+
+                  case "-":
+                    e = ev(e, compressor);
+                    if (e === 0) throw def;
+                    return -e;
+
+                  case "+":
+                    return +ev(e, compressor);
+                }
+                throw def;
+            });
+            def(AST_Binary, function(c) {
+                var left = this.left, right = this.right;
+                switch (this.operator) {
+                  case "&&":
+                    return ev(left, c) && ev(right, c);
+
+                  case "||":
+                    return ev(left, c) || ev(right, c);
+
+                  case "|":
+                    return ev(left, c) | ev(right, c);
+
+                  case "&":
+                    return ev(left, c) & ev(right, c);
+
+                  case "^":
+                    return ev(left, c) ^ ev(right, c);
+
+                  case "+":
+                    return ev(left, c) + ev(right, c);
+
+                  case "*":
+                    return ev(left, c) * ev(right, c);
+
+                  case "/":
+                    return ev(left, c) / ev(right, c);
+
+                  case "%":
+                    return ev(left, c) % ev(right, c);
+
+                  case "-":
+                    return ev(left, c) - ev(right, c);
+
+                  case "<<":
+                    return ev(left, c) << ev(right, c);
+
+                  case ">>":
+                    return ev(left, c) >> ev(right, c);
+
+                  case ">>>":
+                    return ev(left, c) >>> ev(right, c);
+
+                  case "==":
+                    return ev(left, c) == ev(right, c);
+
+                  case "===":
+                    return ev(left, c) === ev(right, c);
+
+                  case "!=":
+                    return ev(left, c) != ev(right, c);
+
+                  case "!==":
+                    return ev(left, c) !== ev(right, c);
+
+                  case "<":
+                    return ev(left, c) < ev(right, c);
+
+                  case "<=":
+                    return ev(left, c) <= ev(right, c);
+
+                  case ">":
+                    return ev(left, c) > ev(right, c);
+
+                  case ">=":
+                    return ev(left, c) >= ev(right, c);
+
+                  case "in":
+                    return ev(left, c) in ev(right, c);
+
+                  case "instanceof":
+                    return ev(left, c) instanceof ev(right, c);
+                }
+                throw def;
+            });
+            def(AST_Conditional, function(compressor) {
+                return ev(this.condition, compressor) ? ev(this.consequent, compressor) : ev(this.alternative, compressor);
+            });
+            def(AST_SymbolRef, function(compressor) {
+                var d = this.definition();
+                if (d && d.constant && d.init) return ev(d.init, compressor);
+                throw def;
+            });
+        })(function(node, func) {
+            node.DEFMETHOD("_eval", func);
+        });
+        (function(def) {
+            function basic_negation(exp) {
+                return make_node(AST_UnaryPrefix, exp, {
+                    operator: "!",
+                    expression: exp
+                });
+            }
+            def(AST_Node, function() {
+                return basic_negation(this);
+            });
+            def(AST_Statement, function() {
+                throw new Error("Cannot negate a statement");
+            });
+            def(AST_Function, function() {
+                return basic_negation(this);
+            });
+            def(AST_UnaryPrefix, function() {
+                if (this.operator == "!") return this.expression;
+                return basic_negation(this);
+            });
+            def(AST_Seq, function(compressor) {
+                var self = this.clone();
+                self.cdr = self.cdr.negate(compressor);
+                return self;
+            });
+            def(AST_Conditional, function(compressor) {
+                var self = this.clone();
+                self.consequent = self.consequent.negate(compressor);
+                self.alternative = self.alternative.negate(compressor);
+                return best_of(basic_negation(this), self);
+            });
+            def(AST_Binary, function(compressor) {
+                var self = this.clone(), op = this.operator;
+                if (compressor.option("unsafe_comps")) {
+                    switch (op) {
+                      case "<=":
+                        self.operator = ">";
+                        return self;
+
+                      case "<":
+                        self.operator = ">=";
+                        return self;
+
+                      case ">=":
+                        self.operator = "<";
+                        return self;
+
+                      case ">":
+                        self.operator = "<=";
+                        return self;
+                    }
+                }
+                switch (op) {
+                  case "==":
+                    self.operator = "!=";
+                    return self;
+
+                  case "!=":
+                    self.operator = "==";
+                    return self;
+
+                  case "===":
+                    self.operator = "!==";
+                    return self;
+
+                  case "!==":
+                    self.operator = "===";
+                    return self;
+
+                  case "&&":
+                    self.operator = "||";
+                    self.left = self.left.negate(compressor);
+                    self.right = self.right.negate(compressor);
+                    return best_of(basic_negation(this), self);
+
+                  case "||":
+                    self.operator = "&&";
+                    self.left = self.left.negate(compressor);
+                    self.right = self.right.negate(compressor);
+                    return best_of(basic_negation(this), self);
+                }
+                return basic_negation(this);
+            });
+        })(function(node, func) {
+            node.DEFMETHOD("negate", function(compressor) {
+                return func.call(this, compressor);
+            });
+        });
+        (function(def) {
+            def(AST_Node, function(compressor) {
+                return true;
+            });
+            def(AST_EmptyStatement, function(compressor) {
+                return false;
+            });
+            def(AST_Constant, function(compressor) {
+                return false;
+            });
+            def(AST_This, function(compressor) {
+                return false;
+            });
+            def(AST_Call, function(compressor) {
+                var pure = compressor.option("pure_funcs");
+                if (!pure) return true;
+                return pure.indexOf(this.expression.print_to_string()) < 0;
+            });
+            def(AST_Block, function(compressor) {
+                for (var i = this.body.length; --i >= 0; ) {
+                    if (this.body[i].has_side_effects(compressor)) return true;
+                }
+                return false;
+            });
+            def(AST_SimpleStatement, function(compressor) {
+                return this.body.has_side_effects(compressor);
+            });
+            def(AST_Defun, function(compressor) {
+                return true;
+            });
+            def(AST_Function, function(compressor) {
+                return false;
+            });
+            def(AST_Binary, function(compressor) {
+                return this.left.has_side_effects(compressor) || this.right.has_side_effects(compressor);
+            });
+            def(AST_Assign, function(compressor) {
+                return true;
+            });
+            def(AST_Conditional, function(compressor) {
+                return this.condition.has_side_effects(compressor) || this.consequent.has_side_effects(compressor) || this.alternative.has_side_effects(compressor);
+            });
+            def(AST_Unary, function(compressor) {
+                return this.operator == "delete" || this.operator == "++" || this.operator == "--" || this.expression.has_side_effects(compressor);
+            });
+            def(AST_SymbolRef, function(compressor) {
+                return false;
+            });
+            def(AST_Object, function(compressor) {
+                for (var i = this.properties.length; --i >= 0; ) if (this.properties[i].has_side_effects(compressor)) return true;
+                return false;
+            });
+            def(AST_ObjectProperty, function(compressor) {
+                return this.value.has_side_effects(compressor);
+            });
+            def(AST_Array, function(compressor) {
+                for (var i = this.elements.length; --i >= 0; ) if (this.elements[i].has_side_effects(compressor)) return true;
+                return false;
+            });
+            def(AST_Dot, function(compressor) {
+                if (!compressor.option("pure_getters")) return true;
+                return this.expression.has_side_effects(compressor);
+            });
+            def(AST_Sub, function(compressor) {
+                if (!compressor.option("pure_getters")) return true;
+                return this.expression.has_side_effects(compressor) || this.property.has_side_effects(compressor);
+            });
+            def(AST_PropAccess, function(compressor) {
+                return !compressor.option("pure_getters");
+            });
+            def(AST_Seq, function(compressor) {
+                return this.car.has_side_effects(compressor) || this.cdr.has_side_effects(compressor);
+            });
+        })(function(node, func) {
+            node.DEFMETHOD("has_side_effects", func);
+        });
+        function aborts(thing) {
+            return thing && thing.aborts();
+        }
+        (function(def) {
+            def(AST_Statement, function() {
+                return null;
+            });
+            def(AST_Jump, function() {
+                return this;
+            });
+            function block_aborts() {
+                var n = this.body.length;
+                return n > 0 && aborts(this.body[n - 1]);
+            }
+            def(AST_BlockStatement, block_aborts);
+            def(AST_SwitchBranch, block_aborts);
+            def(AST_If, function() {
+                return this.alternative && aborts(this.body) && aborts(this.alternative);
+            });
+        })(function(node, func) {
+            node.DEFMETHOD("aborts", func);
+        });
+        OPT(AST_Directive, function(self, compressor) {
+            if (self.scope.has_directive(self.value) !== self.scope) {
+                return make_node(AST_EmptyStatement, self);
+            }
+            return self;
+        });
+        OPT(AST_Debugger, function(self, compressor) {
+            if (compressor.option("drop_debugger")) return make_node(AST_EmptyStatement, self);
+            return self;
+        });
+        OPT(AST_LabeledStatement, function(self, compressor) {
+            if (self.body instanceof AST_Break && compressor.loopcontrol_target(self.body.label) === self.body) {
+                return make_node(AST_EmptyStatement, self);
+            }
+            return self.label.references.length == 0 ? self.body : self;
+        });
+        OPT(AST_Block, function(self, compressor) {
+            self.body = tighten_body(self.body, compressor);
+            return self;
+        });
+        OPT(AST_BlockStatement, function(self, compressor) {
+            self.body = tighten_body(self.body, compressor);
+            switch (self.body.length) {
+              case 1:
+                return self.body[0];
+
+              case 0:
+                return make_node(AST_EmptyStatement, self);
+            }
+            return self;
+        });
+        AST_Scope.DEFMETHOD("drop_unused", function(compressor) {
+            var self = this;
+            if (compressor.option("unused") && !(self instanceof AST_Toplevel) && !self.uses_eval) {
+                var in_use = [];
+                var initializations = new Dictionary();
+                var scope = this;
+                var tw = new TreeWalker(function(node, descend) {
+                    if (node !== self) {
+                        if (node instanceof AST_Defun) {
+                            initializations.add(node.name.name, node);
+                            return true;
+                        }
+                        if (node instanceof AST_Definitions && scope === self) {
+                            node.definitions.forEach(function(def) {
+                                if (def.value) {
+                                    initializations.add(def.name.name, def.value);
+                                    if (def.value.has_side_effects(compressor)) {
+                                        def.value.walk(tw);
+                                    }
+                                }
+                            });
+                            return true;
+                        }
+                        if (node instanceof AST_SymbolRef) {
+                            push_uniq(in_use, node.definition());
+                            return true;
+                        }
+                        if (node instanceof AST_Scope) {
+                            var save_scope = scope;
+                            scope = node;
+                            descend();
+                            scope = save_scope;
+                            return true;
+                        }
+                    }
+                });
+                self.walk(tw);
+                for (var i = 0; i < in_use.length; ++i) {
+                    in_use[i].orig.forEach(function(decl) {
+                        var init = initializations.get(decl.name);
+                        if (init) init.forEach(function(init) {
+                            var tw = new TreeWalker(function(node) {
+                                if (node instanceof AST_SymbolRef) {
+                                    push_uniq(in_use, node.definition());
+                                }
+                            });
+                            init.walk(tw);
+                        });
+                    });
+                }
+                var tt = new TreeTransformer(function before(node, descend, in_list) {
+                    if (node instanceof AST_Lambda && !(node instanceof AST_Accessor)) {
+                        for (var a = node.argnames, i = a.length; --i >= 0; ) {
+                            var sym = a[i];
+                            if (sym.unreferenced()) {
+                                a.pop();
+                                compressor.warn("Dropping unused function argument {name} [{file}:{line},{col}]", {
+                                    name: sym.name,
+                                    file: sym.start.file,
+                                    line: sym.start.line,
+                                    col: sym.start.col
+                                });
+                            } else break;
+                        }
+                    }
+                    if (node instanceof AST_Defun && node !== self) {
+                        if (!member(node.name.definition(), in_use)) {
+                            compressor.warn("Dropping unused function {name} [{file}:{line},{col}]", {
+                                name: node.name.name,
+                                file: node.name.start.file,
+                                line: node.name.start.line,
+                                col: node.name.start.col
+                            });
+                            return make_node(AST_EmptyStatement, node);
+                        }
+                        return node;
+                    }
+                    if (node instanceof AST_Definitions && !(tt.parent() instanceof AST_ForIn)) {
+                        var def = node.definitions.filter(function(def) {
+                            if (member(def.name.definition(), in_use)) return true;
+                            var w = {
+                                name: def.name.name,
+                                file: def.name.start.file,
+                                line: def.name.start.line,
+                                col: def.name.start.col
+                            };
+                            if (def.value && def.value.has_side_effects(compressor)) {
+                                def._unused_side_effects = true;
+                                compressor.warn("Side effects in initialization of unused variable {name} [{file}:{line},{col}]", w);
+                                return true;
+                            }
+                            compressor.warn("Dropping unused variable {name} [{file}:{line},{col}]", w);
+                            return false;
+                        });
+                        def = mergeSort(def, function(a, b) {
+                            if (!a.value && b.value) return -1;
+                            if (!b.value && a.value) return 1;
+                            return 0;
+                        });
+                        var side_effects = [];
+                        for (var i = 0; i < def.length; ) {
+                            var x = def[i];
+                            if (x._unused_side_effects) {
+                                side_effects.push(x.value);
+                                def.splice(i, 1);
+                            } else {
+                                if (side_effects.length > 0) {
+                                    side_effects.push(x.value);
+                                    x.value = AST_Seq.from_array(side_effects);
+                                    side_effects = [];
+                                }
+                                ++i;
+                            }
+                        }
+                        if (side_effects.length > 0) {
+                            side_effects = make_node(AST_BlockStatement, node, {
+                                body: [ make_node(AST_SimpleStatement, node, {
+                                    body: AST_Seq.from_array(side_effects)
+                                }) ]
+                            });
+                        } else {
+                            side_effects = null;
+                        }
+                        if (def.length == 0 && !side_effects) {
+                            return make_node(AST_EmptyStatement, node);
+                        }
+                        if (def.length == 0) {
+                            return side_effects;
+                        }
+                        node.definitions = def;
+                        if (side_effects) {
+                            side_effects.body.unshift(node);
+                            node = side_effects;
+                        }
+                        return node;
+                    }
+                    if (node instanceof AST_For) {
+                        descend(node, this);
+                        if (node.init instanceof AST_BlockStatement) {
+                            var body = node.init.body.slice(0, -1);
+                            node.init = node.init.body.slice(-1)[0].body;
+                            body.push(node);
+                            return in_list ? MAP.splice(body) : make_node(AST_BlockStatement, node, {
+                                body: body
+                            });
+                        }
+                    }
+                    if (node instanceof AST_Scope && node !== self) return node;
+                });
+                self.transform(tt);
+            }
+        });
+        AST_Scope.DEFMETHOD("hoist_declarations", function(compressor) {
+            var hoist_funs = compressor.option("hoist_funs");
+            var hoist_vars = compressor.option("hoist_vars");
+            var self = this;
+            if (hoist_funs || hoist_vars) {
+                var dirs = [];
+                var hoisted = [];
+                var vars = new Dictionary(), vars_found = 0, var_decl = 0;
+                self.walk(new TreeWalker(function(node) {
+                    if (node instanceof AST_Scope && node !== self) return true;
+                    if (node instanceof AST_Var) {
+                        ++var_decl;
+                        return true;
+                    }
+                }));
+                hoist_vars = hoist_vars && var_decl > 1;
+                var tt = new TreeTransformer(function before(node) {
+                    if (node !== self) {
+                        if (node instanceof AST_Directive) {
+                            dirs.push(node);
+                            return make_node(AST_EmptyStatement, node);
+                        }
+                        if (node instanceof AST_Defun && hoist_funs) {
+                            hoisted.push(node);
+                            return make_node(AST_EmptyStatement, node);
+                        }
+                        if (node instanceof AST_Var && hoist_vars) {
+                            node.definitions.forEach(function(def) {
+                                vars.set(def.name.name, def);
+                                ++vars_found;
+                            });
+                            var seq = node.to_assignments();
+                            var p = tt.parent();
+                            if (p instanceof AST_ForIn && p.init === node) {
+                                if (seq == null) return node.definitions[0].name;
+                                return seq;
+                            }
+                            if (p instanceof AST_For && p.init === node) {
+                                return seq;
+                            }
+                            if (!seq) return make_node(AST_EmptyStatement, node);
+                            return make_node(AST_SimpleStatement, node, {
+                                body: seq
+                            });
+                        }
+                        if (node instanceof AST_Scope) return node;
+                    }
+                });
+                self = self.transform(tt);
+                if (vars_found > 0) {
+                    var defs = [];
+                    vars.each(function(def, name) {
+                        if (self instanceof AST_Lambda && find_if(function(x) {
+                            return x.name == def.name.name;
+                        }, self.argnames)) {
+                            vars.del(name);
+                        } else {
+                            def = def.clone();
+                            def.value = null;
+                            defs.push(def);
+                            vars.set(name, def);
+                        }
+                    });
+                    if (defs.length > 0) {
+                        for (var i = 0; i < self.body.length; ) {
+                            if (self.body[i] instanceof AST_SimpleStatement) {
+                                var expr = self.body[i].body, sym, assign;
+                                if (expr instanceof AST_Assign && expr.operator == "=" && (sym = expr.left) instanceof AST_Symbol && vars.has(sym.name)) {
+                                    var def = vars.get(sym.name);
+                                    if (def.value) break;
+                                    def.value = expr.right;
+                                    remove(defs, def);
+                                    defs.push(def);
+                                    self.body.splice(i, 1);
+                                    continue;
+                                }
+                                if (expr instanceof AST_Seq && (assign = expr.car) instanceof AST_Assign && assign.operator == "=" && (sym = assign.left) instanceof AST_Symbol && vars.has(sym.name)) {
+                                    var def = vars.get(sym.name);
+                                    if (def.value) break;
+                                    def.value = assign.right;
+                                    remove(defs, def);
+                                    defs.push(def);
+                                    self.body[i].body = expr.cdr;
+                                    continue;
+                                }
+                            }
+                            if (self.body[i] instanceof AST_EmptyStatement) {
+                                self.body.splice(i, 1);
+                                continue;
+                            }
+                            if (self.body[i] instanceof AST_BlockStatement) {
+                                var tmp = [ i, 1 ].concat(self.body[i].body);
+                                self.body.splice.apply(self.body, tmp);
+                                continue;
+                            }
+                            break;
+                        }
+                        defs = make_node(AST_Var, self, {
+                            definitions: defs
+                        });
+                        hoisted.push(defs);
+                    }
+                }
+                self.body = dirs.concat(hoisted, self.body);
+            }
+            return self;
+        });
+        OPT(AST_SimpleStatement, function(self, compressor) {
+            if (compressor.option("side_effects")) {
+                if (!self.body.has_side_effects(compressor)) {
+                    compressor.warn("Dropping side-effect-free statement [{file}:{line},{col}]", self.start);
+                    return make_node(AST_EmptyStatement, self);
+                }
+            }
+            return self;
+        });
+        OPT(AST_DWLoop, function(self, compressor) {
+            var cond = self.condition.evaluate(compressor);
+            self.condition = cond[0];
+            if (!compressor.option("loops")) return self;
+            if (cond.length > 1) {
+                if (cond[1]) {
+                    return make_node(AST_For, self, {
+                        body: self.body
+                    });
+                } else if (self instanceof AST_While) {
+                    if (compressor.option("dead_code")) {
+                        var a = [];
+                        extract_declarations_from_unreachable_code(compressor, self.body, a);
+                        return make_node(AST_BlockStatement, self, {
+                            body: a
+                        });
+                    }
+                }
+            }
+            return self;
+        });
+        function if_break_in_loop(self, compressor) {
+            function drop_it(rest) {
+                rest = as_statement_array(rest);
+                if (self.body instanceof AST_BlockStatement) {
+                    self.body = self.body.clone();
+                    self.body.body = rest.concat(self.body.body.slice(1));
+                    self.body = self.body.transform(compressor);
+                } else {
+                    self.body = make_node(AST_BlockStatement, self.body, {
+                        body: rest
+                    }).transform(compressor);
+                }
+                if_break_in_loop(self, compressor);
+            }
+            var first = self.body instanceof AST_BlockStatement ? self.body.body[0] : self.body;
+            if (first instanceof AST_If) {
+                if (first.body instanceof AST_Break && compressor.loopcontrol_target(first.body.label) === self) {
+                    if (self.condition) {
+                        self.condition = make_node(AST_Binary, self.condition, {
+                            left: self.condition,
+                            operator: "&&",
+                            right: first.condition.negate(compressor)
+                        });
+                    } else {
+                        self.condition = first.condition.negate(compressor);
+                    }
+                    drop_it(first.alternative);
+                } else if (first.alternative instanceof AST_Break && compressor.loopcontrol_target(first.alternative.label) === self) {
+                    if (self.condition) {
+                        self.condition = make_node(AST_Binary, self.condition, {
+                            left: self.condition,
+                            operator: "&&",
+                            right: first.condition
+                        });
+                    } else {
+                        self.condition = first.condition;
+                    }
+                    drop_it(first.body);
+                }
+            }
+        }
+        OPT(AST_While, function(self, compressor) {
+            if (!compressor.option("loops")) return self;
+            self = AST_DWLoop.prototype.optimize.call(self, compressor);
+            if (self instanceof AST_While) {
+                if_break_in_loop(self, compressor);
+                self = make_node(AST_For, self, self).transform(compressor);
+            }
+            return self;
+        });
+        OPT(AST_For, function(self, compressor) {
+            var cond = self.condition;
+            if (cond) {
+                cond = cond.evaluate(compressor);
+                self.condition = cond[0];
+            }
+            if (!compressor.option("loops")) return self;
+            if (cond) {
+                if (cond.length > 1 && !cond[1]) {
+                    if (compressor.option("dead_code")) {
+                        var a = [];
+                        if (self.init instanceof AST_Statement) {
+                            a.push(self.init);
+                        } else if (self.init) {
+                            a.push(make_node(AST_SimpleStatement, self.init, {
+                                body: self.init
+                            }));
+                        }
+                        extract_declarations_from_unreachable_code(compressor, self.body, a);
+                        return make_node(AST_BlockStatement, self, {
+                            body: a
+                        });
+                    }
+                }
+            }
+            if_break_in_loop(self, compressor);
+            return self;
+        });
+        OPT(AST_If, function(self, compressor) {
+            if (!compressor.option("conditionals")) return self;
+            var cond = self.condition.evaluate(compressor);
+            self.condition = cond[0];
+            if (cond.length > 1) {
+                if (cond[1]) {
+                    compressor.warn("Condition always true [{file}:{line},{col}]", self.condition.start);
+                    if (compressor.option("dead_code")) {
+                        var a = [];
+                        if (self.alternative) {
+                            extract_declarations_from_unreachable_code(compressor, self.alternative, a);
+                        }
+                        a.push(self.body);
+                        return make_node(AST_BlockStatement, self, {
+                            body: a
+                        }).transform(compressor);
+                    }
+                } else {
+                    compressor.warn("Condition always false [{file}:{line},{col}]", self.condition.start);
+                    if (compressor.option("dead_code")) {
+                        var a = [];
+                        extract_declarations_from_unreachable_code(compressor, self.body, a);
+                        if (self.alternative) a.push(self.alternative);
+                        return make_node(AST_BlockStatement, self, {
+                            body: a
+                        }).transform(compressor);
+                    }
+                }
+            }
+            if (is_empty(self.alternative)) self.alternative = null;
+            var negated = self.condition.negate(compressor);
+            var negated_is_best = best_of(self.condition, negated) === negated;
+            if (self.alternative && negated_is_best) {
+                negated_is_best = false;
+                self.condition = negated;
+                var tmp = self.body;
+                self.body = self.alternative || make_node(AST_EmptyStatement);
+                self.alternative = tmp;
+            }
+            if (is_empty(self.body) && is_empty(self.alternative)) {
+                return make_node(AST_SimpleStatement, self.condition, {
+                    body: self.condition
+                }).transform(compressor);
+            }
+            if (self.body instanceof AST_SimpleStatement && self.alternative instanceof AST_SimpleStatement) {
+                return make_node(AST_SimpleStatement, self, {
+                    body: make_node(AST_Conditional, self, {
+                        condition: self.condition,
+                        consequent: self.body.body,
+                        alternative: self.alternative.body
+                    })
+                }).transform(compressor);
+            }
+            if (is_empty(self.alternative) && self.body instanceof AST_SimpleStatement) {
+                if (negated_is_best) return make_node(AST_SimpleStatement, self, {
+                    body: make_node(AST_Binary, self, {
+                        operator: "||",
+                        left: negated,
+                        right: self.body.body
+                    })
+                }).transform(compressor);
+                return make_node(AST_SimpleStatement, self, {
+                    body: make_node(AST_Binary, self, {
+                        operator: "&&",
+                        left: self.condition,
+                        right: self.body.body
+                    })
+                }).transform(compressor);
+            }
+            if (self.body instanceof AST_EmptyStatement && self.alternative && self.alternative instanceof AST_SimpleStatement) {
+                return make_node(AST_SimpleStatement, self, {
+                    body: make_node(AST_Binary, self, {
+                        operator: "||",
+                        left: self.condition,
+                        right: self.alternative.body
+                    })
+                }).transform(compressor);
+            }
+            if (self.body instanceof AST_Exit && self.alternative instanceof AST_Exit && self.body.TYPE == self.alternative.TYPE) {
+                return make_node(self.body.CTOR, self, {
+                    value: make_node(AST_Conditional, self, {
+                        condition: self.condition,
+                        consequent: self.body.value || make_node(AST_Undefined, self.body).optimize(compressor),
+                        alternative: self.alternative.value || make_node(AST_Undefined, self.alternative).optimize(compressor)
+                    })
+                }).transform(compressor);
+            }
+            if (self.body instanceof AST_If && !self.body.alternative && !self.alternative) {
+                self.condition = make_node(AST_Binary, self.condition, {
+                    operator: "&&",
+                    left: self.condition,
+                    right: self.body.condition
+                }).transform(compressor);
+                self.body = self.body.body;
+            }
+            if (aborts(self.body)) {
+                if (self.alternative) {
+                    var alt = self.alternative;
+                    self.alternative = null;
+                    return make_node(AST_BlockStatement, self, {
+                        body: [ self, alt ]
+                    }).transform(compressor);
+                }
+            }
+            if (aborts(self.alternative)) {
+                var body = self.body;
+                self.body = self.alternative;
+                self.condition = negated_is_best ? negated : self.condition.negate(compressor);
+                self.alternative = null;
+                return make_node(AST_BlockStatement, self, {
+                    body: [ self, body ]
+                }).transform(compressor);
+            }
+            return self;
+        });
+        OPT(AST_Switch, function(self, compressor) {
+            if (self.body.length == 0 && compressor.option("conditionals")) {
+                return make_node(AST_SimpleStatement, self, {
+                    body: self.expression
+                }).transform(compressor);
+            }
+            for (;;) {
+                var last_branch = self.body[self.body.length - 1];
+                if (last_branch) {
+                    var stat = last_branch.body[last_branch.body.length - 1];
+                    if (stat instanceof AST_Break && loop_body(compressor.loopcontrol_target(stat.label)) === self) last_branch.body.pop();
+                    if (last_branch instanceof AST_Default && last_branch.body.length == 0) {
+                        self.body.pop();
+                        continue;
+                    }
+                }
+                break;
+            }
+            var exp = self.expression.evaluate(compressor);
+            out: if (exp.length == 2) try {
+                self.expression = exp[0];
+                if (!compressor.option("dead_code")) break out;
+                var value = exp[1];
+                var in_if = false;
+                var in_block = false;
+                var started = false;
+                var stopped = false;
+                var ruined = false;
+                var tt = new TreeTransformer(function(node, descend, in_list) {
+                    if (node instanceof AST_Lambda || node instanceof AST_SimpleStatement) {
+                        return node;
+                    } else if (node instanceof AST_Switch && node === self) {
+                        node = node.clone();
+                        descend(node, this);
+                        return ruined ? node : make_node(AST_BlockStatement, node, {
+                            body: node.body.reduce(function(a, branch) {
+                                return a.concat(branch.body);
+                            }, [])
+                        }).transform(compressor);
+                    } else if (node instanceof AST_If || node instanceof AST_Try) {
+                        var save = in_if;
+                        in_if = !in_block;
+                        descend(node, this);
+                        in_if = save;
+                        return node;
+                    } else if (node instanceof AST_StatementWithBody || node instanceof AST_Switch) {
+                        var save = in_block;
+                        in_block = true;
+                        descend(node, this);
+                        in_block = save;
+                        return node;
+                    } else if (node instanceof AST_Break && this.loopcontrol_target(node.label) === self) {
+                        if (in_if) {
+                            ruined = true;
+                            return node;
+                        }
+                        if (in_block) return node;
+                        stopped = true;
+                        return in_list ? MAP.skip : make_node(AST_EmptyStatement, node);
+                    } else if (node instanceof AST_SwitchBranch && this.parent() === self) {
+                        if (stopped) return MAP.skip;
+                        if (node instanceof AST_Case) {
+                            var exp = node.expression.evaluate(compressor);
+                            if (exp.length < 2) {
+                                throw self;
+                            }
+                            if (exp[1] === value || started) {
+                                started = true;
+                                if (aborts(node)) stopped = true;
+                                descend(node, this);
+                                return node;
+                            }
+                            return MAP.skip;
+                        }
+                        descend(node, this);
+                        return node;
+                    }
+                });
+                tt.stack = compressor.stack.slice();
+                self = self.transform(tt);
+            } catch (ex) {
+                if (ex !== self) throw ex;
+            }
+            return self;
+        });
+        OPT(AST_Case, function(self, compressor) {
+            self.body = tighten_body(self.body, compressor);
+            return self;
+        });
+        OPT(AST_Try, function(self, compressor) {
+            self.body = tighten_body(self.body, compressor);
+            return self;
+        });
+        AST_Definitions.DEFMETHOD("remove_initializers", function() {
+            this.definitions.forEach(function(def) {
+                def.value = null;
+            });
+        });
+        AST_Definitions.DEFMETHOD("to_assignments", function() {
+            var assignments = this.definitions.reduce(function(a, def) {
+                if (def.value) {
+                    var name = make_node(AST_SymbolRef, def.name, def.name);
+                    a.push(make_node(AST_Assign, def, {
+                        operator: "=",
+                        left: name,
+                        right: def.value
+                    }));
+                }
+                return a;
+            }, []);
+            if (assignments.length == 0) return null;
+            return AST_Seq.from_array(assignments);
+        });
+        OPT(AST_Definitions, function(self, compressor) {
+            if (self.definitions.length == 0) return make_node(AST_EmptyStatement, self);
+            return self;
+        });
+        OPT(AST_Function, function(self, compressor) {
+            self = AST_Lambda.prototype.optimize.call(self, compressor);
+            if (compressor.option("unused")) {
+                if (self.name && self.name.unreferenced()) {
+                    self.name = null;
+                }
+            }
+            return self;
+        });
+        OPT(AST_Call, function(self, compressor) {
+            if (compressor.option("unsafe")) {
+                var exp = self.expression;
+                if (exp instanceof AST_SymbolRef && exp.undeclared()) {
+                    switch (exp.name) {
+                      case "Array":
+                        if (self.args.length != 1) {
+                            return make_node(AST_Array, self, {
+                                elements: self.args
+                            }).transform(compressor);
+                        }
+                        break;
+
+                      case "Object":
+                        if (self.args.length == 0) {
+                            return make_node(AST_Object, self, {
+                                properties: []
+                            });
+                        }
+                        break;
+
+                      case "String":
+                        if (self.args.length == 0) return make_node(AST_String, self, {
+                            value: ""
+                        });
+                        if (self.args.length <= 1) return make_node(AST_Binary, self, {
+                            left: self.args[0],
+                            operator: "+",
+                            right: make_node(AST_String, self, {
+                                value: ""
+                            })
+                        }).transform(compressor);
+                        break;
+
+                      case "Number":
+                        if (self.args.length == 0) return make_node(AST_Number, self, {
+                            value: 0
+                        });
+                        if (self.args.length == 1) return make_node(AST_UnaryPrefix, self, {
+                            expression: self.args[0],
+                            operator: "+"
+                        }).transform(compressor);
+
+                      case "Boolean":
+                        if (self.args.length == 0) return make_node(AST_False, self);
+                        if (self.args.length == 1) return make_node(AST_UnaryPrefix, self, {
+                            expression: make_node(AST_UnaryPrefix, null, {
+                                expression: self.args[0],
+                                operator: "!"
+                            }),
+                            operator: "!"
+                        }).transform(compressor);
+                        break;
+
+                      case "Function":
+                        if (all(self.args, function(x) {
+                            return x instanceof AST_String;
+                        })) {
+                            try {
+                                var code = "(function(" + self.args.slice(0, -1).map(function(arg) {
+                                    return arg.value;
+                                }).join(",") + "){" + self.args[self.args.length - 1].value + "})()";
+                                var ast = parse(code);
+                                ast.figure_out_scope({
+                                    screw_ie8: compressor.option("screw_ie8")
+                                });
+                                var comp = new Compressor(compressor.options);
+                                ast = ast.transform(comp);
+                                ast.figure_out_scope({
+                                    screw_ie8: compressor.option("screw_ie8")
+                                });
+                                ast.mangle_names();
+                                var fun;
+                                try {
+                                    ast.walk(new TreeWalker(function(node) {
+                                        if (node instanceof AST_Lambda) {
+                                            fun = node;
+                                            throw ast;
+                                        }
+                                    }));
+                                } catch (ex) {
+                                    if (ex !== ast) throw ex;
+                                }
+                                var args = fun.argnames.map(function(arg, i) {
+                                    return make_node(AST_String, self.args[i], {
+                                        value: arg.print_to_string()
+                                    });
+                                });
+                                var code = OutputStream();
+                                AST_BlockStatement.prototype._codegen.call(fun, fun, code);
+                                code = code.toString().replace(/^\{|\}$/g, "");
+                                args.push(make_node(AST_String, self.args[self.args.length - 1], {
+                                    value: code
+                                }));
+                                self.args = args;
+                                return self;
+                            } catch (ex) {
+                                if (ex instanceof JS_Parse_Error) {
+                                    compressor.warn("Error parsing code passed to new Function [{file}:{line},{col}]", self.args[self.args.length - 1].start);
+                                    compressor.warn(ex.toString());
+                                } else {
+                                    console.log(ex);
+                                    throw ex;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                } else if (exp instanceof AST_Dot && exp.property == "toString" && self.args.length == 0) {
+                    return make_node(AST_Binary, self, {
+                        left: make_node(AST_String, self, {
+                            value: ""
+                        }),
+                        operator: "+",
+                        right: exp.expression
+                    }).transform(compressor);
+                } else if (exp instanceof AST_Dot && exp.expression instanceof AST_Array && exp.property == "join") EXIT: {
+                    var separator = self.args.length == 0 ? "," : self.args[0].evaluate(compressor)[1];
+                    if (separator == null) break EXIT;
+                    var elements = exp.expression.elements.reduce(function(a, el) {
+                        el = el.evaluate(compressor);
+                        if (a.length == 0 || el.length == 1) {
+                            a.push(el);
+                        } else {
+                            var last = a[a.length - 1];
+                            if (last.length == 2) {
+                                var val = "" + last[1] + separator + el[1];
+                                a[a.length - 1] = [ make_node_from_constant(compressor, val, last[0]), val ];
+                            } else {
+                                a.push(el);
+                            }
+                        }
+                        return a;
+                    }, []);
+                    if (elements.length == 0) return make_node(AST_String, self, {
+                        value: ""
+                    });
+                    if (elements.length == 1) return elements[0][0];
+                    if (separator == "") {
+                        var first;
+                        if (elements[0][0] instanceof AST_String || elements[1][0] instanceof AST_String) {
+                            first = elements.shift()[0];
+                        } else {
+                            first = make_node(AST_String, self, {
+                                value: ""
+                            });
+                        }
+                        return elements.reduce(function(prev, el) {
+                            return make_node(AST_Binary, el[0], {
+                                operator: "+",
+                                left: prev,
+                                right: el[0]
+                            });
+                        }, first).transform(compressor);
+                    }
+                    var node = self.clone();
+                    node.expression = node.expression.clone();
+                    node.expression.expression = node.expression.expression.clone();
+                    node.expression.expression.elements = elements.map(function(el) {
+                        return el[0];
+                    });
+                    return best_of(self, node);
+                }
+            }
+            if (compressor.option("side_effects")) {
+                if (self.expression instanceof AST_Function && self.args.length == 0 && !AST_Block.prototype.has_side_effects.call(self.expression, compressor)) {
+                    return make_node(AST_Undefined, self).transform(compressor);
+                }
+            }
+            if (compressor.option("drop_console")) {
+                if (self.expression instanceof AST_PropAccess && self.expression.expression instanceof AST_SymbolRef && self.expression.expression.name == "console" && self.expression.expression.undeclared()) {
+                    return make_node(AST_Undefined, self).transform(compressor);
+                }
+            }
+            return self.evaluate(compressor)[0];
+        });
+        OPT(AST_New, function(self, compressor) {
+            if (compressor.option("unsafe")) {
+                var exp = self.expression;
+                if (exp instanceof AST_SymbolRef && exp.undeclared()) {
+                    switch (exp.name) {
+                      case "Object":
+                      case "RegExp":
+                      case "Function":
+                      case "Error":
+                      case "Array":
+                        return make_node(AST_Call, self, self).transform(compressor);
+                    }
+                }
+            }
+            return self;
+        });
+        OPT(AST_Seq, function(self, compressor) {
+            if (!compressor.option("side_effects")) return self;
+            if (!self.car.has_side_effects(compressor)) {
+                var p;
+                if (!(self.cdr instanceof AST_SymbolRef && self.cdr.name == "eval" && self.cdr.undeclared() && (p = compressor.parent()) instanceof AST_Call && p.expression === self)) {
+                    return self.cdr;
+                }
+            }
+            if (compressor.option("cascade")) {
+                if (self.car instanceof AST_Assign && !self.car.left.has_side_effects(compressor)) {
+                    if (self.car.left.equivalent_to(self.cdr)) {
+                        return self.car;
+                    }
+                    if (self.cdr instanceof AST_Call && self.cdr.expression.equivalent_to(self.car.left)) {
+                        self.cdr.expression = self.car;
+                        return self.cdr;
+                    }
+                }
+                if (!self.car.has_side_effects(compressor) && !self.cdr.has_side_effects(compressor) && self.car.equivalent_to(self.cdr)) {
+                    return self.car;
+                }
+            }
+            return self;
+        });
+        AST_Unary.DEFMETHOD("lift_sequences", function(compressor) {
+            if (compressor.option("sequences")) {
+                if (this.expression instanceof AST_Seq) {
+                    var seq = this.expression;
+                    var x = seq.to_array();
+                    this.expression = x.pop();
+                    x.push(this);
+                    seq = AST_Seq.from_array(x).transform(compressor);
+                    return seq;
+                }
+            }
+            return this;
+        });
+        OPT(AST_UnaryPostfix, function(self, compressor) {
+            return self.lift_sequences(compressor);
+        });
+        OPT(AST_UnaryPrefix, function(self, compressor) {
+            self = self.lift_sequences(compressor);
+            var e = self.expression;
+            if (compressor.option("booleans") && compressor.in_boolean_context()) {
+                switch (self.operator) {
+                  case "!":
+                    if (e instanceof AST_UnaryPrefix && e.operator == "!") {
+                        return e.expression;
+                    }
+                    break;
+
+                  case "typeof":
+                    compressor.warn("Boolean expression always true [{file}:{line},{col}]", self.start);
+                    return make_node(AST_True, self);
+                }
+                if (e instanceof AST_Binary && self.operator == "!") {
+                    self = best_of(self, e.negate(compressor));
+                }
+            }
+            return self.evaluate(compressor)[0];
+        });
+        function has_side_effects_or_prop_access(node, compressor) {
+            var save_pure_getters = compressor.option("pure_getters");
+            compressor.options.pure_getters = false;
+            var ret = node.has_side_effects(compressor);
+            compressor.options.pure_getters = save_pure_getters;
+            return ret;
+        }
+        AST_Binary.DEFMETHOD("lift_sequences", function(compressor) {
+            if (compressor.option("sequences")) {
+                if (this.left instanceof AST_Seq) {
+                    var seq = this.left;
+                    var x = seq.to_array();
+                    this.left = x.pop();
+                    x.push(this);
+                    seq = AST_Seq.from_array(x).transform(compressor);
+                    return seq;
+                }
+                if (this.right instanceof AST_Seq && this instanceof AST_Assign && !has_side_effects_or_prop_access(this.left, compressor)) {
+                    var seq = this.right;
+                    var x = seq.to_array();
+                    this.right = x.pop();
+                    x.push(this);
+                    seq = AST_Seq.from_array(x).transform(compressor);
+                    return seq;
+                }
+            }
+            return this;
+        });
+        var commutativeOperators = makePredicate("== === != !== * & | ^");
+        OPT(AST_Binary, function(self, compressor) {
+            var reverse = compressor.has_directive("use asm") ? noop : function(op, force) {
+                if (force || !(self.left.has_side_effects(compressor) || self.right.has_side_effects(compressor))) {
+                    if (op) self.operator = op;
+                    var tmp = self.left;
+                    self.left = self.right;
+                    self.right = tmp;
+                }
+            };
+            if (commutativeOperators(self.operator)) {
+                if (self.right instanceof AST_Constant && !(self.left instanceof AST_Constant)) {
+                    if (!(self.left instanceof AST_Binary && PRECEDENCE[self.left.operator] >= PRECEDENCE[self.operator])) {
+                        reverse(null, true);
+                    }
+                }
+                if (/^[!=]==?$/.test(self.operator)) {
+                    if (self.left instanceof AST_SymbolRef && self.right instanceof AST_Conditional) {
+                        if (self.right.consequent instanceof AST_SymbolRef && self.right.consequent.definition() === self.left.definition()) {
+                            if (/^==/.test(self.operator)) return self.right.condition;
+                            if (/^!=/.test(self.operator)) return self.right.condition.negate(compressor);
+                        }
+                        if (self.right.alternative instanceof AST_SymbolRef && self.right.alternative.definition() === self.left.definition()) {
+                            if (/^==/.test(self.operator)) return self.right.condition.negate(compressor);
+                            if (/^!=/.test(self.operator)) return self.right.condition;
+                        }
+                    }
+                    if (self.right instanceof AST_SymbolRef && self.left instanceof AST_Conditional) {
+                        if (self.left.consequent instanceof AST_SymbolRef && self.left.consequent.definition() === self.right.definition()) {
+                            if (/^==/.test(self.operator)) return self.left.condition;
+                            if (/^!=/.test(self.operator)) return self.left.condition.negate(compressor);
+                        }
+                        if (self.left.alternative instanceof AST_SymbolRef && self.left.alternative.definition() === self.right.definition()) {
+                            if (/^==/.test(self.operator)) return self.left.condition.negate(compressor);
+                            if (/^!=/.test(self.operator)) return self.left.condition;
+                        }
+                    }
+                }
+            }
+            self = self.lift_sequences(compressor);
+            if (compressor.option("comparisons")) switch (self.operator) {
+              case "===":
+              case "!==":
+                if (self.left.is_string(compressor) && self.right.is_string(compressor) || self.left.is_boolean() && self.right.is_boolean()) {
+                    self.operator = self.operator.substr(0, 2);
+                }
+
+              case "==":
+              case "!=":
+                if (self.left instanceof AST_String && self.left.value == "undefined" && self.right instanceof AST_UnaryPrefix && self.right.operator == "typeof" && compressor.option("unsafe")) {
+                    if (!(self.right.expression instanceof AST_SymbolRef) || !self.right.expression.undeclared()) {
+                        self.right = self.right.expression;
+                        self.left = make_node(AST_Undefined, self.left).optimize(compressor);
+                        if (self.operator.length == 2) self.operator += "=";
+                    }
+                }
+                break;
+            }
+            if (compressor.option("booleans") && compressor.in_boolean_context()) switch (self.operator) {
+              case "&&":
+                var ll = self.left.evaluate(compressor);
+                var rr = self.right.evaluate(compressor);
+                if (ll.length > 1 && !ll[1] || rr.length > 1 && !rr[1]) {
+                    compressor.warn("Boolean && always false [{file}:{line},{col}]", self.start);
+                    return make_node(AST_False, self);
+                }
+                if (ll.length > 1 && ll[1]) {
+                    return rr[0];
+                }
+                if (rr.length > 1 && rr[1]) {
+                    return ll[0];
+                }
+                break;
+
+              case "||":
+                var ll = self.left.evaluate(compressor);
+                var rr = self.right.evaluate(compressor);
+                if (ll.length > 1 && ll[1] || rr.length > 1 && rr[1]) {
+                    compressor.warn("Boolean || always true [{file}:{line},{col}]", self.start);
+                    return make_node(AST_True, self);
+                }
+                if (ll.length > 1 && !ll[1]) {
+                    return rr[0];
+                }
+                if (rr.length > 1 && !rr[1]) {
+                    return ll[0];
+                }
+                break;
+
+              case "+":
+                var ll = self.left.evaluate(compressor);
+                var rr = self.right.evaluate(compressor);
+                if (ll.length > 1 && ll[0] instanceof AST_String && ll[1] || rr.length > 1 && rr[0] instanceof AST_String && rr[1]) {
+                    compressor.warn("+ in boolean context always true [{file}:{line},{col}]", self.start);
+                    return make_node(AST_True, self);
+                }
+                break;
+            }
+            if (compressor.option("comparisons")) {
+                if (!(compressor.parent() instanceof AST_Binary) || compressor.parent() instanceof AST_Assign) {
+                    var negated = make_node(AST_UnaryPrefix, self, {
+                        operator: "!",
+                        expression: self.negate(compressor)
+                    });
+                    self = best_of(self, negated);
+                }
+                switch (self.operator) {
+                  case "<":
+                    reverse(">");
+                    break;
+
+                  case "<=":
+                    reverse(">=");
+                    break;
+                }
+            }
+            if (self.operator == "+" && self.right instanceof AST_String && self.right.getValue() === "" && self.left instanceof AST_Binary && self.left.operator == "+" && self.left.is_string(compressor)) {
+                return self.left;
+            }
+            if (compressor.option("evaluate")) {
+                if (self.operator == "+") {
+                    if (self.left instanceof AST_Constant && self.right instanceof AST_Binary && self.right.operator == "+" && self.right.left instanceof AST_Constant && self.right.is_string(compressor)) {
+                        self = make_node(AST_Binary, self, {
+                            operator: "+",
+                            left: make_node(AST_String, null, {
+                                value: "" + self.left.getValue() + self.right.left.getValue(),
+                                start: self.left.start,
+                                end: self.right.left.end
+                            }),
+                            right: self.right.right
+                        });
+                    }
+                    if (self.right instanceof AST_Constant && self.left instanceof AST_Binary && self.left.operator == "+" && self.left.right instanceof AST_Constant && self.left.is_string(compressor)) {
+                        self = make_node(AST_Binary, self, {
+                            operator: "+",
+                            left: self.left.left,
+                            right: make_node(AST_String, null, {
+                                value: "" + self.left.right.getValue() + self.right.getValue(),
+                                start: self.left.right.start,
+                                end: self.right.end
+                            })
+                        });
+                    }
+                    if (self.left instanceof AST_Binary && self.left.operator == "+" && self.left.is_string(compressor) && self.left.right instanceof AST_Constant && self.right instanceof AST_Binary && self.right.operator == "+" && self.right.left instanceof AST_Constant && self.right.is_string(compressor)) {
+                        self = make_node(AST_Binary, self, {
+                            operator: "+",
+                            left: make_node(AST_Binary, self.left, {
+                                operator: "+",
+                                left: self.left.left,
+                                right: make_node(AST_String, null, {
+                                    value: "" + self.left.right.getValue() + self.right.left.getValue(),
+                                    start: self.left.right.start,
+                                    end: self.right.left.end
+                                })
+                            }),
+                            right: self.right.right
+                        });
+                    }
+                }
+            }
+            if (self.right instanceof AST_Binary && self.right.operator == self.operator && (self.operator == "*" || self.operator == "&&" || self.operator == "||")) {
+                self.left = make_node(AST_Binary, self.left, {
+                    operator: self.operator,
+                    left: self.left,
+                    right: self.right.left
+                });
+                self.right = self.right.right;
+                return self.transform(compressor);
+            }
+            return self.evaluate(compressor)[0];
+        });
+        OPT(AST_SymbolRef, function(self, compressor) {
+            if (self.undeclared()) {
+                var defines = compressor.option("global_defs");
+                if (defines && defines.hasOwnProperty(self.name)) {
+                    return make_node_from_constant(compressor, defines[self.name], self);
+                }
+                switch (self.name) {
+                  case "undefined":
+                    return make_node(AST_Undefined, self);
+
+                  case "NaN":
+                    return make_node(AST_NaN, self);
+
+                  case "Infinity":
+                    return make_node(AST_Infinity, self);
+                }
+            }
+            return self;
+        });
+        OPT(AST_Undefined, function(self, compressor) {
+            if (compressor.option("unsafe")) {
+                var scope = compressor.find_parent(AST_Scope);
+                var undef = scope.find_variable("undefined");
+                if (undef) {
+                    var ref = make_node(AST_SymbolRef, self, {
+                        name: "undefined",
+                        scope: scope,
+                        thedef: undef
+                    });
+                    ref.reference();
+                    return ref;
+                }
+            }
+            return self;
+        });
+        var ASSIGN_OPS = [ "+", "-", "/", "*", "%", ">>", "<<", ">>>", "|", "^", "&" ];
+        OPT(AST_Assign, function(self, compressor) {
+            self = self.lift_sequences(compressor);
+            if (self.operator == "=" && self.left instanceof AST_SymbolRef && self.right instanceof AST_Binary && self.right.left instanceof AST_SymbolRef && self.right.left.name == self.left.name && member(self.right.operator, ASSIGN_OPS)) {
+                self.operator = self.right.operator + "=";
+                self.right = self.right.right;
+            }
+            return self;
+        });
+        OPT(AST_Conditional, function(self, compressor) {
+            if (!compressor.option("conditionals")) return self;
+            if (self.condition instanceof AST_Seq) {
+                var car = self.condition.car;
+                self.condition = self.condition.cdr;
+                return AST_Seq.cons(car, self);
+            }
+            var cond = self.condition.evaluate(compressor);
+            if (cond.length > 1) {
+                if (cond[1]) {
+                    compressor.warn("Condition always true [{file}:{line},{col}]", self.start);
+                    return self.consequent;
+                } else {
+                    compressor.warn("Condition always false [{file}:{line},{col}]", self.start);
+                    return self.alternative;
+                }
+            }
+            var negated = cond[0].negate(compressor);
+            if (best_of(cond[0], negated) === negated) {
+                self = make_node(AST_Conditional, self, {
+                    condition: negated,
+                    consequent: self.alternative,
+                    alternative: self.consequent
+                });
+            }
+            var consequent = self.consequent;
+            var alternative = self.alternative;
+            if (consequent instanceof AST_Assign && alternative instanceof AST_Assign && consequent.operator == alternative.operator && consequent.left.equivalent_to(alternative.left)) {
+                self = make_node(AST_Assign, self, {
+                    operator: consequent.operator,
+                    left: consequent.left,
+                    right: make_node(AST_Conditional, self, {
+                        condition: self.condition,
+                        consequent: consequent.right,
+                        alternative: alternative.right
+                    })
+                });
+            }
+            return self;
+        });
+        OPT(AST_Boolean, function(self, compressor) {
+            if (compressor.option("booleans")) {
+                var p = compressor.parent();
+                if (p instanceof AST_Binary && (p.operator == "==" || p.operator == "!=")) {
+                    compressor.warn("Non-strict equality against boolean: {operator} {value} [{file}:{line},{col}]", {
+                        operator: p.operator,
+                        value: self.value,
+                        file: p.start.file,
+                        line: p.start.line,
+                        col: p.start.col
+                    });
+                    return make_node(AST_Number, self, {
+                        value: +self.value
+                    });
+                }
+                return make_node(AST_UnaryPrefix, self, {
+                    operator: "!",
+                    expression: make_node(AST_Number, self, {
+                        value: 1 - self.value
+                    })
+                });
+            }
+            return self;
+        });
+        OPT(AST_Sub, function(self, compressor) {
+            var prop = self.property;
+            if (prop instanceof AST_String && compressor.option("properties")) {
+                prop = prop.getValue();
+                if (RESERVED_WORDS(prop) ? compressor.option("screw_ie8") : is_identifier_string(prop)) {
+                    return make_node(AST_Dot, self, {
+                        expression: self.expression,
+                        property: prop
+                    });
+                }
+            }
+            return self;
+        });
+        function literals_in_boolean_context(self, compressor) {
+            if (compressor.option("booleans") && compressor.in_boolean_context()) {
+                return make_node(AST_True, self);
+            }
+            return self;
+        }
+        OPT(AST_Array, literals_in_boolean_context);
+        OPT(AST_Object, literals_in_boolean_context);
+        OPT(AST_RegExp, literals_in_boolean_context);
+    })();
+    "use strict";
+    function SourceMap(options) {
+        options = defaults(options, {
+            file: null,
+            root: null,
+            orig: null,
+            orig_line_diff: 0,
+            dest_line_diff: 0
+        });
+        var generator = new MOZ_SourceMap.SourceMapGenerator({
+            file: options.file,
+            sourceRoot: options.root
+        });
+        var orig_map = options.orig && new MOZ_SourceMap.SourceMapConsumer(options.orig);
+        function add(source, gen_line, gen_col, orig_line, orig_col, name) {
+            if (orig_map) {
+                var info = orig_map.originalPositionFor({
+                    line: orig_line,
+                    column: orig_col
+                });
+                source = info.source;
+                orig_line = info.line;
+                orig_col = info.column;
+                name = info.name;
+            }
+            generator.addMapping({
+                generated: {
+                    line: gen_line + options.dest_line_diff,
+                    column: gen_col
+                },
+                original: {
+                    line: orig_line + options.orig_line_diff,
+                    column: orig_col
+                },
+                source: source,
+                name: name
+            });
+        }
+        return {
+            add: add,
+            get: function() {
+                return generator;
+            },
+            toString: function() {
+                return generator.toString();
+            }
+        };
+    }
+    "use strict";
+    (function() {
+        var MOZ_TO_ME = {
+            TryStatement: function(M) {
+                return new AST_Try({
+                    start: my_start_token(M),
+                    end: my_end_token(M),
+                    body: from_moz(M.block).body,
+                    bcatch: from_moz(M.handlers[0]),
+                    bfinally: M.finalizer ? new AST_Finally(from_moz(M.finalizer)) : null
+                });
+            },
+            CatchClause: function(M) {
+                return new AST_Catch({
+                    start: my_start_token(M),
+                    end: my_end_token(M),
+                    argname: from_moz(M.param),
+                    body: from_moz(M.body).body
+                });
+            },
+            ObjectExpression: function(M) {
+                return new AST_Object({
+                    start: my_start_token(M),
+                    end: my_end_token(M),
+                    properties: M.properties.map(function(prop) {
+                        var key = prop.key;
+                        var name = key.type == "Identifier" ? key.name : key.value;
+                        var args = {
+                            start: my_start_token(key),
+                            end: my_end_token(prop.value),
+                            key: name,
+                            value: from_moz(prop.value)
+                        };
+                        switch (prop.kind) {
+                          case "init":
+                            return new AST_ObjectKeyVal(args);
+
+                          case "set":
+                            args.value.name = from_moz(key);
+                            return new AST_ObjectSetter(args);
+
+                          case "get":
+                            args.value.name = from_moz(key);
+                            return new AST_ObjectGetter(args);
+                        }
+                    })
+                });
+            },
+            SequenceExpression: function(M) {
+                return AST_Seq.from_array(M.expressions.map(from_moz));
+            },
+            MemberExpression: function(M) {
+                return new (M.computed ? AST_Sub : AST_Dot)({
+                    start: my_start_token(M),
+                    end: my_end_token(M),
+                    property: M.computed ? from_moz(M.property) : M.property.name,
+                    expression: from_moz(M.object)
+                });
+            },
+            SwitchCase: function(M) {
+                return new (M.test ? AST_Case : AST_Default)({
+                    start: my_start_token(M),
+                    end: my_end_token(M),
+                    expression: from_moz(M.test),
+                    body: M.consequent.map(from_moz)
+                });
+            },
+            Literal: function(M) {
+                var val = M.value, args = {
+                    start: my_start_token(M),
+                    end: my_end_token(M)
+                };
+                if (val === null) return new AST_Null(args);
+                switch (typeof val) {
+                  case "string":
+                    args.value = val;
+                    return new AST_String(args);
+
+                  case "number":
+                    args.value = val;
+                    return new AST_Number(args);
+
+                  case "boolean":
+                    return new (val ? AST_True : AST_False)(args);
+
+                  default:
+                    args.value = val;
+                    return new AST_RegExp(args);
+                }
+            },
+            UnaryExpression: From_Moz_Unary,
+            UpdateExpression: From_Moz_Unary,
+            Identifier: function(M) {
+                var p = FROM_MOZ_STACK[FROM_MOZ_STACK.length - 2];
+                return new (M.name == "this" ? AST_This : p.type == "LabeledStatement" ? AST_Label : p.type == "VariableDeclarator" && p.id === M ? p.kind == "const" ? AST_SymbolConst : AST_SymbolVar : p.type == "FunctionExpression" ? p.id === M ? AST_SymbolLambda : AST_SymbolFunarg : p.type == "FunctionDeclaration" ? p.id === M ? AST_SymbolDefun : AST_SymbolFunarg : p.type == "CatchClause" ? AST_SymbolCatch : p.type == "BreakStatement" || p.type == "ContinueStatement" ? AST_LabelRef : AST_SymbolRef)({
+                    start: my_start_token(M),
+                    end: my_end_token(M),
+                    name: M.name
+                });
+            }
+        };
+        function From_Moz_Unary(M) {
+            var prefix = "prefix" in M ? M.prefix : M.type == "UnaryExpression" ? true : false;
+            return new (prefix ? AST_UnaryPrefix : AST_UnaryPostfix)({
+                start: my_start_token(M),
+                end: my_end_token(M),
+                operator: M.operator,
+                expression: from_moz(M.argument)
+            });
+        }
+        var ME_TO_MOZ = {};
+        map("Node", AST_Node);
+        map("Program", AST_Toplevel, "body@body");
+        map("Function", AST_Function, "id>name, params@argnames, body%body");
+        map("EmptyStatement", AST_EmptyStatement);
+        map("BlockStatement", AST_BlockStatement, "body@body");
+        map("ExpressionStatement", AST_SimpleStatement, "expression>body");
+        map("IfStatement", AST_If, "test>condition, consequent>body, alternate>alternative");
+        map("LabeledStatement", AST_LabeledStatement, "label>label, body>body");
+        map("BreakStatement", AST_Break, "label>label");
+        map("ContinueStatement", AST_Continue, "label>label");
+        map("WithStatement", AST_With, "object>expression, body>body");
+        map("SwitchStatement", AST_Switch, "discriminant>expression, cases@body");
+        map("ReturnStatement", AST_Return, "argument>value");
+        map("ThrowStatement", AST_Throw, "argument>value");
+        map("WhileStatement", AST_While, "test>condition, body>body");
+        map("DoWhileStatement", AST_Do, "test>condition, body>body");
+        map("ForStatement", AST_For, "init>init, test>condition, update>step, body>body");
+        map("ForInStatement", AST_ForIn, "left>init, right>object, body>body");
+        map("DebuggerStatement", AST_Debugger);
+        map("FunctionDeclaration", AST_Defun, "id>name, params@argnames, body%body");
+        map("VariableDeclaration", AST_Var, "declarations@definitions");
+        map("VariableDeclarator", AST_VarDef, "id>name, init>value");
+        map("ThisExpression", AST_This);
+        map("ArrayExpression", AST_Array, "elements@elements");
+        map("FunctionExpression", AST_Function, "id>name, params@argnames, body%body");
+        map("BinaryExpression", AST_Binary, "operator=operator, left>left, right>right");
+        map("AssignmentExpression", AST_Assign, "operator=operator, left>left, right>right");
+        map("LogicalExpression", AST_Binary, "operator=operator, left>left, right>right");
+        map("ConditionalExpression", AST_Conditional, "test>condition, consequent>consequent, alternate>alternative");
+        map("NewExpression", AST_New, "callee>expression, arguments@args");
+        map("CallExpression", AST_Call, "callee>expression, arguments@args");
+        function my_start_token(moznode) {
+            return new AST_Token({
+                file: moznode.loc && moznode.loc.source,
+                line: moznode.loc && moznode.loc.start.line,
+                col: moznode.loc && moznode.loc.start.column,
+                pos: moznode.start,
+                endpos: moznode.start
+            });
+        }
+        function my_end_token(moznode) {
+            return new AST_Token({
+                file: moznode.loc && moznode.loc.source,
+                line: moznode.loc && moznode.loc.end.line,
+                col: moznode.loc && moznode.loc.end.column,
+                pos: moznode.end,
+                endpos: moznode.end
+            });
+        }
+        function map(moztype, mytype, propmap) {
+            var moz_to_me = "function From_Moz_" + moztype + "(M){\n";
+            moz_to_me += "return new mytype({\n" + "start: my_start_token(M),\n" + "end: my_end_token(M)";
+            if (propmap) propmap.split(/\s*,\s*/).forEach(function(prop) {
+                var m = /([a-z0-9$_]+)(=|@|>|%)([a-z0-9$_]+)/i.exec(prop);
+                if (!m) throw new Error("Can't understand property map: " + prop);
+                var moz = "M." + m[1], how = m[2], my = m[3];
+                moz_to_me += ",\n" + my + ": ";
+                if (how == "@") {
+                    moz_to_me += moz + ".map(from_moz)";
+                } else if (how == ">") {
+                    moz_to_me += "from_moz(" + moz + ")";
+                } else if (how == "=") {
+                    moz_to_me += moz;
+                } else if (how == "%") {
+                    moz_to_me += "from_moz(" + moz + ").body";
+                } else throw new Error("Can't understand operator in propmap: " + prop);
+            });
+            moz_to_me += "\n})}";
+            moz_to_me = new Function("mytype", "my_start_token", "my_end_token", "from_moz", "return(" + moz_to_me + ")")(mytype, my_start_token, my_end_token, from_moz);
+            return MOZ_TO_ME[moztype] = moz_to_me;
+        }
+        var FROM_MOZ_STACK = null;
+        function from_moz(node) {
+            FROM_MOZ_STACK.push(node);
+            var ret = node != null ? MOZ_TO_ME[node.type](node) : null;
+            FROM_MOZ_STACK.pop();
+            return ret;
+        }
+        AST_Node.from_mozilla_ast = function(node) {
+            var save_stack = FROM_MOZ_STACK;
+            FROM_MOZ_STACK = [];
+            var ast = from_moz(node);
+            FROM_MOZ_STACK = save_stack;
+            return ast;
+        };
+    })();
+    exports["array_to_hash"] = array_to_hash;
+    exports["slice"] = slice;
+    exports["characters"] = characters;
+    exports["member"] = member;
+    exports["find_if"] = find_if;
+    exports["repeat_string"] = repeat_string;
+    exports["DefaultsError"] = DefaultsError;
+    exports["defaults"] = defaults;
+    exports["merge"] = merge;
+    exports["noop"] = noop;
+    exports["MAP"] = MAP;
+    exports["push_uniq"] = push_uniq;
+    exports["string_template"] = string_template;
+    exports["remove"] = remove;
+    exports["mergeSort"] = mergeSort;
+    exports["set_difference"] = set_difference;
+    exports["set_intersection"] = set_intersection;
+    exports["makePredicate"] = makePredicate;
+    exports["all"] = all;
+    exports["Dictionary"] = Dictionary;
+    exports["DEFNODE"] = DEFNODE;
+    exports["AST_Token"] = AST_Token;
+    exports["AST_Node"] = AST_Node;
+    exports["AST_Statement"] = AST_Statement;
+    exports["AST_Debugger"] = AST_Debugger;
+    exports["AST_Directive"] = AST_Directive;
+    exports["AST_SimpleStatement"] = AST_SimpleStatement;
+    exports["walk_body"] = walk_body;
+    exports["AST_Block"] = AST_Block;
+    exports["AST_BlockStatement"] = AST_BlockStatement;
+    exports["AST_EmptyStatement"] = AST_EmptyStatement;
+    exports["AST_StatementWithBody"] = AST_StatementWithBody;
+    exports["AST_LabeledStatement"] = AST_LabeledStatement;
+    exports["AST_IterationStatement"] = AST_IterationStatement;
+    exports["AST_DWLoop"] = AST_DWLoop;
+    exports["AST_Do"] = AST_Do;
+    exports["AST_While"] = AST_While;
+    exports["AST_For"] = AST_For;
+    exports["AST_ForIn"] = AST_ForIn;
+    exports["AST_With"] = AST_With;
+    exports["AST_Scope"] = AST_Scope;
+    exports["AST_Toplevel"] = AST_Toplevel;
+    exports["AST_Lambda"] = AST_Lambda;
+    exports["AST_Accessor"] = AST_Accessor;
+    exports["AST_Function"] = AST_Function;
+    exports["AST_Defun"] = AST_Defun;
+    exports["AST_Jump"] = AST_Jump;
+    exports["AST_Exit"] = AST_Exit;
+    exports["AST_Return"] = AST_Return;
+    exports["AST_Throw"] = AST_Throw;
+    exports["AST_LoopControl"] = AST_LoopControl;
+    exports["AST_Break"] = AST_Break;
+    exports["AST_Continue"] = AST_Continue;
+    exports["AST_If"] = AST_If;
+    exports["AST_Switch"] = AST_Switch;
+    exports["AST_SwitchBranch"] = AST_SwitchBranch;
+    exports["AST_Default"] = AST_Default;
+    exports["AST_Case"] = AST_Case;
+    exports["AST_Try"] = AST_Try;
+    exports["AST_Catch"] = AST_Catch;
+    exports["AST_Finally"] = AST_Finally;
+    exports["AST_Definitions"] = AST_Definitions;
+    exports["AST_Var"] = AST_Var;
+    exports["AST_Const"] = AST_Const;
+    exports["AST_VarDef"] = AST_VarDef;
+    exports["AST_Call"] = AST_Call;
+    exports["AST_New"] = AST_New;
+    exports["AST_Seq"] = AST_Seq;
+    exports["AST_PropAccess"] = AST_PropAccess;
+    exports["AST_Dot"] = AST_Dot;
+    exports["AST_Sub"] = AST_Sub;
+    exports["AST_Unary"] = AST_Unary;
+    exports["AST_UnaryPrefix"] = AST_UnaryPrefix;
+    exports["AST_UnaryPostfix"] = AST_UnaryPostfix;
+    exports["AST_Binary"] = AST_Binary;
+    exports["AST_Conditional"] = AST_Conditional;
+    exports["AST_Assign"] = AST_Assign;
+    exports["AST_Array"] = AST_Array;
+    exports["AST_Object"] = AST_Object;
+    exports["AST_ObjectProperty"] = AST_ObjectProperty;
+    exports["AST_ObjectKeyVal"] = AST_ObjectKeyVal;
+    exports["AST_ObjectSetter"] = AST_ObjectSetter;
+    exports["AST_ObjectGetter"] = AST_ObjectGetter;
+    exports["AST_Symbol"] = AST_Symbol;
+    exports["AST_SymbolAccessor"] = AST_SymbolAccessor;
+    exports["AST_SymbolDeclaration"] = AST_SymbolDeclaration;
+    exports["AST_SymbolVar"] = AST_SymbolVar;
+    exports["AST_SymbolConst"] = AST_SymbolConst;
+    exports["AST_SymbolFunarg"] = AST_SymbolFunarg;
+    exports["AST_SymbolDefun"] = AST_SymbolDefun;
+    exports["AST_SymbolLambda"] = AST_SymbolLambda;
+    exports["AST_SymbolCatch"] = AST_SymbolCatch;
+    exports["AST_Label"] = AST_Label;
+    exports["AST_SymbolRef"] = AST_SymbolRef;
+    exports["AST_LabelRef"] = AST_LabelRef;
+    exports["AST_This"] = AST_This;
+    exports["AST_Constant"] = AST_Constant;
+    exports["AST_String"] = AST_String;
+    exports["AST_Number"] = AST_Number;
+    exports["AST_RegExp"] = AST_RegExp;
+    exports["AST_Atom"] = AST_Atom;
+    exports["AST_Null"] = AST_Null;
+    exports["AST_NaN"] = AST_NaN;
+    exports["AST_Undefined"] = AST_Undefined;
+    exports["AST_Hole"] = AST_Hole;
+    exports["AST_Infinity"] = AST_Infinity;
+    exports["AST_Boolean"] = AST_Boolean;
+    exports["AST_False"] = AST_False;
+    exports["AST_True"] = AST_True;
+    exports["TreeWalker"] = TreeWalker;
+    exports["KEYWORDS"] = KEYWORDS;
+    exports["KEYWORDS_ATOM"] = KEYWORDS_ATOM;
+    exports["RESERVED_WORDS"] = RESERVED_WORDS;
+    exports["KEYWORDS_BEFORE_EXPRESSION"] = KEYWORDS_BEFORE_EXPRESSION;
+    exports["OPERATOR_CHARS"] = OPERATOR_CHARS;
+    exports["RE_HEX_NUMBER"] = RE_HEX_NUMBER;
+    exports["RE_OCT_NUMBER"] = RE_OCT_NUMBER;
+    exports["RE_DEC_NUMBER"] = RE_DEC_NUMBER;
+    exports["OPERATORS"] = OPERATORS;
+    exports["WHITESPACE_CHARS"] = WHITESPACE_CHARS;
+    exports["PUNC_BEFORE_EXPRESSION"] = PUNC_BEFORE_EXPRESSION;
+    exports["PUNC_CHARS"] = PUNC_CHARS;
+    exports["REGEXP_MODIFIERS"] = REGEXP_MODIFIERS;
+    exports["UNICODE"] = UNICODE;
+    exports["is_letter"] = is_letter;
+    exports["is_digit"] = is_digit;
+    exports["is_alphanumeric_char"] = is_alphanumeric_char;
+    exports["is_unicode_combining_mark"] = is_unicode_combining_mark;
+    exports["is_unicode_connector_punctuation"] = is_unicode_connector_punctuation;
+    exports["is_identifier"] = is_identifier;
+    exports["is_identifier_start"] = is_identifier_start;
+    exports["is_identifier_char"] = is_identifier_char;
+    exports["is_identifier_string"] = is_identifier_string;
+    exports["parse_js_number"] = parse_js_number;
+    exports["JS_Parse_Error"] = JS_Parse_Error;
+    exports["js_error"] = js_error;
+    exports["is_token"] = is_token;
+    exports["EX_EOF"] = EX_EOF;
+    exports["tokenizer"] = tokenizer;
+    exports["UNARY_PREFIX"] = UNARY_PREFIX;
+    exports["UNARY_POSTFIX"] = UNARY_POSTFIX;
+    exports["ASSIGNMENT"] = ASSIGNMENT;
+    exports["PRECEDENCE"] = PRECEDENCE;
+    exports["STATEMENTS_WITH_LABELS"] = STATEMENTS_WITH_LABELS;
+    exports["ATOMIC_START_TOKEN"] = ATOMIC_START_TOKEN;
+    exports["parse"] = parse;
+    exports["TreeTransformer"] = TreeTransformer;
+    exports["SymbolDef"] = SymbolDef;
+    exports["base54"] = base54;
+    exports["OutputStream"] = OutputStream;
+    exports["Compressor"] = Compressor;
+    exports["SourceMap"] = SourceMap;
+})({}, function() {
+    return this;
+}());
