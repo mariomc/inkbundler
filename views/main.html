@@ -4,7 +4,7 @@
       <h1 title="Get into the choppa">JS Packager! </h1>
       <p>Concatenate, minify and bundle your JS online.</p>
     </div>
-    <div class="large-60">
+    <div class="large-50">
       <div class="ink-alert block" ng-class="{success: updating === false}">
         <h4 ng-show="updating === false">
           <i class="icon-cog"></i>  Creating New Bundle
@@ -20,11 +20,13 @@
 
               <p style="padding: 1em 0">Files to add <span class="ink-badge black pull-right" style="height: auto">{{ size(bundle.selectedFiles) }}</span></p>
               <div id="sortable" class="column-group" style="min-height: 100px">
-              <div class="large-80"><input ng-hide="autocomplete" id="selectBox" ng-change="test(this)" type="text" ui-select2="selectOptions" ng-model="selectedUrls" data-placeholder="Pick an URL" class="large-100" style="margin-bottom: 20px"></div>
+              <div class="large-100">
+              <input ng-hide="autocomplete" id="selectBox" type="hidden" ui-select2="selectOptions" ng-model="selectedUrls" data-placeholder="Pick an URL" class="large-100" style="margin-bottom: 20px">
+              </div>
               
               
-              <textarea ng-hide="!autocomplete" class="large-80" ng-model="cenas" placeholder="Place your scripts urls here. Separated by new lines" cols="7"></textarea>
-              <button title="Switch input mode" class="ink-button large-10 push-right" style="margin: 5px 0" ng-click="autocomplete = !autocomplete"><span ng-hide="autocomplete"><i class="icon-terminal"></i></span><span ng-hide="!autocomplete"><i class="icon-list"></i> </span></button>
+              <textarea ng-hide="!autocomplete" class="large-100" ng-model="textarea" placeholder="Place your scripts urls here. Separated by new lines" cols="7"></textarea>
+              <button title="Switch input mode" class="ink-button large-100 push-right" style="margin: 5px 0" ng-click="autocomplete = !autocomplete"><span ng-hide="autocomplete"><i class="icon-terminal"></i> Switch to Textarea </span><span ng-hide="!autocomplete"><i class="icon-list"></i> Switch to Autocomplete</span></button>
               </div>
               
 
@@ -43,20 +45,20 @@
 
       </div>
     </div>
-    <div class="large-40 push-right">
+    <div class="large-50">
 <div class="ink-alert block info">
   <h4>
     <i class="icon-cog"></i>  Saved Bundles <span class="ink-badge black pull-right" style="height: auto">{{ bundles.length }}</span>
   </h4>
         <div ng-class="{updating: updating === $index}" style="margin-top: 0" class="column-group" ng-repeat="bun in bundles">
 
-        <p class="large-40" style="padding-bottom: 0; line-height: 41px">{{bun.name}}</p>
+        <p class="large-40" style="padding-bottom: 0; line-height: 41px"> {{bun.name}} </p>
         <div class="large-20">
           <button title="Edit Bundle" class="ink-button green" ng-click="loadBundle($index)"><span class="icon-wrench"></span></button>
         </div>
         <div class="large-20">
-          <button ng-hide="downloading" title="Download Bundle" class="ink-button blue" ng-click="downloadBundle($index)"><span class="icon-download-alt"></span></button>
-          <button ng-show="downloading" title="Bundle is downloading. Please wait..." class="ink-button orange" title="Downloading..."><span class="icon-spinner fa-spin"></span></button>
+          <button ng-hide="downloadingBundle === $index" title="Download Bundle" class="ink-button blue" ng-click="downloadBundle($index)"><span class="icon-download-alt"></span></button>
+          <button ng-show="downloadingBundle === $index" title="Bundle is downloading. Please wait..." class="ink-button orange" title="Downloading..."><span class="icon-spinner fa-spin"></span></button>
 
         </div>
         <div class="large-20">
@@ -65,15 +67,32 @@
 
       </div>
 </div>
-      <div class="ink-alert block info">
-        <h4>
-          <i class="icon-download-alt"></i>  Import Bundle (JSON)
-        </h4>
-            <div class="panel-body ink-form" style="padding: 0 1em 1em 1em">
-              <textarea class="large-100" placeholder="Insert your import.json contents here" ng-model="importString"></textarea>
-            </div>
-              <button title="Import Bundle" style="margin: 0" class="ink-button large-100" ng-click="import()"><i class="icon-download-alt"></i> Import</button>
+    <div class="ink-alert block info">
+      <h4>
+        <i class="icon-download-alt"></i>  Import Bundle (JSON)
+      </h4>
+        <div class="panel-body ink-form" style="padding: 0 1em 1em 1em">
+          <textarea class="large-100" placeholder="Insert your import.json contents here" ng-model="importString"></textarea>
+        </div>
+        <button title="Import Bundle" style="margin: 0" class="ink-button large-100" ng-click="import()"><i class="icon-download-alt"></i> Import</button>
+    </div>
+    <div class="ink-alert block info">
+      <h4>
+        <i class="icon-download-alt"></i>  Local Stored Contents
+      </h4>
+        <div class="panel-body" style="padding: 0 1em 1em 1em">
+          <div style="margin-top: 0" class="column-group" ng-repeat="(url, content) in files">
 
+          <p class="large-70" style="padding-bottom: 0; line-height: 41px; word-wrap: break-word"> {{url}} </p>
+          <div class="large-15">
+            <button title="Regenerate Contents" ng-class="{orange: isDownloading(url), blue: !isDownloading(url)}" class="ink-button" ng-click="loadScript(url)"><span class="icon-refresh"></span></button>
           </div>
+          <div class="large-15">
+          <button title="Delete Stored Contents" class="ink-button red" ng-click="deleteFile(url)"><span class="icon-remove"></span></button>
+        </div>
+
+        </div>
+        </div>
+    </div>
   </div>
  </div></div>
