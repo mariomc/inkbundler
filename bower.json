@@ -1,0 +1,26 @@
+{
+  "name": "inkbundler",
+  "version": "0.0.1",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~1.10.2",
+    "angular": "~1.2.0",
+    "angular-cookies": "~1.0.8",
+    "json3": "~3.2.4",
+    "es5-shim": "~2.0.8",
+    "underscore": "~1.5.2",
+    "Ink": "2.2.1",
+    "angular-route": "~1.2.0-rc.3",
+    "angular-local-storage": "https://github.com/grevory/angular-local-storage.git",
+    "angular-ui-select2": "~0.0.5"
+  },
+  "resolutions": {
+    "angular": "~1.2.0-rc.2"
+  }
+}
