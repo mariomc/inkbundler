@@ -153,5 +153,5 @@
   display: inline-block;
 }
 .ink-form textarea {
-  resize: horizontal;
+  resize: vertical;
 }

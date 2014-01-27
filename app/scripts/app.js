@@ -10,10 +10,6 @@ angular.module('inkbundlerApp', ['ngRoute', 'LocalStorageModule', 'ui.select2'])
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/:cenas', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      })
       .otherwise({
         redirectTo: '/'
       });

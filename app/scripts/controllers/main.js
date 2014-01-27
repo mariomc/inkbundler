@@ -229,11 +229,12 @@ angular.module('inkbundlerApp')
 /*    $http.get('dependencies.json').then(function(res){
         $scope.dependencies = res.data;
     });
-
-    $http.get('files.json').then(function(res){
-        $scope.files = _.extend($scope.files, res.data);
-    });
 */
+    $scope.$watch('textarea', function(newUrls, oldUrls){
+        if(newUrls === undefined || newUrls === '') return false;
+        $('#selectBox').select2('val', newUrls.split('\n'));
+    }, true);
+
     $scope.$watch('files', function(newFiles, oldFiles){
         localStorageService.set('files', newFiles);
     }, true);
@@ -248,13 +249,14 @@ angular.module('inkbundlerApp')
         }
         $scope.dependentFiles = dependencies;
         $('#selectBox').select2('val', $scope.bundle.selectedFiles);
-
+        $scope.textarea = $scope.bundle.selectedFiles.join('\n');
     }, true);
 
     $scope.$watch('selectedUrls', function(newUrls, oldUrls){
+        console.log(newUrls);
         if(oldUrls === undefined) return false;
         var val = $('#selectBox').select2('val');
-        $scope.bundle.selectedFiles = val;        
+        $scope.bundle.selectedFiles = val;
     });
 
     $scope.$watch('dependentFiles', function(){
