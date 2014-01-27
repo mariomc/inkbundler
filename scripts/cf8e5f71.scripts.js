@@ -28913,9 +28913,6 @@ angular.module("inkbundlerApp", [ "ngRoute", "LocalStorageModule", "ui.select2" 
     $routeProvider.when("/", {
         templateUrl: "views/main.html",
         controller: "MainCtrl"
-    }).when("/:cenas", {
-        templateUrl: "views/main.html",
-        controller: "MainCtrl"
     }).otherwise({
         redirectTo: "/"
     });
@@ -29129,6 +29126,10 @@ angular.module("inkbundlerApp").controller("MainCtrl", [ "$scope", "$http", "$q"
     $scope.bundleFile = "";
     $scope.updating = localStorageService.get("activeBundle") || false;
     $scope.bundle = $scope.updating || emptyBundle();
+    $scope.$watch("textarea", function(newUrls, oldUrls) {
+        if (newUrls === undefined || newUrls === "") return false;
+        $("#selectBox").select2("val", newUrls.split("\n"));
+    }, true);
     $scope.$watch("files", function(newFiles, oldFiles) {
         localStorageService.set("files", newFiles);
     }, true);
@@ -29142,8 +29143,10 @@ angular.module("inkbundlerApp").controller("MainCtrl", [ "$scope", "$http", "$q"
         }
         $scope.dependentFiles = dependencies;
         $("#selectBox").select2("val", $scope.bundle.selectedFiles);
+        $scope.textarea = $scope.bundle.selectedFiles.join("\n");
     }, true);
     $scope.$watch("selectedUrls", function(newUrls, oldUrls) {
+        console.log(newUrls);
         if (oldUrls === undefined) return false;
         var val = $("#selectBox").select2("val");
         $scope.bundle.selectedFiles = val;
