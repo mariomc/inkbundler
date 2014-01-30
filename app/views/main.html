@@ -1,19 +1,10 @@
  <div class="ink-grid">
   <div class="column-group gutters">
     <div class="large-100">
-      <h1 title="Get into the choppa">JS Packager! </h1>
-      <p>Concatenate, minify and bundle your JS online.</p>
-
-      <h2>How To:</h2>
-      <ol>
-        <li>Insert your script urls or contents</li>
-        <li>Add a name to your bundle</li>
-        <li>Check if you want to minify and/or generate a source map</li>
-        <li>Hit Generate</li>
-        <li>Wait a bit (Close Dev tools as it's faster)</li>
-        <li> Doesn't work? Hit me up @Github!</li>
-      </ol>
-
+      <h2 title="Get into the choppa">JS Packager! </h2>
+      <p>Concatenate, minify and bundle your JS online.
+      <br>
+      </p>
     </div>
     <div class="large-50">
       <div class="ink-alert block" ng-class="{success: updating === false}">
@@ -49,11 +40,27 @@
               </div>
               <div style="margin-top:10px;" ng-show="bundle.minify"><label title="Unless you have a 1337 machine"><input type="checkbox" ng-model="bundle.sourceMap" >Source Map (takes some time!)</label>
               </div>
-            </div>
-            <div class="large-100">
-                <button type="button" class="ink-button large-100" ng-click="saveBundle(updating)" title="Save Bundle"> <span class="icon-save"></span> Save Bundle </button>
+              <div class="button-group" style="margin-top: 20px;">
+                  <button type="button" class="ink-button" ng-click="saveBundle(updating)" title="Save Bundle"> <span class="icon-save"></span> Save Bundle </button>
+                  <button type="button" class="ink-button" ng-click="downloadBundle(updating)" title="Download Bundle"> <span class="icon-download"></span> Download Bundle </button>
+              </div>
+
             </div>
 
+      </div>
+      <div class="ink-alert block success">
+        
+        <h4> <i class="icon icon-question-sign"></i> How To</h4>
+        <div class="panel-body ink-form" style="padding: 0 1em 1em 1em;">
+        <ol>
+          <li>Insert your script urls or contents</li>
+          <li>Add a name to your bundle</li>
+          <li>Check if you want to minify and/or generate a source map</li>
+          <li>Hit Download Bundle</li>
+          <li>Wait a bit (Close Dev tools as it's faster)</li>
+          <li> Doesn't work? Hit me up @Github!</li>
+        </ol>
+        </div>
       </div>
     </div>
     <div class="large-50">
@@ -96,7 +103,7 @@
 
           <p class="large-70" style="padding-bottom: 0; line-height: 41px; word-wrap: break-word;"> {{url}} </p>
           <div class="large-15">
-            <button title="Regenerate Contents" ng-class="{orange: isDownloading(url), blue: !isDownloading(url)}" class="ink-button" ng-click="loadScript(url)"><span class="icon-refresh"></span></button>
+            <button title="{{sinceText(url)}}" ng-class="{orange: isDownloading(url), blue: !isDownloading(url)}" class="ink-button" ng-click="loadScript(url)"><span class="icon-refresh"></span></button>
           </div>
           <div class="large-15">
           <button title="Delete Stored Contents" class="ink-button red" ng-click="deleteFile(url)" ><span class="icon-remove"></span></button>

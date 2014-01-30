@@ -3,7 +3,7 @@
 var UglifyJS = require('uglify-js');
 
 angular.module('inkbundlerApp')
-.controller('MainCtrl', function ($scope, $http, $q, localStorageService) {
+.controller('MainCtrl', function ($scope, $location, $http, $q, localStorageService) {
     var emptyBundle = function(){
         return {
             name : '',
@@ -113,9 +113,11 @@ angular.module('inkbundlerApp')
             return $http
             .get('http://jsproxy.eu01.aws.af.cm/index.php?url='+url)
             .success(function(data, status, headers, config){
+                
                 if(data && data.length > 1 && status === 200){
                     $scope.files[url] = {content: data, timestamp: +new Date()};
                 }
+
                 setTimeout(function(){
                     $scope.downloading = _.without($scope.downloading, url);
                     $scope.$apply();
@@ -170,23 +172,6 @@ angular.module('inkbundlerApp')
         }
     };
 
-
-    $scope.import = function(){
-        var to_import = {};
-        try{
-            to_import = JSON.parse($scope.importString);
-            importBundle(to_import);
-        } catch(e){
-            alert('Invalid JSON');
-            return;
-        }
-
-    };
-
-    $scope.isDownloading = function(url){
-        return _.contains($scope.downloading, url);
-    }
-
     $scope.selectOptions = {
         formatNoMatches: function(term){
             var http = new RegExp('^(http|https)://', 'i');
@@ -216,6 +201,8 @@ angular.module('inkbundlerApp')
         }
     };
 
+
+
     $scope.autocomplete = false;
     $scope.downloadingBundle = -1;
     $scope.downloading = [];
@@ -226,10 +213,20 @@ angular.module('inkbundlerApp')
     $scope.updating = localStorageService.get('activeBundle') || false;
     $scope.bundle = $scope.updating || emptyBundle();
 
-/*    $http.get('dependencies.json').then(function(res){
-        $scope.dependencies = res.data;
-    });
-*/
+    var urlsToLoad = $location.$$search.u;
+    if(urlsToLoad){
+        if(_.isString(urlsToLoad)){
+            urlsToLoad = [urlsToLoad];
+        }
+
+        $q.all(_.map(urlsToLoad, function(value, key){
+            return loadScript(value);
+        })).then(function(response){
+            console.log("finished downloading");
+            $location.path('/').search('u', null).replace();
+        });
+    }
+
     $scope.$watch('textarea', function(newUrls, oldUrls){
         if(newUrls === undefined || newUrls === '') return false;
         $('#selectBox').select2('val', newUrls.split('\n'));
@@ -238,6 +235,7 @@ angular.module('inkbundlerApp')
     $scope.$watch('files', function(newFiles, oldFiles){
         localStorageService.set('files', newFiles);
     }, true);
+
     $scope.$watch('bundles', function(newBundles, oldBundles){
         localStorageService.set('bundles', newBundles);
     }, true);
@@ -253,7 +251,6 @@ angular.module('inkbundlerApp')
     }, true);
 
     $scope.$watch('selectedUrls', function(newUrls, oldUrls){
-        console.log(newUrls);
         if(oldUrls === undefined) return false;
         var val = $('#selectBox').select2('val');
         $scope.bundle.selectedFiles = val;
@@ -291,6 +288,26 @@ angular.module('inkbundlerApp')
         });
     }, true);
 
+    $scope.sinceText = function(url){
+        return 'Last updated: ' + new Date($scope.files[url].timestamp).toUTCString();
+    };
+
+    $scope.import = function(){
+        var to_import = {};
+        try{
+            to_import = JSON.parse($scope.importString);
+            importBundle(to_import);
+        } catch(e){
+            alert('Invalid JSON');
+            return;
+        }
+
+    };
+
+    $scope.isDownloading = function(url){
+        return _.contains($scope.downloading, url);
+    };
+    
     $scope.size = function(selectedFiles){
         if(selectedFiles.length == 1){
             return (selectedFiles[0] === '' ? 0 : 1);
