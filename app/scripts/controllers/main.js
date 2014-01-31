@@ -4,6 +4,7 @@ var UglifyJS = require('uglify-js');
 
 angular.module('inkbundlerApp')
 .controller('MainCtrl', function ($scope, $location, $http, $q, localStorageService) {
+    
     var emptyBundle = function(){
         return {
             name : '',
@@ -14,6 +15,7 @@ angular.module('inkbundlerApp')
             selectedFiles: []
         };
     };
+
     function isDependent(url){
         return  _.contains($scope.dependentFiles, url);
     }
@@ -104,6 +106,7 @@ angular.module('inkbundlerApp')
             sourceMap: sourceMap,
           };
     }
+    
     function loadScript(url){
         if(_.contains($scope.downloading, url)) {
             console.log("Already downloding this url. Please wait");
@@ -222,7 +225,6 @@ angular.module('inkbundlerApp')
         $q.all(_.map(urlsToLoad, function(value, key){
             return loadScript(value);
         })).then(function(response){
-            console.log("finished downloading");
             $location.path('/').search('u', null).replace();
         });
     }
