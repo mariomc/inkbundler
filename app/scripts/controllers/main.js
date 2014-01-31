@@ -217,6 +217,9 @@ angular.module('inkbundlerApp')
     $scope.bundle = $scope.updating || emptyBundle();
 
     var urlsToLoad = $location.$$search.u;
+
+    window.cenas = $location;
+
     if(urlsToLoad){
         if(_.isString(urlsToLoad)){
             urlsToLoad = [urlsToLoad];
@@ -225,7 +228,7 @@ angular.module('inkbundlerApp')
         $q.all(_.map(urlsToLoad, function(value, key){
             return loadScript(value);
         })).then(function(response){
-            $location.path('/').search('u', null).replace();
+            $location.path($location.$$path).search('u', null).replace();
         });
     }
 
