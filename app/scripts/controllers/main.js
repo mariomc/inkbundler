@@ -228,7 +228,7 @@ angular.module('inkbundlerApp')
         $q.all(_.map(urlsToLoad, function(value, key){
             return loadScript(value);
         })).then(function(response){
-            $location.path($location.$$path).search('u', null).replace();
+            //$location.path($location.$$path).search('u', null).replace();
         });
     }
 
