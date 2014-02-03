@@ -2,7 +2,7 @@
 
 var UglifyJS = require('uglify-js');
 
-angular.module('inkbundlerApp')
+angular.module('jsbundler')
 .controller('MainCtrl', function ($scope, $location, $http, $q, localStorageService) {
     
     var emptyBundle = function(){
@@ -121,10 +121,7 @@ angular.module('inkbundlerApp')
                     $scope.files[url] = {content: data, timestamp: +new Date()};
                 }
 
-                setTimeout(function(){
-                    $scope.downloading = _.without($scope.downloading, url);
-                    $scope.$apply();
-                }, 1000);
+                $scope.downloading = _.without($scope.downloading, url);
             })
             .error(function(){
                 setTimeout(function(){
@@ -218,8 +215,6 @@ angular.module('inkbundlerApp')
 
     var urlsToLoad = $location.$$search.u;
 
-    window.cenas = $location;
-
     if(urlsToLoad){
         if(_.isString(urlsToLoad)){
             urlsToLoad = [urlsToLoad];
@@ -228,7 +223,7 @@ angular.module('inkbundlerApp')
         $q.all(_.map(urlsToLoad, function(value, key){
             return loadScript(value);
         })).then(function(response){
-            //$location.path($location.$$path).search('u', null).replace();
+            $location.path($location.$$path).search('u', null).replace();
         });
     }
 
