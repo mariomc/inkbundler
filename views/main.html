@@ -98,7 +98,13 @@
       <h4>
         <i class="icon-download-alt"></i>  Local Stored Contents
       </h4>
-        <div class="panel-body" style="padding: 0 1em 1em 1em">
+        <div class="panel-body ink-form" style="padding: 0 1em 1em 1em">
+        <div class="control-group column-group gutters">
+            <label class="large-20" for="phone">Proxy</label> 
+            <div class="control large-80">
+                <input type="text" id="phone" ng-model="proxy">
+            </div>
+        </div>
           <div style="margin-top: 0" class="column-group" ng-repeat="(url, content) in files">
 
           <p class="large-70" style="padding-bottom: 0; line-height: 41px; word-wrap: break-word"> {{url}} </p>
